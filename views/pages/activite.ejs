@@ -1,0 +1,226 @@
+
+<!DOCTYPE html>
+<html>
+
+<head>
+  <% include ../partials/header.ejs %>
+  <link href="/stylesheets/activite.css" rel="stylesheet" type="text/css" media="all" />
+</head>
+<body>
+
+  <% include ../partials/navVillage.ejs %>
+
+
+<div class="container">
+
+	
+		<p>Cette page permet la gestion des activités (un stand, un porteur, une conférence, des participants, formations ou concerts). 
+		Avant de créer l'activité nous vous recommandons de créer le lieu et le porteur associé </br>
+	</p>
+	
+	<p>
+		<input type="button" class="btn btn-default couleurbg largeurAuto" id="nouvelleActivite" value="Nouvelle activité"/>
+	<form method="post" action="/ajoutActivite" id="ajoutActivite" <%if(!(typeof activiteAModifier  !== undefined && activiteAModifier!=null)){ %> class="hide" <% } %>>
+		   	<input type="text" style="display:none" name ="villageId" id="villageId" value="<% if(typeof village  !== undefined && village!=null){ %><%= village._id %><% } %>" />
+		   <input type="text" style="display:none" name ="id" id="id" value="<% if(typeof activiteAModifier  !== undefined && activiteAModifier!=null){ %><%= activiteAModifier._id %><% } %>" />
+			<label for="nom">Nom de l'activité :</label>
+			<input type="text" name="nom" required id="nom" value="<% if(typeof activiteAModifier  !== undefined && activiteAModifier!=null){ %><%= activiteAModifier.nom %><% } %>"/>
+			</p>
+			<label for="description">Description de l'activité :</label>
+			<textarea form ="ajoutActivite" rows="4" cols="50" name="description" id="description"><% if(typeof activiteAModifier  !== undefined && activiteAModifier!=null){ %><%= activiteAModifier.description %><% } %></textarea>
+			</p>
+		<!--		<label for="placeMaximum">Nombre de place maximum pour l'activité :</label>
+			<input type="number" name="placeMaximum" id="placeMaximum" value="<% if(typeof activiteAModifier  !== undefined && activiteAModifier!=null){ %><%= activiteAModifier.placeMaximum %><% } %>"/>
+			</p>
+ -->
+		   <label for="materielNecessaire">Matériel à apporter :</label>
+		   <textarea form ="ajoutActivite" rows="4" cols="50" name="materielNecessaire" id="materielNecessaire"><% if(typeof activiteAModifier  !== undefined && activiteAModifier!=null){ %><%= activiteAModifier.materielNecessaire %><% } %></textarea>
+		<p>
+			<div id="mapLabel"> Sélectionner les horaires de début et de fin de l'activité </div>
+			<div class="input-group">
+				<input id="dateDebut" name="dateDebut" type="date" required class="form-control date start datepicker horaire"  value="<%  if(typeof activiteAModifier  !== undefined && activiteAModifier!=null && typeof activiteAModifier.disponibilites[0]  !== undefined && activiteAModifier.disponibilites[0]!=null ){ %><%= moment.utc(activiteAModifier.disponibilites[0].dateDebut).format('YYYY-MM-DD') %><% }
+				else if (village._horairesOuvertures!=null){
+  village._horairesOuvertures.forEach(function(horairesOuverture) {
+  %><%= moment.utc(horairesOuverture.dateDebut).format('YYYY-MM-DD') %><% }); }%>"/>
+				<input id="horaireDebut"  name="horaireDebut" required type="time" class="form-control time start horaire"  value="<%  if(typeof activiteAModifier  !== undefined && activiteAModifier!=null && typeof activiteAModifier.disponibilites[0]  !== undefined && activiteAModifier.disponibilites[0]!=null){ %><%= moment.utc(activiteAModifier.disponibilites[0].dateDebut).format('HH:mm') %><% }else if (village._horairesOuvertures!=null){
+  village._horairesOuvertures.forEach(function(horairesOuverture) {
+  %><%= moment.utc(horairesOuverture.dateDebut).format('HH:mm') %><% }); }%>"/>  à  
+				<input id="dateFin" name="dateFin" type="date" required class="form-control time end horaire" value="<%  if(typeof activiteAModifier  !== undefined && activiteAModifier!=null && typeof activiteAModifier.disponibilites[0]  !== undefined && activiteAModifier.disponibilites[0]!=null){ %><%= moment.utc(activiteAModifier.disponibilites[0].dateFin).format('YYYY-MM-DD') %><% }
+				else if (village._horairesOuvertures!=null){
+  village._horairesOuvertures.forEach(function(horairesOuverture) {
+  %><%= moment.utc(horairesOuverture.dateFin).format('YYYY-MM-DD') %><% }); }%>"/>
+				<input id="horaireFin" name="horaireFin" required type="time" class="form-control date end datepicker horaire"value="<%  if(typeof activiteAModifier  !== undefined && activiteAModifier!=null && typeof activiteAModifier.disponibilites[0]  !== undefined && activiteAModifier.disponibilites[0]!=null){ %><%= moment.utc(activiteAModifier.disponibilites[0].dateFin).format('HH:mm') %><% }else if (village._horairesOuvertures!=null){
+  village._horairesOuvertures.forEach(function(horairesOuverture) {
+  %><%= moment.utc(horairesOuverture.dateFin).format('HH:mm') %><% }); }%>"/>
+			</div>	
+		</p>
+		
+		<label>Sélectionner le lieu de l'activité</label>
+		<select id="idLieu" name="idLieu">
+			<option></option>
+		<% if (lieux!=null) {
+		lieux.forEach(function(lieu) { %>
+			<option value="<%= lieu._id %>" <% if(typeof activiteAModifier  !== undefined && activiteAModifier!=null && activiteAModifier._lieux!=null && typeof activiteAModifier._lieux[0]  !== undefined && activiteAModifier._lieux[0]!=null && activiteAModifier._lieux[0]._id.equals(lieu._id)){  %> selected="selected" <% } %>><%= lieu.nom %></option>
+		<% }); }%>
+		</select>
+		</p>
+		<label>Sélectionner le porteur référent (Pour sélectionner plusieurs porteurs garder la touche controle enfoncée et selectionner les porteurs)</label>
+		<select id="idPorteur"  multiple name="idPorteur">
+		<option value=""></option>
+
+		<% if (porteurs!=null) {
+		porteurs.forEach(function(porteur) { %>
+			<option value="<%= porteur._id %>"  <% if(typeof activiteAModifier  !== undefined && activiteAModifier!=null && activiteAModifier._porteurs.length!=0){
+				activiteAModifier._porteurs.forEach(function(porteurActivite){
+					if(porteurActivite!=undefined && porteurActivite._id.equals(porteur._id)){
+						%> selected="selected" <%
+					}
+				});
+			  } %>><%= porteur.nom %></option>
+		<% }); }%>
+		</select>
+		</p>
+
+		<label>Sélectionner le type de l'activité</label>
+		<select id="typeActivite" name="typeActivite">
+		
+			 <% Activite.schema.path('typeActivite').enumValues.forEach(function(typeActivite) {
+                %>
+                <option value="<%=typeActivite%>" "<% if(typeof activiteAModifier  !== undefined && activiteAModifier!=null && activiteAModifier.typeActivite==typeActivite){  %> selected="selected" <% } %>><%=typeActivite%></option> 
+                <%
+                }); %>
+		</select>
+		</br>
+		<div  id="lienVelorution"  <%  if(!(typeof activiteAModifier  !== undefined && activiteAModifier!=null &&  activiteAModifier.typeActivite.localeCompare("V&eacute;lorution")==1)){ %> class="hide" <% } %>>
+			<label for="lienVelorution"> Lien Open Runner </label>
+			<input type="text" name="lienVelorution" value="<% if(typeof activiteAModifier  !== undefined && activiteAModifier!=null){ %><%= activiteAModifier.lienVelorution %><% } %>" >
+			</br>
+		</div>
+		
+	
+		<div class="checkbox">
+	      <label><input type="checkbox" name="inscription" <% if(typeof activiteAModifier  !== undefined && activiteAModifier!=null && (activiteAModifier.inscription!=null  && activiteAModifier.inscription)){ %>checked<% } %>  >Activer l'inscription à l'activité</label>
+	    </div>
+		<p>
+			<input type="submit" id="bouton" value="<% if(typeof activiteAModifier  !== undefined && activiteAModifier!=null){ %> Modifier l'activité <% }else{ %>Ajouter l'activité<%} %>"/>
+		</p>
+	</form>
+
+	<div class="modifier-activite" >Cliquez sur une activité existante pour la modifier</div>
+	<table id="listeActivite">
+		<thead>
+			<td class="couleurAvecFond">Nom</td>
+			<td class="couleurAvecFond">Type</td>
+			<td class="couleurAvecFond">Porteur</td>
+			<td class="couleurAvecFond">Supression</td>
+		</thead>
+		<tbody>
+        <% if (activites!=null) {
+		activites.forEach(function(activite) { %>
+		<tr id="<%= activite._id %>" data-village="<%= village._id %>" description-"<%= activite._id %>" >
+			<td ><%= activite.nom %></td>
+			<td ><%= activite.typeActivite %></td> 
+			<td> <% if (activite._porteurs!=null){
+		        activite._porteurs.forEach(function(porteur) {
+		        	if(porteur!== undefined && porteur!=null){
+		          %>
+		         <%= porteur.nom %>
+		          <%}
+		          });
+		          }
+		          %>
+		    </td>
+      		<td class="supression center"> 
+			      		<!-- Button trigger modal -->
+			<button type="button" class="btn btn-primary" data-toggle="modal" data-target="#popinSupression">
+			 <span class="glyphicon glyphicon-trash"> </span>
+			</button>
+
+      			
+      		</td> 
+		</tr>
+        <% }); }%>
+		</tbody>
+	</table>
+	<p>
+ <% include activite/popinSupression.ejs %>
+
+	
+</body>
+  <% include ../partials/footer.ejs %>
+</html>
+<script>
+$(".supression").click(function(event) {
+	    $("#activiteId").val($( this ).parent().attr('id'));
+	    });
+
+$("#supprimer").click(function(event) {
+	    var idActivite =$("#activiteId" ).val();
+	    var villageId=$("#villageId" ).val();
+		var url="/suppressionActivite?activiteId="+idActivite;
+		if(villageId !=null){
+			url=url+"&villageId="+villageId
+		}
+	    window.location.href = url;
+	    });
+
+	$("#nouvelleActivite").click(function(event) {
+	      $("#id").val("");
+		  $("#nom").val("");
+		  $("#description").val("");
+	      $("#placeMaximum").val("");
+		  $("#adresse").val("");
+		  $("#idPorteur").val("");
+		  $("#bouton").val("Ajouter une nouvelle activité");
+		  $("#ajoutActivite").removeClass("hide");
+	    });
+		
+	$(".navbar-nav li").removeClass("active");
+	$("#Activite_Icone").addClass("active");
+	  <%if((typeof activiteAModifier  !== undefined && activiteAModifier!=null)){ %> 
+      $('html, body').animate({
+                        scrollTop: $("#ajoutActivite").offset().top
+                    }, 1000);
+		<% } %>  
+	
+	
+	$("#listeActivite tbody tr td:not(.supression)").click(function(event) {
+	    var idActivite =$( this ).parent().attr('id');
+	    var villageId=$( this ).parent().attr('data-village');
+		var url="/activite?activiteId="+idActivite;
+		if(villageId !=null){
+			url=url+"&villageId="+villageId
+		}
+	    window.location.href = url;
+	});
+
+$("#listeActivite tbody tr td .supression").click(function(event) {
+	    var idActivite =$( this ).parent().attr('id');
+	    var villageId=$( this ).parent().attr('data-village');
+		var url="/supressionActivite?activiteId="+idActivite;
+		if(villageId !=null){
+			url=url+"&villageId="+villageId
+		}
+	    window.location.href = url;
+	});
+
+
+    $('#listeActivite').DataTable( {
+        responsive: true,
+        "language": {
+                "url": "//cdn.datatables.net/plug-ins/1.10.16/i18n/French.json"
+            },
+        'iDisplayLength': 10
+    } );
+	$("#typeActivite").change(function(event) {
+	    if($( this ).val().localeCompare("V&eacute;lorution")==1){
+	    	$("#lienVelorution").removeClass("hide");
+	    }else{
+		    $("#lienVelorution").addClass("hide");
+		    $("input[name='lienVelorution']").val("");
+		    
+	    }
+
+	});
+    
+</script>

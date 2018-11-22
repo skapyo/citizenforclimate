@@ -1,0 +1,243 @@
+
+<!DOCTYPE html>
+<html>
+
+<head>
+  <% include ../partials/header.ejs %>
+  <link href="/stylesheets/lieu.css" rel="stylesheet" type="text/css" media="all" />
+</head>
+<body>
+	<% include ../partials/navVillage.ejs %>
+	<div class="container">
+		<p>Cette page permet la gestion des lieux où vont se dérouler les activités de la marche : stands, conférences, concerts et formations.</br>
+	</p>
+		<input type="button" class="btn btn-default couleurbg largeurAuto" id="nouveauLieu" value="Nouveau Lieu" />
+
+		<form method="post" <%if(!(typeof lieuAModifier  !== undefined && lieuAModifier!=null)){ %> class="hide" <% } %> action="/ajoutLieu" id="ajoutLieu">
+		   <p>
+		   	<!-- Info cache pour le post -->
+		   	<input type="text" style="display:none" name ="villageId" id="villageId" value="<% if(typeof village  !== undefined && village!=null){ %><%= village._id %><% } %>" />
+			 <input type="text" style="display:none" name ="id" id="id" value="<% if(typeof lieuAModifier  !== undefined && lieuAModifier!=null){ %><%= lieuAModifier._id %><% } %>" />
+			 <input type="text" style="display:none" name ="latitude" id="latitude" value="<% if(typeof lieuAModifier  !== undefined && lieuAModifier!=null){ %><%= lieuAModifier.coordonnees.latitude %><% } %>"/>
+			 <input type="text" style="display:none" name ="longitude" id="longitude" value="<% if(typeof lieuAModifier  !== undefined && lieuAModifier!=null){ %><%= lieuAModifier.coordonnees.longitude %><% } %>" />
+
+			<!-- Donnees du formulaire -->
+			<label for="nom">Nom du lieu (Exemple place du village, salle Voltaire, Parc butte Chaumont, ...):</label>
+			<input type="text" name="nom" required id="nom" value="<% if(typeof lieuAModifier  !== undefined && lieuAModifier!=null){ %><%= lieuAModifier.nom %><% } %>"/>
+			<label for="adresse">Adresse du lieu :</label>
+			<input type="text" name="adresse" required id="adresse" value="<% if(typeof lieuAModifier  !== undefined && lieuAModifier!=null){ %><%= lieuAModifier.adresse %><% } %>"/>
+			
+			<p>
+			<!--
+				<label id="mapLabel"> Selectionner la disponibilite du lieu :</label>
+				
+				<input id="dateDebut" name="dateDebut" type="date" class="date start datepicker horaire"  value="<%  if(typeof lieuAModifier  !== undefined && lieuAModifier!=null && typeof lieuAModifier.disponibilites[0]  !== undefined && lieuAModifier.disponibilites[0]!=null ){ %><%= moment.utc(lieuAModifier.disponibilites[0].dateDebut).format('YYYY-MM-DD') %><% }
+				else if (village._horairesOuvertures!=null){
+  village._horairesOuvertures.forEach(function(horairesOuverture) {
+  %><%= moment.utc(horairesOuverture.dateDebut).format('YYYY-MM-DD') %><% }); }%>"/>
+				
+				<input id="horaireDebut"  name="horaireDebut" type="time" class="time start horaire"  value="<%  if(typeof lieuAModifier  !== undefined && lieuAModifier!=null && typeof lieuAModifier.disponibilites[0]  !== undefined && lieuAModifier.disponibilites[0]!=null){ %><%= moment.utc(lieuAModifier.disponibilites[0].dateDebut).format('HH:mm') %><% }else if (village._horairesOuvertures!=null){
+  village._horairesOuvertures.forEach(function(horairesOuverture) {
+  %><%= moment.utc(horairesOuverture.dateDebut).format('HH:mm') %><% }); }%>"/> a 
+				
+				<input id="dateFin" name="dateFin" type="date" class="time end horaire" value="<%  if(typeof lieuAModifier  !== undefined && lieuAModifier!=null && typeof lieuAModifier.disponibilites[0]  !== undefined && lieuAModifier.disponibilites[0]!=null){ %><%= moment.utc(lieuAModifier.disponibilites[0].dateFin).format('YYYY-MM-DD') %><% }else if (village._horairesOuvertures!=null){
+  village._horairesOuvertures.forEach(function(horairesOuverture) {
+  %><%= moment.utc(horairesOuverture.dateFin).format('YYYY-MM-DD') %><% }); }%>"/>
+				
+				<input id="horaireFin" name="horaireFin" type="time" class="date end datepicker horaire"value="<%  if(typeof lieuAModifier  !== undefined && lieuAModifier!=null && typeof lieuAModifier.disponibilites[0]  !== undefined && lieuAModifier.disponibilites[0]!=null){ %><%= moment.utc(lieuAModifier.disponibilites[0].dateFin).format('HH:mm') %><% }else if (village._horairesOuvertures!=null){
+  village._horairesOuvertures.forEach(function(horairesOuverture) {
+  %><%= moment.utc(horairesOuverture.dateFin).format('HH:mm') %><% }); }%>"/>
+			</p>
+			-->
+			<label> Cliquez sur la carte pour indiquer l'emplacement du lieu ou utilisez la zone de recherche</label>
+			<input id="pac-input" class="controls" type="text" placeholder="Rechercher l'emplacement du lieu">
+			<div id="carte"></div>
+			</p>
+			<p>
+				<input type="submit" id="bouton" value="<% if(typeof lieuAModifier  !== undefined && lieuAModifier!=null){ %> Modifier le lieu <% }else{ %>Ajouter un nouveau lieu <%} %>"/>
+			</p>
+		</form>
+	</p>
+		<div class="modifier-lieu">Cliquez sur un lieu existant pour le modifier</div>
+		<table id="listeLieu">
+			<thead>
+			   <td class="couleurAvecFond">Nom du lieu</td>
+			   <td class="couleurAvecFond">Adresse</td>
+			</thead>
+			<tbody>
+			<% if (lieux!=null) {
+			lieux.forEach(function(lieu) { %>
+			<tr  id="<%= lieu._id %>" data-village="<%= village.id %>">
+			   <td latitude="<%= lieu.coordonnees.latitude %>" longitude="<%= lieu.coordonnees.longitude %>" ><%= lieu.nom %></td>
+			   <td><%= lieu.adresse %></td>
+			</tr>
+			<% }); }%>
+			</tbody>
+		</table>
+
+
+
+	</div>
+
+</body>
+	  <% include ../partials/footer.ejs %>
+</html>
+<script>
+
+ 
+
+	$(".navbar-nav li").removeClass("active");
+	$("#lieu_Icone").addClass("active");
+  	var map; 
+   	var marker;   
+    function initMap() {
+      
+      var markerListe=[];
+    	 var zoom=14;
+      <% if( village.niveauZoom!=null){ %>
+      zoom=<%= village.niveauZoom%>;
+      <% }%>
+
+      var marker;
+       var village = {lat: <%= village.coordonnees.latitude %>, lng: <%= village.coordonnees.longitude %>};
+        var map = new google.maps.Map(document.getElementById('carte'), {
+             zoom: zoom,
+            center: village
+         });
+         // Create the search box and link it to the UI element.
+        var input = document.getElementById('pac-input');
+        var searchBox = new google.maps.places.SearchBox(input);
+        map.controls[google.maps.ControlPosition.TOP_LEFT].push(input);
+
+        // Bias the SearchBox results towards current map's viewport.
+        map.addListener('bounds_changed', function() {
+          searchBox.setBounds(map.getBounds());
+        });
+
+           var markers = [];
+        // Listen for the event fired when the user selects a prediction and retrieve
+        // more details for that place.
+        searchBox.addListener('places_changed', function() {
+          var places = searchBox.getPlaces();
+
+          if (places.length == 0) {
+            return;
+          }
+
+
+          // For each place, get the icon, name and location.
+          var bounds = new google.maps.LatLngBounds();
+          places.forEach(function(place) {
+            if (!place.geometry) {
+              console.log("Returned place contains no geometry");
+              return;
+            }
+            placeMarker(place.geometry.location);
+            $("#latitude").val(place.geometry.location.lat());
+            $("#longitude").val(place.geometry.location.lng());
+            if (place.geometry.viewport) {
+              // Only geocodes have viewport.
+              bounds.union(place.geometry.viewport);
+            } else {
+              bounds.extend(place.geometry.location);
+            }
+          });
+          map.fitBounds(bounds);
+          $("#niveauZoom").val(map.getZoom());
+        });
+      
+         google.maps.event.addListener(map, 'click', function(event) {
+             placeMarker(event.latLng);
+            $("#latitude").val(event.latLng.lat);
+            $("#longitude").val(event.latLng.lng);
+         });
+         function placeMarker(location) {
+            if(marker){ //on vérifie si le marqueur existe
+                marker.setPosition(location); //on change sa position
+            }else{
+                marker = new google.maps.Marker({ //on créé le marqueur
+                    position: location,
+                    map: map
+                });
+            }
+         }
+/**
+   		 map= L.map('carte').setView([<%= village.coordonnees.latitude %>,<%= village.coordonnees.longitude %>], zoom);
+			L.tileLayer('http://{s}.tile.osm.org/{z}/{x}/{y}.png', {
+		    attribution: '&copy; <a href="http://osm.org/copyright">OpenStreetMap</a>  <a href="https://alternatiba.eu/">Alternatiba</a> contributors'
+		}).addTo(map);
+
+     	  map.on('click', function(event) {
+            placeMarker(event.latlng);
+            $("#latitude").val(event.latlng.lat);
+            $("#longitude").val(event.latlng.lng);
+        });
+
+        function placeMarker(location) {
+            if(marker){ //on vérifie si le marqueur existe
+                marker.setLatLng(location).update(); //on change sa position
+            }else{
+                marker = L.marker(location).addTo(map);
+            }
+        }**/
+
+		<% if(typeof lieuAModifier  !== undefined && lieuAModifier!=null){ %>
+			var position ={lat: Number(<%= lieuAModifier.coordonnees.latitude %>), lng: Number(<%= lieuAModifier.coordonnees.longitude %>)};
+			placeMarker(position);
+		<% } %>
+
+        $("#listeLieu tbody").click(function(event) {
+            var target = event.target;
+            var parent = target.parentElement
+
+        	var lieuId=parent.id;
+        	var villageId=$(parent).attr('data-village');
+			var url="/lieu?lieuId="+lieuId;
+			if(villageId !=null){
+				url=url+"&villageId="+villageId
+			}
+            window.location.href = url;
+        });
+        $("#adresse").on('keypress', function(event){
+            var adresse = $(event.target);
+            $("#pac-input").val(adresse.val());
+        });
+        $("#adresse").on('change', function(event){
+            var adresse = $(event.target);
+            $("#pac-input").val(adresse.val());
+            $("#pac-input").trigger( "focus" );
+        });
+    }
+
+    $("#nouveauLieu").click(function(event) {
+      $("#id").val("");
+      $("#latitude").val("");
+      $("#longitude").val("");
+	  $("#nom").val("");
+	  $("#adresse").val("");
+	  $("#bouton").val("Ajouter un nouveau lieu");
+	  if(!$("#ajoutLieu").hasClass("hide")){
+	 	 map.removeLayer(marker);
+	 	 marker=null;
+	  }
+	 
+	   $("#ajoutLieu").removeClass("hide");
+	    map.invalidateSize();
+    });
+    
+      <%if((typeof lieuAModifier  !== undefined && lieuAModifier!=null)){ %> 
+      $('html, body').animate({
+                        scrollTop: $("#ajoutLieu").offset().top
+                    }, 1000);
+		<% } %>
+    $('#listeLieu').DataTable( {
+        responsive: true,
+        "language": {
+                "url": "//cdn.datatables.net/plug-ins/1.10.16/i18n/French.json"
+            },
+        'iDisplayLength': 10
+    } );
+</script>
+<script async defer
+		src="https://maps.googleapis.com/maps/api/js?key=googleMapsApiToReplacelanguage=fr&region=FR&callback=initMap&libraries=places">
+</script>

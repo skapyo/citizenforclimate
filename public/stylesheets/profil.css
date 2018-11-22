@@ -1,0 +1,7 @@
+  #listeVillageInteresse td,#listeVillageInteresse td, #listeVillageOrganisateurs td,#listeVillageOrganisateurs td, #listeVillageBenevoles td,#listeVillageBenevoles td, #listeVillageParticipant td,#listeActiviteeParticipant td {
+	padding: 8px 10px;
+}
+.bordureGrise{
+  border: 1px solid #ccc;
+  padding: 1% 1% 1% 1%;
+}

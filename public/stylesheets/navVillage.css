@@ -1,0 +1,9 @@
+.left{
+    position: relative;
+  float: left;
+}
+.right{
+    position: relative;
+  float: right;
+  padding-top: 5%;
+}

@@ -1,0 +1,91 @@
+@media(min-height:700px){
+	#carte {
+      height: 50em;;
+    }
+}
+@media(max-height:700px){
+	#carte {
+      height: 30em;;
+    }
+}
+   form {
+   border: 1px solid #ccc;
+   padding: 10px;
+}
+
+button, input, select, textarea {
+width: 100%;
+}
+.largeurAuto{
+  width: auto;
+}
+
+label{
+width: 100%;
+}
+.leaflet-interactive{
+    padding: inherit;
+}
+.tableau> tr:not(.nonCliquable){
+  cursor: pointer;
+ }
+  div.leaflet-tile-container > img {
+    margin: 0;
+}
+.tableau>>tbody>tr:not(.nonCliquable):focus, .tableau>>tbody>tr:not(.nonCliquable):hover {
+    color: white;
+    background-color: #148755;
+}
+.tableau>tbody>tr:focus, .tableau>>tbody>tr:hover {
+    color: black;
+    background-color: #f8f9fa;
+}
+
+.couleurVerte{
+  color:#148755;
+}
+
+#navbarSupportedContent .navbar-right{
+  margin-right:inherit;
+}
+.nav-item{
+  border-radius: .25rem;
+}
+
+#listeVillage td, #listeVillage th, #listeClimateFriday td, #listeClimateFriday th{
+  border: none !important;
+}
+#listeClimateFriday,#listeVillage{
+    width:100%!important;
+}
+ #listeVillage_length select,#listeVillage_length button, #listeVillage_length label, #listeVillage_filter label,#listeVillage_filter input, #listeClimateFriday_length select,#listeClimateFriday_length button, #listeClimateFriday_length label, #listeClimateFriday_filter label,#listeClimateFriday_filter input{
+  width:inherit;
+  font-weight:inherit;
+}
+#listeVillage_wrapper, #listeClimateFriday_wrapper {
+  padding-top: 1%;
+}
+#velo{
+    border-bottom-style: solid;
+    border-bottom-color: #148755;
+}
+.couleurbg, .couleurAvecFond {
+  background-color: #148755;
+  color: white;
+}
+.description{
+padding: 0 4em 0 4em;
+}
+.modal.fade .modal-dialog {
+  -webkit-transform: inherit;
+  transform: inherit;
+  }
+  .close{
+  width:inherit;
+}
+#labelEmail{
+  font-weight:inherit;
+}
+.tab{
+    width:50%!important;
+}

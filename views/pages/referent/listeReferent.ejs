@@ -1,0 +1,60 @@
+<div class="bordureGrise">
+	Liste des référents
+
+			  <table id="listereferent" class="tableau">
+			      <thead>
+			      <tr>
+			          <td>Nom de la marche</td>
+			          <td>Dernière modification</td>
+			          <td>publié</td>
+			          <td>Nombre activite</td>
+			          <td>Nom </td>
+			          <td>Prénom</td>
+			          <td>Email</td>
+			          <td>Téléphone</td>
+			          <td>Lien</td>
+			      </tr>
+			      </thead>
+			      <tbody>
+			          <%
+			          if (villages!== undefined){
+
+			          villages.forEach(function(village) { 
+			          	if( (village.estMarche!= undefined && village.estMarche)){
+			          	village._referents.forEach(function(referent) { %>
+
+			        <tr>
+			         <td><%= village.nom %></td>
+			         <td> <% if (village.updatedAt!== undefined){%><%= moment.utc(village.updatedAt).add(2, 'hours').format('DD/MM, HH:mm')%><%}%></td>
+			          <td><% if(village.publication){ %>Oui<%}else{%>Non<% } %></td>
+			         <td><%= village._activites.length %></td>
+			          <td><%= referent.prenom %></td>
+			          <td><%= referent.nom %></td>
+			          <td><%= referent.adresseMail %></td>
+			          <td><%= referent.telephone %></td>  
+			          <td><a href="/village?villageId=<%= village._id %>"> <button>Aller à la marche <%= village.nom %></button></a></td>
+	       			 </tr>
+			          <% });
+			          	}
+			           });
+			          }%>
+			      </tbody>
+			  </table>
+</div>
+<script>
+$('#listereferent').DataTable( {
+        responsive: true,
+        bSortable: false,
+         "order": [[ 1, "desc" ]]
+         ,
+          "language": {
+                "url": "//cdn.datatables.net/plug-ins/1.10.16/i18n/French.json"
+            },
+            
+           dom: 'Blfrtip',
+             buttons: [
+        'excelHtml5',
+        'csvHtml5'
+    ]
+    } );
+</script>

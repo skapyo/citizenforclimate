@@ -1,0 +1,57 @@
+<!--                   Section interesse           -->  
+  <% if (typeof accesscontrol !== "undefined" && accesscontrol!=null && typeof utilisateur !== "undefined" && utilisateur!=null ) { 
+  		 if ( utilisateur.role!=null &&  accesscontrol.can(utilisateur.role).readAny('interesse').granted || contientUtilisateur(village._referents)){ %>
+  %>
+    Nombre d'intéressés : <%= village._interesses.length %> 
+
+  <div class="afficher-cacher-filtre"> <span class="ouvrirInteresse">Afficher la liste des personnes intéressées</span> <span class="fermerInteresse hide">Cacher la liste des personnes intéressées</span></div>
+ <p>
+ <div id="interesse" style="display:none">
+ Liste des intéressés : 
+      <table id="listeInteresses">
+	      <thead>
+	      <tr>
+	          <td>Nom</td>
+	          <td>Prénom</td>
+	          <td>Email</td>
+	          <td>Date cr&eacute;ation</td>
+	      </tr>
+	      </thead>
+	      <tbody>
+	          <%
+	          village._interesses.forEach(function(interesse) { %>
+	        <tr id="<%= interesse._id %>">
+	          <td><%= interesse.nom %></td>
+	          <td><%= interesse.prenom %></td>
+	          <td><%= interesse.adresseMail %></td>
+	           <td><% if(typeof interesse.createdAt !== "undefined" && interesse.createdAt!=null){%>  <%= moment.utc(interesse.createdAt).locale("fr").format('DD/MM/YY HH:mm') %><% } %></td>
+	        </tr>
+	          <% });%>
+	      </tbody>
+	  </table>
+  </div>
+     <% } 
+     }
+     %>
+<script>
+ 
+$('.ouvrirInteresse').on('click',function(){
+    $('#interesse').slideDown();
+    $('.ouvrirInteresse').addClass("hide");
+    $('.fermerInteresse').removeClass("hide");
+});
+$('.fermerInteresse').on('click',function(){
+    $('#interesse').slideUp();
+    $('.ouvrirInteresse').removeClass("hide");
+    $('.fermerInteresse').addClass("hide");
+});
+$.fn.dataTable.moment('DD/MM/YY HH:mm'); 
+$('#listeInteresses').DataTable( {
+    responsive: true,
+    "language": {
+                "url": "//cdn.datatables.net/plug-ins/1.10.16/i18n/French.json"
+            },
+       "order": [[ 3, "asc" ]]
+} );
+
+</script>

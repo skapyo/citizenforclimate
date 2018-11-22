@@ -1,0 +1,109 @@
+
+<!-- popin -->
+<div class="modal fade" id="popinFormation" tabindex="-1" role="dialog" aria-labelledby="popinLabel" aria-hidden="true">
+  <form method="get" action="/ajoutParticipantActiviteFormation" id="contactFormFormation">
+    <input type="text" style="display:none" name ="villageId" id="villageId" value="<% if(typeof village  !== undefined && village!=null){ %><%= village._id %><% } %>" />
+    <input type="text" style="display:none" name ="activiteId" id="activiteIdPopin" />
+
+      <div class="modal-dialog" role="document">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title" id="popinLabel">Inscription formation</h5> 
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+              <span aria-hidden="true">&times;</span>
+            </button>
+          </div>
+          <div class="modal-body">
+
+          <label for="tel">Téléphone</label>
+          <input type="Number" form ="contactFormFormation" required name="tel" id="tel" value="<% if (typeof utilisateur !== "undefined" && utilisateur!=null&& utilisateur.telephone!=null ) { %><%= utilisateur.telephone%><% }%>"/>
+
+          <label for="ville">Ville</label>
+          <input type="text" form ="contactFormFormation" name="ville" id="ville" value="<% if (typeof utilisateur !== "undefined" && utilisateur!=null&& utilisateur.ville!=null ) { %><%= utilisateur.ville%><% }%>"/>
+
+          <label for="codePostal">Code Postal</label>
+          <input type="Number" form ="contactFormFormation" required name="codePostal" id="codePostal" value="<% if (typeof utilisateur !== "undefined" && utilisateur!=null&& utilisateur.codePostal!=null ) { %><%= utilisateur.codePostal%><% }%>"/>
+
+          <label for="age">Age</label>
+          <input type="number" form ="contactFormFormation" required name="age" id="age" value="<% if (typeof utilisateur !== "undefined" && utilisateur!=null&& utilisateur.age!=null ) { %><%= utilisateur.age%><% }%>"/>
+
+          </br>
+          </br>
+          </br>
+          <h2>Quelle est ton expérience ?</h2>
+          </br>
+          <label for="nom">Es-tu actif dans un groupe Action Non-Violente COP21 (ANV-COP21, Alternatiba, Amis de la Terre, ou dans une autre association ? </label>
+          <div class="form-check">
+            <input type="checkbox" class="form-check-input" name="estANV"/>
+            <label class="form-check-label" for="estANV">ANV-COP21</label>
+          </div>
+           <div class="form-check">
+            <input type="checkbox" class="form-check-input" name="estAlternatiba"/>
+            <label class="form-check-label" for="estAlternatiba">Alternatiba</label>
+          </div>
+          <div class="form-check">
+            <input type="checkbox" class="form-check-input" name="estAmisDeLaTerre"/>
+            <label class="form-check-label" for="estAmisDeLaTerre">Amis de la Terre</label>
+          </div>
+          <label for="autres">Autres associations</label>
+          <input type="text" form ="contactFormFormation" name="autres" id="autres" value=""/>
+
+          <label for="participationAction">As-tu déjà participé à des actions non-violentes ?</label>
+          <textarea form ="contactFormFormation" name="participationAction"> </textarea>
+
+           <label for="participationActionAvecGroupe">As-tu déjà participé à des actions non-violentes avec ANV-COP21, Alternatiba ou les Amis de la Terre ?</label>
+          <textarea form ="contactFormFormation" name="participationActionAvecGroupe"> </textarea>
+
+          <label for="autres"><a href="https://anv-cop21.org/criteres-non-violence-3/" target="_blank"> Connais-tu les critères de non-violence d’ANV-COP21 ? </a></label>
+          <div class="radio">
+            <label><input type="radio" name="connaissanceCritereNonViolence" required value="oui">Oui</label>
+          </div>
+          <div class="radio">
+            <label><input type="radio" name="connaissanceCritereNonViolence" value="non">Non</label>
+          </div>
+          <div class="radio disabled">
+            <label><input type="radio" name="connaissanceCritereNonViolence" value="plus tard">Je les lirai plus tard</label>
+          </div>
+
+          <!--  <label for="nonDisponible">Si tu n’es pas disponible dès 18h mais que tu souhaites participer, précise-nous à quelle heure tu serais disponible ? </label>
+           <textarea form ="contactFormFormation" name="nonDisponible"> </textarea>
+         <input id="horaireDebut"  name="horaireDebut"  type="time" class="form-control time start horaire"  value=""/>  jusqu'à  
+          <input id="horaireFin" name="horaireFin"  type="time" class="form-control date end datepicker horaire" value=""/>
+           -->
+
+          </br>
+          </br>
+          <label for="commentaire">As-tu des commentaires à nous faire ?</label>
+           <textarea form ="contactFormFormation" name="commentaire"> </textarea>
+           </br>
+
+
+           </br>
+          </br>
+         <div class="form-check">
+            <input type="checkbox" required class="form-check-input" name="rgpd"/>
+            <label class="form-check-label" for="rgpd">En m’inscrivant sur ce formulaire, je recevrai des informations sur la formation et sur les prochaines activités organisées par ANV-COP21. Je pourrai demander à tout moment de cesser de recevoir des informations via un lien de désinscription, et je pourrai demander l'accès et la suppression de mes données personnelles en écrivant à ANV-COP21, 20 rue des Cordeliers, 64100 Bayonne.</label>
+          </div>
+
+            <div>
+              </br>
+              <% if(utilisateur == undefined){ %>
+              </br>
+              En confirmant ton inscription, tu seras invité à créer ton compte utilisateur (si tu n’en as pas déjà créé un) ou à t'identifier.
+              </br>Tu recevras ensuite une confirmation de ton inscription par mail. Merci et à bientôt !
+              <% }else {%>
+              </br>
+              En confirmant ton inscription, tu recevras une confirmation de ton inscription par mail. Merci et à bientôt !
+              <%}%>
+            </div>
+          </div>
+
+
+          <div class="modal-footer">
+            <button type="button" class="btn btn-secondary" data-dismiss="modal">Annuler</button>
+            <button type="submit" class="btn btn-default couleurbg" id="ok">Confirmer l'inscription</button>
+          </div>
+        </div>
+      </div>
+  </form>	
+</div>

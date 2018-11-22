@@ -1,0 +1,30 @@
+<%
+	if (!(villagesOrganisateurs!== undefined && villagesOrganisateurs.length==0)){ %>
+<div id="villagesOrganisateurs" class="bordureGrise">
+ 
+Liste des marches auxquelles tu souhaites aider à l'organisation
+<p>
+      <table id="listeVillageOrganisateurs" class="tableau">
+	      <thead>
+	      <tr>
+	          <td>Nom</td>
+	          <td>Nombre bénévoles</td>
+	          <td>Accéder à la marche</td>
+	      </tr>
+	      </thead>
+	      <tbody>
+	          <%
+	          if (villagesOrganisateurs!== undefined){
+	          villagesOrganisateurs.forEach(function(village) { %>
+	        <tr id="<%= village._id %>">
+	          <td><%= village.nom %></td>
+	          <td><%= village._benevoles.length %></td>
+	          <td><a href="/village?villageId=<%= village._id %>"> <button>Entrer dans la marche</button></a></td>
+	        </tr>
+	          <% });
+	          }%>
+	      </tbody>
+	  </table>
+	 
+  </div>
+<% }%>

@@ -1,0 +1,29 @@
+.couleurVert{
+  color:#148755;
+}
+.couleurbg, .couleurAvecFond,.tableau>thead>tr>td {
+  background-color: #148755;
+  color: white;
+}
+.couleurbg:hover{
+  background-color: white;
+  color: #148755;
+}
+.couleurbginverse{
+	background-color: white;
+	color: #148755; 
+	border-color:#148755;;
+
+}
+.couleurbginverse:hover{
+	background-color: #148755;
+	color: white;
+	text-decoration:line-through;
+}
+.tableau >tbody>tr:focus, .tableau >tbody>tr:hover {
+    color: white;
+    background-color: #098048;
+}
+.tableau td, .tableau th{
+  border: none !important;
+}

@@ -1,0 +1,85 @@
+<link href="/stylesheets/nav.css" rel="stylesheet" type="text/css" media="all" />
+<link href="/stylesheets/commun.css" rel="stylesheet" type="text/css" media="all" />
+<link href="/stylesheets/navVillage.css" rel="stylesheet" type="text/css" media="all" />
+<%
+ function contientUtilisateur(listeUtilisateur){
+     
+      if(utilisateur != undefined  && listeUtilisateur!=null){
+        for (var i = 0, len = listeUtilisateur.length; i < len; i++) {
+       var utilisateurPresent=listeUtilisateur[i]
+          if(utilisateurPresent != undefined && utilisateurPresent._id.equals(utilisateur._id)){
+            return true;
+          }
+        }
+       }
+     return false;
+  }
+  %>
+ <% include ../partials/navCommon.ejs %>
+  <div class="container">
+  <nav class="navbar navbar-expand-lg navbar-light bg-light">
+    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+	    	<span class="navbar-toggler-icon"></span>
+	  </button>
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="nav navbar-nav mr-auto">
+        <li class="nav-item" id="accueil_Icone">
+          <a href="/"><span class="glyphicon glyphicon-globe"></span> Page d'accueil</a>
+        <li id="village_Icone" class="nav-item">
+          <a href="/village?villageId=<% if (typeof village !== "undefined" && village!=null) {%><%= village.id %><% }%>"><span class="glyphicon glyphicon-home"></span> <% if (typeof village !== "undefined" && village!=null) {%><%= village.nom %><% }%></a>
+    
+      <% if (typeof accesscontrol !== "undefined" && accesscontrol!=null && typeof utilisateur !== "undefined" && utilisateur!=null ) { 
+
+      
+          if ( utilisateur.role!=null &&  accesscontrol.can(utilisateur.role).updateAny('porteur').granted || contientUtilisateur(village._referents)){ %>
+             <li id="edition_Icone">
+                <a href="/editionVillage?villageId=<%= village.id %>"><span class="glyphicon glyphicon-pencil"></span> Edition marche</a>
+            </li>
+            <li id="porteur_Icone">
+              <a href="/porteur?villageId=<%= village.id %>"><span class="glyphicon glyphicon-pencil"></span> Edition porteurs</a>
+            </li>
+       <% } 
+          if ( utilisateur.role!=null &&  accesscontrol.can(utilisateur.role).updateAny('lieu').granted || contientUtilisateur(village._referents)){ %>
+          %>
+            <li class="nav-item" id="lieu_Icone">
+            <a href="/lieu?villageId=<%= village.id %>"><span class="glyphicon glyphicon-pencil"></span> Edition lieux</a>
+            </li>
+      <% } 
+          if ( utilisateur.role!=null &&  accesscontrol.can(utilisateur.role).updateAny('activite').granted || contientUtilisateur(village._referents)|| contientUtilisateur(village._porteurs)){ %>
+            <li  id="Activite_Icone">
+            <a href="/activite?villageId=<%= village.id %>"><span class="glyphicon glyphicon-pencil"></span> Edition activit&eacute; </a>
+            </li>
+        <% }
+          if ( utilisateur.role!=null &&  accesscontrol.can(utilisateur.role).updateAny('engagements').granted || contientUtilisateur(village._referents)){ %>
+          %>
+          <li class="nav-item" id="lieu_Icone">
+              <a href="/engagement?villageId=<%= village.id %>"><span class="glyphicon glyphicon-pencil"></span> Edition Engagements</a>
+          </li>
+          <% } %>
+          </ul>
+		   <ul class="nav navbar-nav navbar-right" >
+        <li class="nav-item dropdown" id="Profil_Icone">
+        <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+          <span class="glyphicon glyphicon-user"></span>Mon profil
+        </a>
+        <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
+          <a class="dropdown-item" href="/profil/mesEtapes">Mes marches/activités</a>
+          <a class="dropdown-item" href="/profil/referent">Espace référent</a>
+          <a class="dropdown-item" href="/authentification/logout">Se déconnecter</a>
+        </div>
+      </li>
+    </ul>
+      <% } else { %>
+     </ul>
+
+     <ul class="nav navbar-nav navbar-right" >
+        <li class="nav-item " id="Profil_Icone">
+          <a href="/profil/mesEtapes"><span class="glyphicon glyphicon-user"></span>Connexion</a>
+        </li>
+   </ul>
+         
+      <% } %>
+        
+      
+  </nav>
+</div>

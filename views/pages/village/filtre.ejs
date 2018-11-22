@@ -1,0 +1,50 @@
+<div class="afficher-cacher-filtre"> <span class="ouvrir ">Afficher filtre</span> <span class="fermer hide">Cacher Filtre</span></div>
+
+<form method="post" action="/recherche"  id="filtre" style="display:none">
+    Recherche
+  </p>
+   <% if (typeof village !== "undefined" && village!=null) {%>
+    <input type="hidden" id="rechercheVillage" name="villageId" value="<%= village._id %>"/>
+  <% }%>
+  
+  <label for="rechercheNomPorteur">Nom du porteur recherche</label>
+  <input type="text" id="rechercheNomPorteur" name="rechercheNomPorteur" value=""/>
+  </p>
+ <!-- <label for="rechercheNomPorteur">Nom du lieu recherche</label>
+  <input type="text" id="rechercheNomLieu" name="rechercheNomLieu" value=""/>
+  </p>
+-->
+  <label for="rechercheNomActivite">Nom de l'activite recherche</label>
+  <input type="text" id="rechercheNomActivite"  name="rechercheNomActivite" value=""/>
+  </p>
+  <label for="rechercheElementDescriptionActivite">Element de description de l'activite recherche</label>
+  <input type="text" id="rechercheElementDescriptionActivite"  name="rechercheElementDescriptionActivite" value=""/>
+  </p>
+  <label for="amount-time">Plage horaire du filtre</label>
+  <input type="text" name="amount-time" id="amount-time" style="border: 0; color: #666666; font-weight: bold;" value="10:00 - 20:00"/>
+  <input type="label" name="dateMin" id="dateMin" />
+  <input type="label" name="dateMax" id="dateMax"/>
+  <div id="slider-time"></div><br>
+  </p>
+    <fieldset class="liste">
+                <legend>Type Activite</legend>
+                <% Activite.schema.path('typeActivite').enumValues.forEach(function(typeActivite) {
+                %>
+                 <input type="checkbox" name="typeActivite[]" value="<%=typeActivite%>" id="<%=typeActivite%>"/><label for="<%=typeActivite%>"><%=typeActivite%> </label>
+                <%
+                }); %>
+
+        </fieldset>
+    </p>
+    <fieldset class="liste">
+        <legend>Quartier du village</legend>
+        <% Porteur.schema.path('quartier').enumValues.forEach(function(quartier) {
+        %>
+        <input type="checkbox" name="quartierPorteur[]" value="<%=quartier%>" id="<%=quartier%>"/><label for="<%=quartier%>"><%=quartier%> </label>
+        <%
+        }); %>
+
+    </fieldset>
+  <input type="submit" id="bouton" value="Filtrer"/>
+</form>
+</p>

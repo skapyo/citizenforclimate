@@ -1,0 +1,47 @@
+<link href="/stylesheets/nav.css" rel="stylesheet" type="text/css" media="all" />
+<link href="/stylesheets/commun.css" rel="stylesheet" type="text/css" media="all" />
+<% include ../partials/navCommon.ejs %>
+  <div class="container">
+  <nav class="navbar navbar-expand-lg navbar-light bg-light">
+  	<button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+	    	<span class="navbar-toggler-icon"></span>
+	  </button>
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+   		
+      <ul class="nav navbar-nav mr-auto">
+        <li class="nav-item" id="accueil_Icone">
+          <a href="/"><span class="glyphicon glyphicon-globe"></span> Page d'accueil</a>
+        </li>
+
+     <% if (typeof accesscontrol !== "undefined" && accesscontrol!=null && typeof utilisateur !== "undefined" && utilisateur!=null ) { 
+      if ( utilisateur.role!=null &&  accesscontrol.can(utilisateur.role).updateAny('village').granted){ %>
+         
+      <li lass="nav-item" id="village_Icone">
+            <a href="/editionVillage"><span class="glyphicon glyphicon-home"></span> Création / Edition de marche</a>
+          </li> 
+
+     <% } %>
+     </ul>
+     <ul class="nav navbar-nav navbar-right" >
+        <li class="nav-item dropdown" id="Profil_Icone">
+        <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+          <span class="glyphicon glyphicon-user"></span>Mon profil
+        </a>
+        <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
+          <a class="dropdown-item" href="/profil/mesEtapes">Mes préférences</a>
+          <a class="dropdown-item" href="/profil/referent">Espace Référent</a>
+          <a class="dropdown-item" href="/authentification/logout">Se déconnecter</a>
+        </div>
+      </li>
+	  </ul>
+      <% } else { %>
+     </ul>
+
+     <ul class="nav navbar-nav navbar-right" >
+        <li class="nav-item " id="Profil_Icone">
+          <a href="/profil/mesEtapes"><span class="glyphicon glyphicon-user"></span>Connexion</a>
+        </li>
+	</ul>
+         <% } %>
+  </nav>
+</div>

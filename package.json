@@ -1,0 +1,58 @@
+{
+  "name": "citizenforclimate",
+  "version": "1.0.0",
+  "description": "An app for event for citizenforclimate",
+  "engines": {
+    "node": "6.11.1"
+  },
+  "main": "index.js",
+  "scripts": {
+    "start": "node index.js"
+  },
+  "dependencies": {
+    "cool-ascii-faces": "1.3.4",
+    "ejs": "2.5.6",
+    "express": "4.15.2",
+    "mongodb": "*",
+    "body-parser": "*",
+    "mongoose": "*",
+    "jquery": "*",
+    "bootstrap-material-datetimepicker": "*",
+    "moment": "*",
+    "datatables.net": "*",
+    "browserify": "*",
+    "jsonld-request": "*",
+    "node-cache": "*",
+    "bcrypt": "*",
+    "express-session": "*",
+    "connect-mongo": "*",
+    "accesscontrol": "*",
+    "passport": "*",
+    "passport-local": "*",
+    "connect-flash": "*",
+    "he": "*",
+    "multer": "*",
+    "multer-gridfs-storage": "*",
+    "gridfs-stream": "*",
+    "universal-analytics":"*",
+    "bootstrap-select":"*",
+    "nodemailer":"*",
+    "nodemailer-express-handlebars":"*",
+    "jwt-simple":"*",
+    "mongoose-cache":"*"
+    
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/skapyo/citizenforclimate"
+  },
+  "keywords": [
+    "node",
+    "heroku",
+    "express"
+  ],
+  "license": "MIT",
+  "devDependencies": {
+    "nodemon": "^1.14.11"
+  }
+}

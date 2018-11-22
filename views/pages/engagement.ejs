@@ -1,0 +1,187 @@
+
+<!DOCTYPE html>
+<html>
+
+<head>
+  <% include ../partials/header.ejs %>
+  <link href="/stylesheets/engagement.css" rel="stylesheet" type="text/css" media="all" />
+</head>
+<body>
+
+  <% include ../partials/navVillage.ejs %>
+
+
+<div class="container">
+
+	
+		<p>Cette page permet la gestion des engagements. C'est grâce à ces engagements que l'on va changer d'echelle</br>
+	</p>
+	
+	<p>
+		<input type="button" class="btn btn-default couleurbg largeurAuto" id="nouveauEngagement" value="Nouveau engagement"/>
+	<form method="post" action="/ajoutEngagement" id="ajoutEngagement" <%if(!(typeof engagementAModifier  !== undefined && engagementAModifier!=null)){ %> class="hide" <% } %>>
+		   	<input type="text" style="display:none" name ="villageId" id="villageId" value="<% if(typeof village  !== undefined && village!=null){ %><%= village._id %><% } %>" />
+		   <input type="text" style="display:none" name ="id" id="id" value="<% if(typeof engagementAModifier  !== undefined && engagementAModifier!=null){ %><%= engagementAModifier._id %><% } %>" />
+		<label for="nom">Nom de l'engagement :</label>
+		<input type="text" name="nom" required id="nom" value="<% if(typeof engagementAModifier  !== undefined && engagementAModifier!=null){ %><%= engagementAModifier.nom %><% } %>"/>
+	</p>
+		<label for="description">Description de l'engagement :</label>
+			<textarea form ="ajoutEngagement" rows="4" cols="50" name="description" id="description"><% if(typeof engagementAModifier  !== undefined && engagementAModifier!=null){ %><%= engagementAModifier.description %><% } %></textarea>
+			</p>
+		</p>
+		<label>Sélectionner le porteur référent (Pour sélectionner plusieurs porteurs garder la touche controle enfoncée et selectionner les porteurs)</label>
+		<select id="idPorteur"  multiple name="idPorteur">
+		<option value=""></option>
+
+		<% if (porteurs!=null) {
+		porteurs.forEach(function(porteur) { %>
+			<option value="<%= porteur._id %>"  <% if(typeof engagementAModifier  !== undefined && engagementAModifier!=null && engagementAModifier._porteurs.length!=0){
+				engagementAModifier._porteurs.forEach(function(porteurEngagement){
+					if(porteurEngagement!=undefined && porteurEngagement._id.equals(porteur._id)){
+						%> selected="selected" <%
+					}
+				});
+			  } %>><%= porteur.nom %></option>
+		<% }); }%>
+		</select>
+		</p>
+
+		<label>Sélectionner le type de l'engagement</label>
+		<select id="typeEngagement" name="typeEngagement">
+		
+			 <% Engagement.schema.path('typeEngagement').enumValues.forEach(function(typeEngagement) {
+                %>
+                <option value="<%=typeEngagement%>" "<% if(typeof engagementAModifier  !== undefined && engagementAModifier!=null && engagementAModifier.typeEngagement==typeEngagement){  %> selected="selected" <% } %>><%=typeEngagement%></option>
+                <%
+                }); %>
+		</select>
+		</br>
+		<div  id="lienVelorution"  <%  if(!(typeof engagementAModifier  !== undefined && engagementAModifier!=null &&  engagementAModifier.typeEngagement.localeCompare("V&eacute;lorution")==1)){ %> class="hide" <% } %>>
+			<label for="lienVelorution"> Lien Open Runner </label>
+			<input type="text" name="lienVelorution" value="<% if(typeof engagementAModifier  !== undefined && engagementAModifier!=null){ %><%= engagementAModifier.lienVelorution %><% } %>" >
+			</br>
+		</div>
+
+		<p>
+			<input type="submit" id="bouton" value="<% if(typeof engagementAModifier  !== undefined && engagementAModifier!=null){ %> Modifier l'engagement <% }else{ %>Ajouter l'engagement<%} %>"/>
+		</p>
+	</form>
+
+	<div class="modifier-engagement" >Cliquez sur une engagement existante pour la modifier</div>
+	<table id="listeEngagement">
+		<thead>
+			<td class="couleurAvecFond">Nom</td>
+			<td class="couleurAvecFond">Type</td>
+			<td class="couleurAvecFond">Porteur</td>
+			<td class="couleurAvecFond">Supression</td>
+		</thead>
+		<tbody>
+        <% if (engagements!=null) {
+		engagements.forEach(function(engagement) { %>
+		<tr id="<%= engagement._id %>" data-village="<%= village._id %>" description-"<%= engagement._id %>" >
+			<td ><%= engagement.nom %></td>
+			<td ><%= engagement.typeEngagement %></td>
+			<td> <% if (engagement._porteurs!=null){
+		        engagement._porteurs.forEach(function(porteur) {
+		        	if(porteur!== undefined && porteur!=null){
+		          %>
+		         <%= porteur.nom %>
+		          <%}
+		          });
+		          }
+		          %>
+		    </td>
+      		<td class="supression center"> 
+			      		<!-- Button trigger modal -->
+			<button type="button" class="btn btn-primary" data-toggle="modal" data-target="#popinSupression">
+			 <span class="glyphicon glyphicon-trash"> </span>
+			</button>
+
+      			
+      		</td> 
+		</tr>
+        <% }); }%>
+		</tbody>
+	</table>
+	<p>
+ <% include engagement/popinSupression.ejs %>
+
+	
+</body>
+  <% include ../partials/footer.ejs %>
+</html>
+<script>
+$(".supression").click(function(event) {
+	    $("#engagementId").val($( this ).parent().attr('id'));
+	    });
+
+$("#supprimer").click(function(event) {
+	    var idEngagement =$("#engagementId" ).val();
+	    var villageId=$("#villageId" ).val();
+		var url="/suppressionEngagement?engagementId="+idEngagement;
+		if(villageId !=null){
+			url=url+"&villageId="+villageId
+		}
+	    window.location.href = url;
+	    });
+
+	$("#nouveauEngagement").click(function(event) {
+	      $("#id").val("");
+		  $("#nom").val("");
+		  $("#description").val("");
+	      $("#placeMaximum").val("");
+		  $("#adresse").val("");
+		  $("#idPorteur").val("");
+		  $("#bouton").val("Ajouter une nouveau engagement");
+		  $("#ajoutEngagement").removeClass("hide");
+	    });
+		
+	$(".navbar-nav li").removeClass("active");
+	$("#Engagement_Icone").addClass("active");
+	  <%if((typeof engagementAModifier  !== undefined && engagementAModifier!=null)){ %>
+      $('html, body').animate({
+                        scrollTop: $("#ajoutEngagement").offset().top
+                    }, 1000);
+		<% } %>  
+	
+	
+	$("#listeEngagement tbody tr td:not(.supression)").click(function(event) {
+	    var idEngagement =$( this ).parent().attr('id');
+	    var villageId=$( this ).parent().attr('data-village');
+		var url="/engagement?engagementId="+idEngagement;
+		if(villageId !=null){
+			url=url+"&villageId="+villageId
+		}
+	    window.location.href = url;
+	});
+
+$("#listeEngagement tbody tr td .supression").click(function(event) {
+	    var idEngagement =$( this ).parent().attr('id');
+	    var villageId=$( this ).parent().attr('data-village');
+		var url="/supressionEngagement?engagementId="+idEngagement;
+		if(villageId !=null){
+			url=url+"&villageId="+villageId
+		}
+	    window.location.href = url;
+	});
+
+
+    $('#listeEngagement').DataTable( {
+        responsive: true,
+        "language": {
+                "url": "//cdn.datatables.net/plug-ins/1.10.16/i18n/French.json"
+            },
+        'iDisplayLength': 10
+    } );
+	$("#typeEngagement").change(function(event) {
+	    if($( this ).val().localeCompare("V&eacute;lorution")==1){
+	    	$("#lienVelorution").removeClass("hide");
+	    }else{
+		    $("#lienVelorution").addClass("hide");
+		    $("input[name='lienVelorution']").val("");
+		    
+	    }
+
+	});
+    
+</script>

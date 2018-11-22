@@ -1,0 +1,59 @@
+<!--                   Section participant           -->  
+  <% if (typeof accesscontrol !== "undefined" && accesscontrol!=null && typeof utilisateur !== "undefined" && utilisateur!=null ) { 
+  		 if ( utilisateur.role!=null &&  accesscontrol.can(utilisateur.role).readAny('participant').granted || contientUtilisateur(village._referents)){ %>
+  %>
+    Nombre de participants : <%= village._participants.length %> 
+
+  <div class="afficher-cacher-filtre"> <span class="ouvrirParticipant">Afficher la liste des participants à la marche</span> <span class="fermerParticipant hide">Cacher la liste la liste des participants à la marche</span></div>
+ <p>
+ <div id="participant" style="display:none">
+ Liste des participants : 
+      <table id="listeParticipants">
+	      <thead>
+	      <tr>
+	          <td>Nom</td>
+	          <td>Prénom</td>
+	          <td>Email</td>
+	          <td>Date cr&eacute;ation</td>
+	      </tr>
+	      </thead>
+	      <tbody>
+	          <%
+	          village._participants.forEach(function(participant) { 
+              if(participant!=null){%>
+	        <tr id="<%= participant._id %>">
+	          <td><%= participant.nom %></td>
+	          <td><%= participant.prenom %></td>
+	          <td><%= participant.adresseMail %></td>
+	          <td><% if(typeof participant.createdAt !== "undefined" && participant.createdAt!=null){%>  <%= moment.utc(participant.createdAt).locale("fr").format('DD/MM/YY HH:mm') %><% } %></td>
+	        </tr>
+	          <% }});%>
+	      </tbody>
+	  </table>
+  </div>
+     <% } 
+     }
+     %>
+<script>
+ 
+$('.ouvrirParticipant').on('click',function(){
+    $('#participant').slideDown();
+    $('.ouvrirParticipant').addClass("hide");
+    $('.fermerParticipant').removeClass("hide");
+});
+$('.fermerParticipant').on('click',function(){
+    $('#participant').slideUp();
+    $('.ouvrirParticipant').removeClass("hide");
+    $('.fermerParticipant').addClass("hide");
+});
+
+$.fn.dataTable.moment('DD/MM/YY HH:mm');   
+$('#listeParticipants').DataTable( {
+    responsive: true,
+    "language": {
+                "url": "//cdn.datatables.net/plug-ins/1.10.16/i18n/French.json"
+            },
+       "order": [[ 3, "asc" ]]
+} );
+
+</script>

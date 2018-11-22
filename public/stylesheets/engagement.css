@@ -1,0 +1,74 @@
+#carte {
+	height: 400px;
+	width: 100%;
+}
+form {
+   	border: 1px solid #ccc;
+   	padding: 10px;
+}
+
+button, input, select, textarea {
+	width: 100%;
+}
+label{
+	width: 100%;
+}
+.horaire{
+	  width: 24.4%;
+}
+table{
+  		width: 100%;
+   }
+   .modifier-activite {
+    margin-top: 20px;
+    margin-bottom: 10px;
+    text-decoration: underline;
+    font-weight: bold;
+ }
+#listeActivite tr {
+     	 cursor: pointer;
+  	}
+#listeActivite tr {
+  	 cursor: pointer;
+}
+#listeActivite >tbody>tr:focus, #listeActivite >tbody>tr:hover {
+    color: white;
+    background-color: #098048;
+}
+#listeActivite td, #listeActivite th{
+  border: none !important;
+}
+#listeActivite_length select,#listeActivite_length button, #listeActivite_length label, #listeActivite_filter label,#listeActivite_filter input{
+  width:inherit;
+  font-weight:inherit;
+}
+#listeActivite_wrapper {
+  padding-top: 1%;
+}
+#listeActivite>tbody>tr:focus, #listeActivite>tbody>tr:hover {
+    color: white;
+    background-color: #148755;
+}
+
+.supression:hover {
+    background-color: white;
+}
+.modal.fade .modal-dialog {
+  -webkit-transform: inherit;
+  transform: inherit;
+  }
+
+  .btn-primary {
+    color: #fff;
+    background-color: #fbd15f;
+    border-color: #fbd15f;
+}
+
+  .btn-primary:hover {
+    color: #fff;
+    background-color: #148755;
+    border-color: #148755;
+}
+.close{
+  width:inherit;
+}

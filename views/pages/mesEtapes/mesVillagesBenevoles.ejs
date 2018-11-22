@@ -1,0 +1,27 @@
+ <% if (!(villagesBenevoles!== undefined && villagesBenevoles.length==0)){ %>
+<div id="villagesBenevoles" class="bordureGrise">
+Liste des marches pour lesquelles dont tu es bénévole pour le jour J
+<p>
+      <table id="listeVillageBenevoles" class="tableau">
+	      <thead>
+	      <tr>
+	          <td>Nom</td>
+	          <td>Nombre bénévoles</td>
+	          <td>Accéder à la marche</td>
+	      </tr>
+	      </thead>
+	      <tbody>
+	          <%
+	          if (villagesBenevoles!== undefined){
+	          villagesBenevoles.forEach(function(village) { %>
+	        <tr id="<%= village._id %>">
+	          <td><%= village.nom %></td>
+	          <td><%= village._benevoles.length %></td>
+	          <td><a href="/village?villageId=<%= village._id %>"> <button>Entrer dans la marche</button></a></td>
+	        </tr>
+	          <% });
+	          }%>
+	      </tbody>
+	  </table>
+  </div>
+<% }%>

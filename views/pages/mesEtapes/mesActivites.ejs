@@ -1,0 +1,49 @@
+<div id="activites" class="bordureGrise">
+ <%
+	if (activites!== undefined && activites.length==0){ %>
+Tu ne participe encore 	&agrave; aucune activit&eacute;
+	<% } else { %>
+Liste des activit&eacute;s auxquelles tu souhaites participer
+<p>
+      <table id="listeActiviteeParticipant" class="tableau">
+	      <thead>
+	      <tr>
+	          <td>Nom</td>
+	         <!-- <td>Materiel Necessaire</td> -->
+	          <td>Lieu</td>
+	          <td>Etape</td>
+	      </tr>
+	      </thead>
+	      <tbody>
+	          <%
+	          if (activites!== undefined){
+	          activites.forEach(function(activite) { %>
+	        <tr id="<%= activite._id %>">
+	          <td><%= activite.nom %></td>
+	        <!--  <td><%= activite.materielNecessaire %></td> -->
+	          <td><% if (activite._lieux!=null){
+		            activite._lieux.forEach(function(lieu) {
+		              %>
+		              <%= lieu.nom %>
+		              <%
+		              }); }
+		             %>
+		         </td>
+		        <td>
+		        <% if (villagesContenantActivite!=null){
+		        	villagesContenantActivite.forEach(function(village) {
+			            village._activites.forEach(function(activitevillage) {
+			            if(activitevillage!=null && activitevillage.equals(activite._id)){
+			              %>
+			              <a href="/village?villageId=<%= village._id %>&activiteId=<%=activitevillage%>"> <button><%= village.nom %></button></a>
+			              <%
+		          }  });   }); }
+		             %>
+		          </td>    
+		       <%  }) };
+			%>
+	      </tbody>
+	  </table>
+	</p>
+	  <% }%>
+  </div>

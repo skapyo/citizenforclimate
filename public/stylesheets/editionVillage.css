@@ -1,0 +1,100 @@
+#carte {
+	height: 400px;
+	width: 100%;
+}
+form {
+   	border: 1px solid #ccc;
+   	padding: 10px;
+}
+
+button, input, select, textarea {
+	width: 100%;
+}
+label{
+	width: 100%;
+}
+.horaire{
+	  width: 24.4%;
+}
+table{
+  		width: 100%;
+   }
+   .modifier-village {
+    margin-top: 20px;
+    margin-bottom: 10px;
+    text-decoration: underline;
+    font-weight: bold;
+ }
+#listeActivite tr {
+     	 cursor: pointer;
+  	}
+
+  	#listeLieuxPossible, #listeLieuxVillage {
+   border: 1px solid #eee;
+   width: 142px;
+   min-height: 20px;
+   list-style-type: none;
+   margin: 0;
+   padding: 5px 0 0 0;
+   float: left;
+   margin-right: 10px;
+ }
+ #lieuDispo {
+   float: left;
+  }
+ #listeLieuxPossible li, #listeLieuxVillage li,#listePorteursPossible li, #listePorteursVillage li  {
+   margin: 0 5px 5px 5px;
+   padding: 5px;
+   font-size: 1.2em;
+   width: 120px;
+ }
+ #pac-input {
+      background-color: #fff;
+      font-family: Roboto;
+      font-size: 15px;
+      font-weight: 300;
+      margin-left: 12px;
+      padding: 0 11px 0 13px;
+      text-overflow: ellipsis;
+      width: 300px;
+    }
+#pac-input:focus {
+  border-color: #4d90fe;
+}
+
+.pac-container {
+  font-family: Roboto;
+}
+#listeVillage>tbody>tr:focus, #listeVillage>tbody>tr:hover {
+    color: white;
+    background-color: #098048;
+}
+#listeVillage td, #listeVillage th{
+  border: none !important;
+}
+#listeVillage_length select,#listeVillage_length button, #listeVillage_length label, #listeVillage_filter label,#listeVillage_filter input{
+  width:inherit;
+  font-weight:inherit;
+}
+#listeVillage_wrapper {
+  padding-top: 1%;
+}
+#listeVillage>tbody>tr:focus, #listeVillage>tbody>tr:hover {
+    color: white;
+    background-color: #148755;
+}
+.form-check-input{
+	width:inherit;
+	margin-left: -1.25rem!important;
+}
+.form-check-label{
+    margin-left: 1%;
+    font-weight:inherit
+}
+#imagePourcentage{
+	width:5%;
+}
+.bordure{
+  border: 1px solid #ccc;
+  padding: 1% 1% 1% 1%;
+}

@@ -1,0 +1,26 @@
+
+<!-- popin -->
+<div class="modal fade" id="popinContactBenevole" tabindex="-1" role="dialog" aria-labelledby="popinLabel" aria-hidden="true">
+  <form method="post" action="/ajoutBenevole" id="contactFormBenevole">
+    <input type="text" style="display:none" name ="villageId" id="villageId" value="<% if(typeof village  !== undefined && village!=null){ %><%= village._id %><% } %>" />
+
+      <div class="modal-dialog" role="document">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title" id="popinLabel">Devenir bénévole</h5> 
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+              <span aria-hidden="true">&times;</span>
+            </button>
+          </div>
+          <div class="modal-body">
+           Vous pouvez ajouter un message aux référents de la marche :
+           <textarea form ="contactFormBenevole" name="contactMessage"> </textarea>
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-secondary" data-dismiss="modal">Annuler</button>
+            <button type="submit" class="btn btn-default couleurbg" id="ok">Devenir bénévole pour aider le jour J</button>
+          </div>
+        </div>
+      </div>
+  </form>	
+</div>

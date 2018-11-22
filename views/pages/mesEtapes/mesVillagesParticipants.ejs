@@ -1,0 +1,28 @@
+<div id="villagesParticipants" class="bordureGrise">
+ <%
+	if (villagesParticipants!== undefined && villagesParticipants.length==0){ %>
+Tu ne participes encore &agrave; aucune marche
+	<% } else { %>
+Liste des marches auxquelles tu souhaites participer
+<p>
+      <table id="listeVillageParticipant" class="tableau">
+	      <thead>
+	      <tr>
+	          <td>Nom</td>
+	          <td>Accéder à la marche</td>
+	      </tr>
+	      </thead>
+	      <tbody>
+	          <%
+	          if (villagesParticipants!== undefined){
+	          villagesParticipants.forEach(function(village) { %>
+	        <tr id="<%= village._id %>">
+	          <td><%= village.nom %></td>
+	          <td><a href="/village?villageId=<%= village._id %>"> <button>Entrer dans la marche</button></a></td>
+	        </tr>
+	          <% });
+	          }%>
+	      </tbody>
+	  </table>
+	  <% }%>
+  </div>

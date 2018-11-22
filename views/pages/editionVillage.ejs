@@ -1,0 +1,351 @@
+ <% include ../utils/dateUtils.ejs %>
+<%
+ function contientUtilisateur(listeUtilisateur){
+     
+      if(utilisateur != undefined  && listeUtilisateur!=null){
+        for (var i = 0, len = listeUtilisateur.length; i < len; i++) {
+       var utilisateurPresent=listeUtilisateur[i]
+          if(utilisateurPresent != undefined && utilisateurPresent._id.equals(utilisateur._id)){
+            return true;
+          }
+        }
+       }
+     return false;
+  }
+  %>
+  
+<!DOCTYPE html>
+<html>
+<head>
+  <% include ../partials/header.ejs %>
+   <link href="/stylesheets/editionVillage.css" rel="stylesheet" type="text/css" media="all" />
+</head>
+<body>
+ <% if (typeof accesscontrol !== "undefined" && accesscontrol!=null && typeof utilisateur !== "undefined" && utilisateur!=null ) { 
+      if ( utilisateur.role!=null &&  accesscontrol.can(utilisateur.role).updateAny('village').granted){ 
+      var isAdmin=true;
+  }} %>
+  	
+<% if(isAdmin!=null && isAdmin){ %>
+  	<% include ../partials/nav.ejs %>
+  <% }else{ %>
+  <% include ../partials/navVillage.ejs %>
+  <% } %>
+<div class="container">
+
+<br/>
+	<form method="post" action="/ajoutVillage" id="ajoutVillage" enctype="multipart/form-data">
+    <script type="text/javascript" src="http://js.nicedit.com/nicEdit-latest.js"></script> <script type="text/javascript">
+//<![CDATA[
+        bkLib.onDomLoaded(function() { new nicEditor({buttonList : ['fontSize','fontFamily','forecolor','bold','italic','underline','strikeThrough','left','center','right','ol','ul','indent','outdent','link']}).panelInstance('article'); });
+  //]]>
+    </script>
+
+		    <!-- Info pour le post -->
+		    <input type="text" style="display:none" name ="id" id="id" value="<% if(typeof villageAModifier  !== undefined && villageAModifier!=null){ %><%= villageAModifier._id %><% } %>" />
+		   	<input type="text" style="display:none" name ="latitude" id="latitude" value="<% if(typeof villageAModifier  !== undefined && villageAModifier!=null){ %><%= villageAModifier.coordonnees.latitude %><% } %>"/>
+			<input type="text" style="display:none" name ="longitude" id="longitude" value="<% if(typeof villageAModifier  !== undefined && villageAModifier!=null){ %><%= villageAModifier.coordonnees.longitude %><% } %>" />
+			<input type="text" style="display:none" name ="niveauZoom" id="niveauZoom" value="<% if(typeof villageAModifier  !== undefined && villageAModifier!=null){ %><%= villageAModifier.zoom %><% } %>" />
+
+       </p>
+			<!-- Donnees du formulaire -->
+		 <label  for="nom">Ville de la marche :</label>
+     	 <input type="text" name="nom" id="nom"  required value="<% if(typeof villageAModifier  !== undefined && villageAModifier!=null){ %><%= villageAModifier.nom %><% } %>"/>
+			 <p>
+                 <label  for="facebookUrl">Url Facebook :</label>
+                 <input type="text" name="facebookUrl" id="facebookUrl"  value="<% if(typeof villageAModifier  !== undefined && villageAModifier!=null){ %><%= villageAModifier.facebookUrl %><% } %>"/>
+        <p>
+	<div class="form-check">
+		<input type="checkbox" class="form-check-input" name="estPreTour" <% if(typeof villageAModifier  !== undefined && villageAModifier!=null && (villageAModifier.estPreTour=!null  && villageAModifier.estPreTour)){ %>checked<% } %>/>
+		<label class="form-check-label" for="estPreTour">Cette étape fait partie du tour de chauffe (du 3 au 8 juin)</label>
+	</div>
+	<div class="form-check">
+		<input type="checkbox" class="form-check-input" name="estTourEtendu" <% if(typeof villageAModifier  !== undefined && villageAModifier!=null && (villageAModifier.estTourEtendu=!null  && villageAModifier.estTourEtendu)){ %>checked<% } %>/>
+		<label class="form-check-label" for="estTourEtendu">Cette étape fait partie d'un tour étendu</label>
+	</div>
+        <div class="form-check">
+            <input type="checkbox" class="form-check-input" name="estMarche" <% if(typeof villageAModifier  !== undefined && villageAModifier!=null && (villageAModifier.estMarche=!null  && villageAModifier.estMarche)){ %>checked<% } %>/>
+            <label class="form-check-label" for="estMarche">Marche</label>
+        </div>
+
+        <div class="bordure">
+      <div class="form-check">
+			<input type="checkbox" name="afficherHoraire" class="form-check-input" <% if(typeof villageAModifier  !== undefined && villageAModifier!=null && (villageAModifier.afficherHoraire!=null  && villageAModifier.afficherHoraire)){ %>checked<% } %>/>
+			<label class="form-check-label" for="afficherHoraire">Activer l'affichage des horaires (par défaut, l'horaire affiché est "<%
+    if (typeof villageAModifier  !== undefined && villageAModifier!=null && villageAModifier._horairesOuvertures!=null){
+  villageAModifier._horairesOuvertures.forEach(function(horairesOuverture) {
+  if (!(villageAModifier.afficherHoraires!=null && villageAModifier.afficherHoraire)){
+              %>
+           <%- libelleHoraire(horairesOuverture,false)%><% }})} %>")</label>
+      </div>
+      Sélectionner les dates et horaires de la marche si vous affichez les horaires (attention, il faut que la date de la marche corresponde toujours au jour pendant lequel les cyclistes seront présents)
+
+      <div id="mapLabel"> <strong>Sélectionner les dates et horaires de la marche si vous affichez les horaires  </strong></div>
+        <input id="dateDebut" name="dateDebut" type="date" class="date start datepicker horaire"  value="<%  if(typeof villageAModifier  !== undefined && villageAModifier!=null && villageAModifier._horairesOuvertures != undefined && typeof villageAModifier._horairesOuvertures[0]  !== undefined && villageAModifier._horairesOuvertures[0]!=null ){ %><%= moment.utc(villageAModifier._horairesOuvertures[0].dateDebut).format('YYYY-MM-DD') %><% }else{ %>2018-12-08<%}%>"/>
+        <input id="horaireDebut"  name="horaireDebut" type="time" class="time start horaire"  value="<%  if(typeof villageAModifier  !== undefined && villageAModifier!=null && villageAModifier._horairesOuvertures != undefined && typeof villageAModifier._horairesOuvertures[0]  !== undefined && villageAModifier._horairesOuvertures[0]!=null){ %><%= moment.utc(villageAModifier._horairesOuvertures[0].dateDebut).format('HH:mm') %><% }else{ %>14:00<%}%>"/> à
+        <input id="dateFin" name="dateFin" type="date" class="time end horaire" value="<%  if(typeof villageAModifier  !== undefined && villageAModifier!=null && villageAModifier._horairesOuvertures != undefined && typeof villageAModifier._horairesOuvertures[0]  !== undefined && villageAModifier._horairesOuvertures[0]!=null){ %><%= moment.utc(villageAModifier._horairesOuvertures[0].dateFin).format('YYYY-MM-DD') %><% }else{ %>2018-12-08<%}%>"/>
+        <input id="horaireFin" name="horaireFin" type="time" class="date end datepicker horaire"value="<%  if(typeof villageAModifier  !== undefined && villageAModifier!=null && typeof villageAModifier._horairesOuvertures[0]  !== undefined && villageAModifier._horairesOuvertures[0]!=null){ %><%= moment.utc(villageAModifier._horairesOuvertures[0].dateFin).format('HH:mm') %><% }else{ %>18:00<%}%>"/>
+      </p>
+    </div>
+			<label for="emailContact">Adresses email de contact : </label>
+      Séparer chaque adresse email par une virgule (exemple : alternatiba@alternatiba.eu, anv-cop21@anv-cop21.org)
+			<input type="text" form ="ajoutVillage" name="emailContact" id="emailContact" value="<% if(typeof villageAModifier  !== undefined && villageAModifier!=null){ %><%= villageAModifier.emailContact %><% } %>"/>
+			</br>
+      </p>
+     	<label for="description">Description succinte pour la page d'accueil (Max 120 caractères ne contenant pas de  guillemet "") :</label>
+			<input type="text" form ="ajoutVillage" name="description" id="description" value="<% if(typeof villageAModifier  !== undefined && villageAModifier!=null){ %><%= villageAModifier.description %><% } else {%> <%}%>%> "/>
+			</br>
+      </p>
+
+       <div><strong>Sélectionnez l’image &agrave; afficher.</strong> Attention l'image s’affiche sur la page étape à la taille affichée sur cette page</div>   
+        <input type="file" name="image"> 
+         <label class="form-check-label" for="nom">Taille de l'image :  <input type="number" name="imagePourcentage" id="imagePourcentage" value="<% if(typeof villageAModifier  !== undefined && villageAModifier!=null && villageAModifier.imagePourcentage !=null){ %><%= villageAModifier.imagePourcentage %><% }else{ %>50<% } %>"> pourcent de la largeur de la page </label>
+        <!--
+        <img  id="imageAffichee" <% if(typeof villageAModifier  !== undefined && villageAModifier!=null && villageAModifier.imagePourcentage !=null){ %>width="<%= villageAModifier.imagePourcentage %>%"<% } %> >
+       
+       
+
+      <label for="nombrePersonnesAttendues">Nombre de personnnes attendues :</label>
+      <input type="number" name="nombrePersonnesAttendues" id="nombrePersonnesAttendues" value="<% if(typeof villageAModifier  !== undefined && villageAModifier!=null){ %><%= villageAModifier.nombrePersonnesAttendues %><% } %>"/>
+      </p>
+      -->
+ 
+      <label for="description">Article de présentation de la marche:</label>
+      <textarea form ="ajoutVillage" rows="4" cols="50" name="article" id="article"><% if(typeof villageAModifier  !== undefined && villageAModifier!=null){ %><%= villageAModifier.article %><% } %></textarea>
+
+      
+     
+	
+		</p>
+	 <div class="form-check">
+		<input type="checkbox" class="form-check-input" name="inscriptionOrganisateur" <% if(typeof villageAModifier  !== undefined && villageAModifier!=null && (villageAModifier.inscriptionOrganisateur=!null  && villageAModifier.inscriptionOrganisateur)){ %>checked<% } %>/>
+		<label class="form-check-label" for="inscriptionOrganisateur">Activer le bouton d'inscription "Je souhaite aider à l'organisation de la marche" (Les personnes inscrites sur cette liste souhaitent être bénévole pour organisées la marche)</label>
+	</div>
+	<div class="form-check">
+		<input type="checkbox" class="form-check-input" name="inscriptionBenevole" <% if(typeof villageAModifier  !== undefined && villageAModifier!=null && (villageAModifier.inscriptionBenevole=!null  && villageAModifier.inscriptionBenevole)){ %>checked<% } %>/>
+		<label class="form-check-label" for="inscriptionBenevole">Activer le bouton d'inscription "Je souhaite aider le jour J" (Les personnes inscrites sur cette liste souhaitent être bénévole le jour de la marche)</label>
+	</div>
+        <label for="lienFormulaireBenevole">Url du formulaire spécifique pour les bénévoles : (Optionnel)</label>
+        <input type="text" form="ajoutVillage" name="lienFormulaireBenevole" id="lienFormulaireBenevole"
+               value="<% if(typeof villageAModifier !== undefined && villageAModifier != null){ %><%= villageAModifier.lienFormulaireBenevole %><% } %>"/>
+        </br>
+	<div class="form-check">
+		<input type="checkbox" class="form-check-input" name="inscriptionVisiteur" <% if(typeof villageAModifier  !== undefined && villageAModifier!=null && (villageAModifier.inscriptionVisiteur=!null  && villageAModifier.inscriptionVisiteur)){ %>checked<% } %>/>
+		<label class="form-check-label" for="inscriptionVisiteur">Activer le bouton "Je suis intéréssé par la marche "(Personne souhaitant recevoir l'actualité de l'étape) et le bouton "Je participerai à la marche" (personne souhaitant être présent le jour de la marche) </label>
+	</div>
+	
+
+		<label> Cliquez sur la carte pour indiquer le centre de la marche et définissez le niveau de zoom pour l'affichage de la carte de la marche</label>
+		<input id="pac-input" class="controls" type="text" placeholder="Rechercher le lieu de la marche">
+		<div id="carte"></div>
+		</p>
+		 
+  <div class="form-check">
+    <input type="checkbox" class="form-check-input" name="publication" <% if(typeof villageAModifier  !== undefined && villageAModifier!=null && (villageAModifier.publication=!null  && villageAModifier.publication)){ %>checked<% } %>/>
+    <label class="form-check-label" for="publication">Publier la marche (Attention : si cette case n'est pas cochée, les visiteurs ne pourront pas accéder à votre marche depuis la page d'accueil)</label>
+  </div>
+
+    <div class="form-check">
+        <input type="checkbox" class="form-check-input" name="horsFetesDesPossible" <% if(typeof villageAModifier  !== undefined && villageAModifier!=null && (villageAModifier.horsFetesDesPossible=!null  && villageAModifier.horsFetesDesPossible)){ %>checked<% } %>/>
+        <label class="form-check-label" for="horsFetesDesPossible">Hors Fêtes des Possibles</label>
+    </div>
+ <% if (typeof accesscontrol !== "undefined" && accesscontrol!=null && typeof utilisateur !== "undefined" && utilisateur!=null ) { 
+      if ( utilisateur.role!=null &&  accesscontrol.can(utilisateur.role).updateAny('village').granted){ %>
+    <div class="form-check">
+      <input type="checkbox" class="form-check-input" name="horsTour" <% if(typeof villageAModifier  !== undefined && villageAModifier!=null && (villageAModifier.horsTour=!null  && villageAModifier.horsTour)){ %>checked<% } %>/>
+      <label class="form-check-label" for="horsTour">Village non affiché sur la carte</label>
+    </div>
+
+      <% } 
+    }%>     
+		<input type="submit" id="bouton" class="btn btn-default couleurbg largeurAuto" value="<% if(typeof villageAModifier  !== undefined && villageAModifier!=null){ %> Enregistrer les modifications <% }else{ %>Ajouter la marche <%} %>"/>
+	   </p>
+	</form>
+
+     <% if (typeof accesscontrol !== "undefined" && accesscontrol!=null && typeof utilisateur !== "undefined" && utilisateur!=null ) { 
+      if ( utilisateur.role!=null &&  accesscontrol.can(utilisateur.role).updateAny('village').granted){ %>
+
+	<div class="modifier-village" >Cliquez sur une marche existante pour la modifier</div>
+	<table id="listeVillage">
+		<thead>
+			<td>Nom</td><td class="cacherMobile">Description</td><td>Horaires</td>
+		</thead>
+		<tbody>
+        <% if (villages!=null) {
+		villages.forEach(function(village) { %>
+		<tr id="<%= village._id %>" description-"<%= village._id %>">
+			<td ><%= village.nom %></td>
+			<td class="cacherMobile"><%= village.description %></td> 
+			<td> <% if (village._horairesOuvertures!=null){
+		        village._horairesOuvertures.forEach(function(horaire) {
+		          %>
+		         <%= moment.utc(horaire.dateDebut).format('YYYY-MM-DD HH:mm') %> a <%= moment.utc(horaire.dateFin).format('YYYY-MM-DD HH:mm') %>
+		          <%
+		          });
+		          }
+		          %>
+		    </td>
+		</tr>
+        <% }); }%>
+		</tbody>
+	</table>
+  <% }}%>
+
+</div>
+
+
+</body>
+
+  <% include ../partials/footer.ejs %>
+
+</html>
+<script>
+$("#bouton").click(function(event) {
+$("#article").val(new nicEditors.findEditor('article').getContent());
+});
+
+<% if( typeof villageAModifier  !== undefined && villageAModifier!=null && villageAModifier.image!=null && villageAModifier.image){ %>
+  <!-- $("#imageAffichee").attr('src','/recupererImage/<%= villageAModifier.id%>'); -->
+  <% } %>
+
+  
+	$("#listeVillage tbody").click(function(event) {
+      var target = event.target;
+      var parent = target.parentElement
+	  var porteurId=parent.id;
+        window.location.href = "/editionVillage?villageId="+porteurId;
+    });
+	
+	$(".navbar-nav li").removeClass("active");
+	$("#edition_Icone").addClass("active");
+
+    $('#listeVillage').DataTable( {
+        responsive: true,
+        "language": {
+                "url": "//cdn.datatables.net/plug-ins/1.10.16/i18n/French.json"
+            },
+        'iDisplayLength': 100,
+          "order": [[ 2, "asc" ]]
+    } );
+
+    function initMap() {
+        var marker;
+        var coordonneesVillage = {lat: 46.52863469527167, lng:2.43896484375}; //Centre de la frace
+        var zoom=5;
+        <% if(typeof villageAModifier  !== undefined && villageAModifier!=null){ %>
+    
+   		<%  if( villageAModifier.niveauZoom!=null){ %>
+   		zoom=<%= villageAModifier.niveauZoom%>
+   		console.log("helleo"+"<%=villageAModifier.niveauZoom%>");
+   		<% } else {%>
+   		    zoom=14;
+   		<%}}
+   		 if(typeof villageAModifier  !== undefined && villageAModifier!=null && villageAModifier.coordonnees!=null && villageAModifier.coordonnees.latitude!=null){ %>
+   		coordonneesVillage = {lat:<%= villageAModifier.coordonnees.latitude %>, lng: <%= villageAModifier.coordonnees.longitude %>};
+   		<% }%>
+
+        var map = new google.maps.Map(document.getElementById('carte'), {
+            zoom: zoom,
+            center: coordonneesVillage
+        });
+         // Create the search box and link it to the UI element.
+        var input = document.getElementById('pac-input');
+        var searchBox = new google.maps.places.SearchBox(input);
+        map.controls[google.maps.ControlPosition.TOP_LEFT].push(input);
+
+        // Bias the SearchBox results towards current map's viewport.
+        map.addListener('bounds_changed', function() {
+          searchBox.setBounds(map.getBounds());
+        });
+
+           var markers = [];
+        // Listen for the event fired when the user selects a prediction and retrieve
+        // more details for that place.
+        searchBox.addListener('places_changed', function() {
+          var places = searchBox.getPlaces();
+
+          if (places.length == 0) {
+            return;
+          }
+
+
+          // For each place, get the icon, name and location.
+          var bounds = new google.maps.LatLngBounds();
+          places.forEach(function(place) {
+            if (!place.geometry) {
+              console.log("Returned place contains no geometry");
+              return;
+            }
+            placeMarker(place.geometry.location);
+            $("#latitude").val(place.geometry.location.lat());
+            $("#longitude").val(place.geometry.location.lng());
+            if (place.geometry.viewport) {
+              // Only geocodes have viewport.
+              bounds.union(place.geometry.viewport);
+            } else {
+              bounds.extend(place.geometry.location);
+            }
+          });
+          map.fitBounds(bounds);
+          $("#niveauZoom").val(map.getZoom());
+        });
+      
+
+
+        google.maps.event.addListener(map, 'click', function(event) { // On place le marker et on stocke la longitude et latitude
+            placeMarker(event.latLng);
+            $("#latitude").val(event.latLng.lat());
+            $("#longitude").val(event.latLng.lng());
+        });
+
+        google.maps.event.addListener(map, 'zoom_changed', function() {
+		    $("#niveauZoom").val(map.getZoom());
+		});
+
+        function placeMarker(location) {
+            if(marker){ //on vÃ©rifie si le marqueur existe
+                marker.setPosition(location); //on change sa position
+            }else{
+                marker = new google.maps.Marker({ //on crÃ©Ã© le marqueur
+                    position: location,
+                    map: map
+                });
+            }
+        }
+
+		<% if(typeof villageAModifier  !== undefined && villageAModifier!=null && villageAModifier.coordonnees!=null){ %>
+			var position ={lat: Number(<%= villageAModifier.coordonnees.latitude %>), lng: Number(<%= villageAModifier.coordonnees.longitude %>)};
+			placeMarker(position);
+		<% } %>
+
+    }
+    /** Pour les lieux **/
+    $( "#listeLieuxPossible, #listeLieuxVillage" ).sortable({
+      connectWith: ".connectedSortable"
+    }).disableSelection();
+	$( "#listePorteursPossible, #listePorteursVillage" ).sortable({
+	  connectWith: ".connectedSortable"
+	}).disableSelection();
+	  
+
+    $('#ajoutVillage').on('submit', function(e){
+        e.preventDefault();
+        $("#listeLieuxVillage li").each(function(index) {
+        	
+        	var input = $("<input>").attr("type", "hidden").attr("name", "lieu").val($( this ).attr("data-id"));
+        	console.log(input);
+        	$('#ajoutVillage').append($(input));
+        });	
+       this.submit();
+    });
+
+    $("#description").on('keypress', function(event){
+            $("#description").val($("#description").val().replace("\"",""));
+        });
+        $("#description").on('change', function(event){
+            $("#description").val($("#description").val().replace("\"",""));
+        });
+</script>
+<script async defer
+		src="https://maps.googleapis.com/maps/api/js?key=googleMapsApiToReplacelanguage=fr&region=FR&callback=initMap&libraries=places">
+</script>

@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<kml xmlns="http://www.opengis.net/kml/2.2">
+<Document>
+ <% 
+
+ 	if (typeof villages !== "undefined" && villages!=null) {
+		villages.forEach(function(village) { 
+%>
+<Placemark>
+  <name><%= village.nom %></name>
+  <Point>
+    <coordinates><%= village.coordonnees.latitude %>,<%= village.coordonnees.longitude %></coordinates>
+  </Point>
+</Placemark>
+<%
+	});
+	}
+%>
+</Document>
+</kml>

@@ -1,0 +1,486 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <% include ../partials/header.ejs %>
+<link href="/stylesheets/village.css" rel="stylesheet" type="text/css" media="all" />
+
+</head>
+
+<body onload="InitialiserCarte();">
+
+  <% include ../partials/navVillage.ejs %>
+
+
+<div class="container">
+<div class="center-block">
+  <div class="row ">
+    <div class="col-xs-6 center-block " style="float:none"><span class="align-middle"><h1 class="text-center couleurVert">
+		Bienvenue à la marche de
+		  <% if (typeof village !== "undefined" && village!=null) {%>
+		    <%= village.nom %>
+		  <% }%><span class="align-middle"></h1>
+ 	 </div>
+ </div></br>
+ <div class="row afficher-cacher-filtre ">
+   <% include ../utils/dateUtils.ejs %>
+  <%
+  
+    if (village._horairesOuvertures!=null){
+  village._horairesOuvertures.forEach(function(horairesOuverture) {
+  if (!(village.afficherHoraires!=null && village.afficherHoraire)){
+              %>
+           <div class="col-sm center-block"/>
+             <%- libelleHoraire(horairesOuverture,village.afficherHoraire)%>
+            </div>
+ <% }else {
+	  %><div class="col-sm center-block"/>
+	        Début : <%= moment.utc(horairesOuverture.dateDebut).locale("fr").format('Do MMMM YYYY, HH:mm') %>
+	    </div>
+	    <div class="col-sm center-block"/>
+	      Fin : <%= moment.utc(horairesOuverture.dateFin).locale("fr").format('Do MMMM YYYY, HH:mm')%>
+	    </div><%
+	}
+    });
+   }
+  %>
+ </div>
+</div>
+
+
+  <p>
+<% if( false && village.image!=null && village.image){ %>
+	<div class="text-center">
+   		<img  id="imageEtape" <% if(typeof village  !== undefined && village!=null && village.imagePourcentage !=null){ %>width="<%= village.imagePourcentage %>%"<% } %>  class="image img-rounded" src="/recupererImage/<%= village.id%>">
+   </div>
+  <% } %>
+
+<br>
+
+<% if(village.article!=null ){ %>
+   <div id="article"><%- village.article%></div>
+  <% } %>
+
+</p>
+  <%
+  var nbEngagementDejaFait =0
+  var nbEngagementPris =0
+  var nbEngagementRealise =0
+  village._engagements.forEach(function(engagement) {
+      if(engagement._informationParticipantEngagement!= undefined) {
+          engagement._informationParticipantEngagement.forEach(function (informationParticipantEngagement) {
+              if (informationParticipantEngagement.statutEngagement == "Déja fait") {
+                  nbEngagementDejaFait += 1;
+              }
+              if (informationParticipantEngagement.statutEngagement == "Je m'engage") {
+                  nbEngagementPris += 1;
+              }
+              if (informationParticipantEngagement.statutEngagement == "Fait") {
+                  nbEngagementRealise += 1;
+              }
+
+          });
+      }
+  });
+  %>
+  <div class ="center">
+      Il faut aussi agir, si nous sommes des milliers à changer, ça change tout.</br>
+      Déjà <b><%- nbEngagementDejaFait %></b> défis réalisés et <b><%- nbEngagementPris %></b> engagement pris pour <% if (typeof village !== "undefined" && village!=null) {%><%= village.nom %><% }%>.  </br>
+      <a href ="https://onestpret.fr/" target="blank" >On est prêt</a>. A vous d'agir :
+      </br>
+      </br>
+      <button type="button"  id="agirbutton" data-villageid="<%= village._id %>" class="btn btn-default couleurbg agir center agirwidth" data-toggle="modal" data-target="#popinEngagement">J'agis</button>
+  </div>
+  </br>
+ </br>
+ <%   function contientUtilisateur(listeUtilisateur){
+     
+      if(utilisateur != undefined  && listeUtilisateur!=null){
+        for (var i = 0, len = listeUtilisateur.length; i < len; i++) {
+       var utilisateurPresent=listeUtilisateur[i]
+          if(utilisateurPresent != undefined && utilisateurPresent._id.equals(utilisateur._id)){
+            return true;
+          }
+        }
+       }
+     return false;
+  }
+  %>
+  <% if (village._horairesOuvertures!=null && !(village.horsFetesDesPossible!= undefined && village.horsFetesDesPossible)){
+  if(moment.utc(village._horairesOuvertures[0].dateDebut.getTime()).isAfter(moment("2018-10-30"))){ %>
+
+  <% include ./village/inscriptionVillage.ejs %>
+<% }
+else{ %>
+<button type="button"  data-villageid="<%= village._id %>" class="btn btn-default couleurbg contact" data-toggle="modal" data-target="#popinContact">Contacter le collectif</button>
+<%}
+} %>
+
+  <% include ./village/sectionReferent.ejs %>
+
+ <% include ./village/sectionParticipant.ejs %>
+
+ <% include ./village/sectionInteresse.ejs %>
+
+  <% include ./village/sectionOrganisateur.ejs %>
+
+<% include ./village/sectionBenevole.ejs %>
+
+<% if (activites.length!=0 ) {
+  %>
+
+
+</p>
+<% if (activites.length > 15 && false) { %>
+	<% include ./village/filtre.ejs %>
+<% } }%> 
+<div id="carte"></div>
+
+<% if (activites.length==0 ) {
+  %>
+  </br>
+  La marche est en cours de construction.
+  </br>
+
+<% } %>
+  </br> 
+
+
+
+<% if (activites.length!==0 ) {
+%>
+</p>  
+<% include ./village/infoActivite.ejs %>
+
+</p>
+
+<% include ./village/listeActivite.ejs %>
+
+<% }
+%>
+<% include ./accueil/popinContact.ejs %>
+  <% include ./village/popinEngagement.ejs %>
+
+
+  </br>
+
+  <button type="button"  data-villageid="<%= village._id %>" class="btn btn-default couleurbg contact" data-toggle="modal" data-target="#popinContact">Contacter le collectif</button>
+<%
+
+if (village._horairesOuvertures!=null && !(village.horsFetesDesPossible!= undefined && village.horsFetesDesPossible)){
+    if(moment.utc(village._horairesOuvertures[0].dateDebut.getTime()).isAfter(moment("2018-09-06")) && moment.utc(village._horairesOuvertures[0].dateDebut.getTime()).isBefore(moment("2018-10-06")) ){ %>
+  <div class="center">
+  </br>
+          <a id="feteDesPossible" href="https://fete-des-possibles.org/" target='_blank'> Cette étape est inscrite à la Fête des Possibles, partenaire du tour Alternatiba</a></div>
+  </div>
+<% }
+}
+%>
+</body>
+
+  <% include ../partials/footer.ejs %>
+
+</html>
+<script>
+
+
+$("#contactVillageId").val("<%= village._id %>");
+
+$('.ouvrir').on('click',function(){
+    $('#filtre').slideDown();
+    $('.ouvrir').addClass("hide");
+    $('.fermer').removeClass("hide");
+});
+$('.fermer').on('click',function(){
+    $('#filtre').slideUp();
+    $('.ouvrir').removeClass("hide");
+    $('.fermer').addClass("hide");
+});
+
+
+
+
+  
+  
+var dt_from = "2017/09/30 08:00";
+var dt_to = "2017/10/01 20:00";
+
+$('#dateMin').val(dt_from);
+$('#dateMax').val(dt_to);
+var min_val = Date.parse(dt_from)/1000;
+var max_val = Date.parse(dt_to)/1000;
+
+function zeroPad(num, places) {
+  var zero = places - num.toString().length + 1;
+  return Array(+(zero > 0 && zero)).join("0") + num;
+}
+function formatDT(__dt) {
+    var year = __dt.getFullYear();
+    var month = zeroPad(__dt.getMonth()+1, 2);
+    var date = zeroPad(__dt.getDate(), 2);
+    var hours = zeroPad(__dt.getHours(), 2);
+    var minutes = zeroPad(__dt.getMinutes(), 2);
+    return year + '-' + month + '-' + date + ' ' + hours + ':' + minutes;
+};
+  $('#slider-time').slider({
+    range: true,
+    min: min_val,
+    max: max_val,
+    step: 10,
+    values: [min_val, max_val],
+    slide: function (e, ui) {
+        var dt_cur_from = new Date(ui.values[0]*1000); //.format("yyyy-mm-dd hh:ii");
+        $('#dateMin').val(formatDT(dt_cur_from));
+
+        var dt_cur_to = new Date(ui.values[1]*1000); //.format("yyyy-mm-dd hh:ii");                
+        $('#dateMax').val(formatDT(dt_cur_to));
+    }
+});
+
+
+        
+  $(".navbar-nav li").removeClass("active");
+  $("#village_Icone").addClass("active");
+  
+    function modifierChampActivite(idHtml,valeur){
+      if(valeur!=null && valeur!=""){
+        $("#"+idHtml).parent().removeClass("hide");
+        $("#"+idHtml).html(valeur);
+      }
+      else{
+          $("#"+idHtml).parent().addClass("hide");
+      }
+        
+       
+    }
+
+      function afficherInfo(activiteid) {
+            var activites =<%- JSON.stringify(activites).replace(/&quot;/g,'\\"').replace(/'/g, "&apos;") %>;
+            activites.forEach(function(activite) {
+                if(activite._id==activiteid){
+                    $("#infoActivite").removeClass("hide");
+                    modifierChampActivite("nomActivite",activite.nom);
+                    modifierChampActivite("descriptionActivite",activite.description);
+                    modifierChampActivite("typeActivite",activite.typeActivite);
+                    if(activite.typeActivite=="Formation"){
+                      $("#ajoutParticipantActivite").attr("data-toggle","modal");
+                      $("#ajoutParticipantActivite").attr("data-target","#popinFormation");
+                       $("#ajoutParticipantActivite").addClass("affichePopin");
+                      $("#ajoutParticipantActivite").html("Je m'inscris à la formation");
+
+                       $("#activiteIdPopin").val(activite._id);
+                    }
+                    else{
+                        $("#ajoutParticipantActivite").removeAttr("data-toggle");
+                      $("#ajoutParticipantActivite").removeAttr("data-target");
+                       $("#ajoutParticipantActivite").removeClass("affichePopin");
+                       $("#ajoutParticipantActivite").html("Je souhaite participer à l'activité");
+                    }
+
+                    if(activite.lienVelorution!=undefined && activite.lienVelorution!=""){
+                    	modifierChampActivite("lienVelorution","<a href='"+activite.lienVelorution+"'' target='_blank'>lien de la v&eacute;lorution</a>");
+                    }else{
+                    	 modifierChampActivite("lienVelorution","");
+                    }
+
+                      modifierChampActivite("nomPorteur0","");
+                      modifierChampActivite("descriptionPorteur0","");
+                      modifierChampActivite("siteWebPorteur0","");
+                      modifierChampActivite("adresseMailPorteur0","");
+
+                     modifierChampActivite("nomPorteur1","");
+                      modifierChampActivite("descriptionPorteur1","");
+                      modifierChampActivite("siteWebPorteur1","");
+                      modifierChampActivite("adresseMailPorteur1","");
+                      modifierChampActivite("nomPorteur2","");
+                      modifierChampActivite("descriptionPorteur2","");
+                      modifierChampActivite("siteWebPorteur2","");
+                      modifierChampActivite("adresseMailPorteur2","");
+
+
+                    activite._porteurs.forEach(function(porteur,index){
+                      if(porteur!=null){ 
+                          modifierChampActivite("nomPorteur"+index,porteur.nom);
+                          modifierChampActivite("descriptionPorteur"+index,porteur.description);
+                          if(porteur.siteWeb!=undefined && porteur.siteWeb!=""){
+                      		 modifierChampActivite("siteWebPorteur"+index,"<a href='"+porteur.siteWeb+"'' target='_blank'>"+porteur.siteWeb+"</a>");
+                    		 }
+                           modifierChampActivite("adresseMailPorteur"+index,porteur.adresseMail);
+                       }
+                    });
+
+                    if(activite._lieux!=undefined && activite._lieux[0]!=null) {
+                      modifierChampActivite("lieuActivite",activite._lieux[0].nom);
+                      modifierChampActivite("adresseActivite",activite._lieux[0].adresse);
+                    }
+                    else {
+                      modifierChampActivite("lieuActivite","");
+                      modifierChampActivite("adresseActivite","");
+                    }
+                    modifierChampActivite("activiteId",activite._id);
+                      
+                       modifierChampActivite("nbParticipant","");
+                      // on n'affiche pas le nombre de participant pour les visiteurs
+                      <%  
+                      if (typeof accesscontrol !== "undefined" && accesscontrol!=null && typeof utilisateur !== "undefined" && utilisateur!=null ) { 
+    						if ( utilisateur.role!=null &&  accesscontrol.can(utilisateur.role).readAny('referent').granted){ %>
+    				        modifierChampActivite("nbParticipant",activite._participants.length);
+    				<% }}%>
+                    
+                    modifierChampActivite("quartier","");
+                    modifierChampActivite("materielActivite",activite.materielNecessaire);
+                     modifierChampActivite("nbPlaceActivite","");
+                    $("#suppressionParticipantActivite").addClass("hidden")
+                     $("#ajoutParticipantActivite").addClass("hidden")
+
+                    if(activite.inscription!= undefined && activite.inscription){
+                       $("#suppressionParticipantActivite").addClass("hidden")
+                       $("#ajoutParticipantActivite").removeClass("hidden");
+                     <%  if(utilisateur != undefined){ %>
+                    activite._participants.forEach(function(participant) {
+
+                        if(participant=="<%=utilisateur._id%>"){
+                            $("#suppressionParticipantActivite").removeClass("hidden")
+                            $("#ajoutParticipantActivite").addClass("hidden");
+                        }
+                    }); 
+                     <% }%>
+                     }
+                 
+                    var horaire ="";
+                     activite.disponibilites.forEach(function(disponibilite) {
+                    horaire += "Le "+moment.utc(disponibilite.dateDebut).locale("fr").format('Do MMMM')+ " de "+moment.utc(disponibilite.dateDebut).locale("fr").format('HH:mm')+" à "+moment.utc(disponibilite.dateFin).locale("fr").format('HH:mm');
+                 });
+    
+                    $("#horaireActivite").html(horaire);
+
+
+                    $('#filtre').slideUp();
+                    $('.ouvrir').removeClass("hide");
+                    $('.fermer').addClass("hide");
+
+                   $('html, body').animate({
+                        scrollTop: $("#infoActivite").offset().top
+                    }, 1000);
+
+                }
+            });
+        }
+        
+    function InitialiserCarte() {
+      
+      var markerListe=[];
+     var zoom=14;
+      <% if( village.niveauZoom!=null){ %>
+      zoom=<%= village.niveauZoom%>;
+      <% }%>
+      var map = L.map('carte').setView([<%= village.coordonnees.latitude %>,<%= village.coordonnees.longitude %>], zoom);
+      map.scrollWheelZoom.disable();
+    	map.on('focus', () => { map.scrollWheelZoom.enable(); });
+    	map.on('blur', () => { map.scrollWheelZoom.disable(); });
+
+        var URL1   = "https://www.openrunner.com/r/8779030";
+    // URL of the GPX data
+    var URL2   = "https://www.openrunner.com/route/"
+      + URL1.split("/").pop()
+      + "/gpx?type=0";
+
+
+    	L.tileLayer('https://{s}.tile.openstreetmap.fr/osmfr/{z}/{x}/{y}.png', {
+    		    attribution: '&copy; <a href="https://osm.org/copyright">OpenStreetMap</a>  <a href="https://alternatiba.eu/">Alternatiba</a> contributors'
+    		}).addTo(map);
+
+      // LOAD GPX FILE -------------------------------------
+    
+    // L.GPX reads text format, not parsed XML
+/*
+        track = new L.GPX(URL2, {
+          async: true,
+          opacity: 0.6,
+          weight:  3.5,crossDomain : true
+        }).on('loaded', function(e){
+          e.target.addTo(map);
+          map.fitBounds(e.target.getBounds());
+        });
+*/
+ 
+
+
+      var icon = L.icon({
+            iconUrl: '/images/marker.png',
+            iconAnchor:   [4, 27], // point of the icon which will correspond to marker's location
+            popupAnchor:  [13, -25] 
+        });
+
+     <%
+
+      lieux.forEach(function(lieu) {
+
+         if(lieu.coordonnees!=null && lieu.coordonnees.latitude!=null){
+         %>
+         var marker<%=village._id%>=L.marker([<%=lieu.coordonnees.latitude %>, <%=lieu.coordonnees.longitude %>],{icon: icon}).addTo(map);
+         
+             var contenu<%=village._id%> ="Lieu :  <%=lieu.nom %><br/><br/><table class='activites popup tableau' id='activite_lieuid<%=lieu.id%>'><thead><tr><td>Activit&eacute;</td><td>Horaire</td></tr></thead><% 
+                activiteParlieux[lieu._id].forEach(function(activite) { %><tr onclick=\"afficherInfo('<%= activite._id %>');\"><td><%= activite.nom %></td><td><% 
+              if (activite.disponibilites!=null){
+                activite.disponibilites.forEach(function(disponibilite) {
+              %><%= moment.utc(disponibilite.dateDebut).format('DD/MM HH:mm') %> à <%= moment.utc(disponibilite.dateFin).format('HH:mm') %></td><%
+                });
+               }
+              %></tr><%}); %>";
+              
+            marker<%=village._id%>.bindPopup(contenu<%=village._id%>,{maxHeight : 200});
+
+    <%
+         }
+      });
+       
+    %>
+
+        $('.activites tbody,.activite').on('click',function(event){
+            var target = event.target;
+            var parent = target.parentElement
+
+            var activiteid=parent.id;
+            afficherInfo(activiteid);
+        });
+
+    }
+
+
+
+
+  <% if (typeof village !== "undefined" && village!=null) {%>
+    $("#ajoutParticipantActivite").click(function(event) {
+      if(!$(event.target).hasClass("affichePopin")){
+          var activiteid=$("#activiteId");
+            window.location.href = "/ajoutParticipantActivite?villageId=<%= village._id %>&activiteId="+activiteid.html();
+        }
+        });
+       $("#suppressionParticipantActivite").click(function(event) {
+      var activiteid=$("#activiteId");
+        window.location.href = "/suppressionParticipantActivite?villageId=<%= village._id %>&activiteId="+activiteid.html();
+    });
+  <% }%>
+  
+  (function() {
+    <%
+ if (typeof activiteId !== "undefined" && activiteId!=null) {  
+    %>
+     afficherInfo("<%= activiteId%>");
+ <%
+ }
+ if (typeof afficherEngagement !== "undefined" && afficherEngagement!=null) {
+ %>
+ $('html, body').animate({
+     scrollTop: $("#agirbutton").offset().top
+ }, 1000);
+      $("#agirbutton").trigger("click")
+<%
+}
+ %>
+
+})();
+  
+
+</script>

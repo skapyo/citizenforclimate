@@ -1,0 +1,48 @@
+#carte {
+	height: 400px;
+	width: 100%;
+}
+form {
+   	border: 1px solid #ccc;
+   	padding: 10px;
+}
+
+button, input, select, textarea {
+	width: 100%;
+}
+label{
+	width: 100%;
+}
+.horaire{
+	   width: 23.4%;
+}
+table{
+		width: 100%;
+ }
+.modifier-lieu {
+  margin-top: 20px;
+  margin-bottom: 10px;
+  text-decoration: underline;
+  font-weight: bold;
+}
+#listeLieu tr {
+  	 cursor: pointer;
+}
+#listeLieu >tbody>tr:focus, #listeLieu >tbody>tr:hover {
+    color: white;
+    background-color: #098048;
+}
+#listeLieu td, #listeLieu th{
+  border: none !important;
+}
+#listeLieu_length select,#listeLieu_length button, #listeLieu_length label, #listeLieu_filter label,#listeLieu_filter input{
+  width:inherit;
+  font-weight:inherit;
+}
+#listeLieu_wrapper {
+  padding-top: 1%;
+}
+#listeLieu>tbody>tr:focus, #listeLieu>tbody>tr:hover {
+    color: white;
+    background-color: #148755;
+}

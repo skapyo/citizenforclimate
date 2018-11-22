@@ -1,0 +1,230 @@
+
+
+<ul class="nav nav-tabs nav-justified">
+    <li class="active tab"><a data-toggle="tab" href="#toutesEtapes">Les marches pour le climat</a></li>
+    <li class="tab formation"><a data-toggle="tab" href="#menu1">Climate Friday</a></li>
+</ul>
+<div class="tab-content">
+    <div id="toutesEtapes" class="tab-pane fade in active">
+        <table id="listeVillage"  class="tableau">
+
+            <thead>
+            <td class="couleurAvecFond hide">Ville</td>
+            <td class="couleurAvecFond">Ville du collectif</td>
+            <td class="cacherMobile couleurAvecFond" >Description</td>
+            <td class="couleurAvecFond hide ">Début</td>
+            <td class="couleurAvecFond hide ">Fin</td>
+            <td class="couleurAvecFond"></td>
+            <td class="couleurAvecFond"></td>
+
+            </thead>
+            <tbody>
+            <% include ../../utils/dateUtils.ejs %>
+            <%
+            if (typeof villages !== "undefined" && villages!=null) {
+                var villageTour;
+
+            villages.forEach(function(village) {
+            if((village.estMarche!= undefined && village.estMarche)){%>
+            <tr id="<%= village._id %>" description-"<%= village._id %>" class="<% if(!(village.publication!=null && village.publication)){ %>nonCliquable<% }%>">
+            <td class="hide" ><%= village.nom %></td>
+            <td><%
+                    var libelleIcone="marker";
+                    if(village.estTourEtendu!= undefined && village.estTourEtendu){
+                        libelleIcone+="_etendu";
+                    }
+                %>
+                <img  id="imageVelo" src="/images/<%=libelleIcone%>.png">
+                <%= village.nom %></td>
+            <td  class="cacherMobile"><% if (village.description!=null){ %> <%= village.description.substr(0,150) %> <%}%> </td>
+            <td class='date hide'> <% if (village._horairesOuvertures!=null){
+                village._horairesOuvertures.forEach(function(horaire) {
+                %>
+                <%= moment.utc(horaire.dateDebut).format('DD/MM/YYYY, HH:mm')%>
+                <%
+                });
+                }
+                %>
+            </td>
+            <td class='date hide '><% if (village._horairesOuvertures!=null){
+                village._horairesOuvertures.forEach(function(horaire) {
+                %>
+                <%= moment.utc(horaire.dateFin).format('DD/MM/YYYY, HH:mm')%>
+                <%
+                });
+                }
+                %>
+            </td>
+            <td>
+                <a  class="btn btn-default couleurbg" style="color: white!important " onmouseover="this.style.background=color='#148755'" role="button" href="<%=village.facebookUrl%>" target="'_blank" >Lien Facebook</a>
+            </td>
+            <td>
+                <% if(!(village.publication!=null && village.publication)){
+                %>
+                <button type="button"  data-villageid="<%= village._id %>" class="btn btn-default couleurbg contact" data-toggle="modal" data-target="#popinContact">Contacter le collectif</button>
+                <%
+                } else {
+                %>
+                <button class="btn btn-default couleurbg">En savoir plus</button>
+                <%
+                }
+                %>
+            </td>
+            </tr>
+            <% }
+            }); }%>
+            </tbody>
+        </table>
+    </div>
+    <div id="menu1" class="tab-pane fade">
+        <table id="listeClimateFriday" class="tableau">
+
+            <thead>
+            <td class="couleurAvecFond hide">Ville de la marche</td>
+            <td class="couleurAvecFond">Ville du collectif</td>
+            <td class="couleurAvecFond hide ">Début</td>
+            <td class="couleurAvecFond hide ">Fin</td>
+            <td class="couleurAvecFond"></td>
+
+            </thead>
+            <tbody>
+            <% include ../../utils/dateUtils.ejs %>
+            <%
+            if (typeof villages !== "undefined" && villages!=null) {
+
+            villages.forEach(function(village) {
+            if((village.estClimateFriday!= undefined && village.estClimateFriday)){ %>
+            <tr id="<%= village._id %>" description-"<%= village._id %>" class="<% if(!(village.publication!=null && village.publication)){ %>nonCliquable<% }%>">
+            <td class="hide" ><%= village.nom %></td>
+            <td><%
+                    var libelleIcone="marker";
+                        libelleIcone+="_etendu";
+
+                %>
+                <img  id="imageVelo" src="/images/<%=libelleIcone%>.png">
+                <%= village.nom %></td>
+            <td class='date hide'> <% if (village._horairesOuvertures!=null){
+                village._horairesOuvertures.forEach(function(horaire) {
+                %>
+                <%= moment.utc(horaire.dateDebut).format('DD/MM/YYYY, HH:mm')%>
+                <%
+                });
+                }
+                %>
+            </td>
+            <td class='date hide '><% if (village._horairesOuvertures!=null){
+                village._horairesOuvertures.forEach(function(horaire) {
+                %>
+                <%= moment.utc(horaire.dateFin).format('DD/MM/YYYY, HH:mm')%>
+                <%
+                });
+                }
+                %>
+            </td>
+            <td class='date'> <% if (village._horairesOuvertures!=null){
+                village._horairesOuvertures.forEach(function(horaire) {
+                %>
+                <%- libelleHoraire(horaire,village.afficherHoraire)%>
+                <%
+                });
+                }
+                %>
+            </td>
+            <td>
+                <button class="btn btn-default couleurbg">En savoir plus</button>
+            </td>
+            </tr>
+            <% }
+            }); }%>
+            </tbody>
+        </table>
+    </div>
+    <div id="menu2" class="tab-pane fade">
+        <h3>Menu 2</h3>
+        <p>Some content in menu 2.</p>
+    </div>
+</div>
+
+
+  <script>
+
+  $("#listeVillage tbody tr:not(.nonCliquable)").click(function(event) {
+            var target = event.target;
+            if(target.parentElement.localName=="td"){
+               var parent = target.parentElement.parentElement;
+            }
+            else{
+              var parent = target.parentElement
+          }
+          var villageId=parent.id;
+            window.location.href = "/village?villageId="+villageId;
+        });
+  $("#listeClimateFriday tbody tr").click(function(event) {
+      var target = event.target;
+      if(target.parentElement.localName=="td"){
+          var parent = target.parentElement.parentElement;
+      }
+      else{
+          var parent = target.parentElement
+      }
+      var villageId=parent.id;
+      window.location.href = "/village?villageId="+villageId;
+  });
+   $(".contact").click(function(event) {
+      $("#contactVillageId").val($(event.target).data('villageid'));
+    });
+   $.fn.dataTable.moment('DD/MM/YYYY, HH:mm');
+
+  jQuery.fn.dataTable.Api.register( 'page.jumpToData()', function ( data, column ) {
+      var pos = this.column(column, {order:'current'}).data().indexOf( data );
+
+      if ( pos >= 0 ) {
+          var page = Math.floor( pos / this.page.info().length );
+          this.page( page ).draw( false );
+      }
+
+      return this;
+  } );
+
+  var tableauVillage=$('#listeVillage').DataTable( {
+        responsive: true,
+        bSortable: true,
+        "columnDefs": [
+          { "orderable": true, "targets": "_all" } // Applies the option to all columns
+        ],
+    "language": {
+                "url": "//cdn.datatables.net/plug-ins/1.10.16/i18n/French.json"
+            },
+        'iDisplayLength': 25
+
+         ,
+          "order": [[ 3, "asc" ]]
+
+  } );
+
+
+var initalise=false;
+  var tableauVillageFormation
+  $(".formation").click(function(event) {
+      if(!initalise) {
+           tableauVillageFormation = $('#listeClimateFriday').DataTable({
+              responsive: true,
+              bSortable: true,
+              "columnDefs": [
+                  {"orderable": true, "targets": "_all"} // Applies the option to all columns
+              ],
+              "language": {
+                  "url": "//cdn.datatables.net/plug-ins/1.10.16/i18n/French.json"
+              },
+              'iDisplayLength': 25
+
+              ,
+              "order": [[3, "asc"]]
+
+          });
+          initalise=true;
+      }
+  });
+// Trie par date https://www.datatables.net/plug-ins/sorting/datetime-moment
+
+</script>

@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <% include ../partials/header.ejs %>
+<link href="/stylesheets/village.css" rel="stylesheet" type="text/css" media="all" />
+
+</head>
+
+<body>
+
+<% include ../partials/nav.ejs %>
+  <%
+  if (typeof accesscontrol !== "undefined" && accesscontrol!=null && typeof utilisateur !== "undefined" && utilisateur!=null ) {
+  if ( utilisateur.role!=null &&  accesscontrol.can(utilisateur.role).readAny('analyseData').granted){
+  %>
+  <div class="container">
+  <table id="listeUtilisateur" class=" activites tableau">
+      <thead>
+      <tr>
+          <td >nom</td>
+          <td >prenom</td>
+          <td >adresseMail</td>
+          <td >telephone</td>
+          <td >ville</td>
+          <td >codePostal</td>
+          <td >dateNaissance</td>
+          <td >age</td>
+          <td >statut</td>
+          <td >estreferent</td>
+          <td >village</td>
+
+      </tr>
+      </thead>
+      <tbody>
+      <% if (typeof utilisateurAvecVillage !== "undefined" && utilisateurAvecVillage !== null) {
+      utilisateurAvecVillage.forEach(function(utilisateur) { %>
+      <tr  id="<%= utilisateur._id %>">
+          <td><%= utilisateur.nom %>
+          <td ><%= utilisateur.prenom %>
+          <td ><%= utilisateur.adresseMail %>
+          <td ><%= utilisateur.telephone %>
+          <td ><%= utilisateur.ville %>
+          <td ><%= utilisateur.codePostal %>
+          <td ><%= utilisateur.dateNaissance %>
+          <td ><%= utilisateur.age %>
+          <td ><%= utilisateur.statut %>
+          <td ><%= utilisateur.role %>
+          <td ><%= utilisateur.village.nom %>
+      </tr>
+      <% }); }%>
+      </tbody>
+  </table>
+<%
+    }else{
+      %>
+      Tu n'as pas les droits fait une demande à emailToReplace
+      <%
+    }
+}
+ %>
+
+  <p>
+
+</body>
+
+  <% include ../partials/footer.ejs %>
+
+</html>
+<script>
+    $.fn.dataTable.moment('DD/MM/YYYY, HH:mm');
+    $('#listeUtilisateur').DataTable( {
+        responsive: true,
+
+        "language": {
+            "url": "//cdn.datatables.net/plug-ins/1.10.16/i18n/French.json"
+
+        }, bSortable: false,
+        "scrollX": true,
+        dom: 'Blfrtip',
+        buttons: [
+            'excelHtml5',
+            'csvHtml5'
+        ]
+    } );
+
+
+
+  
+
+
+</script>

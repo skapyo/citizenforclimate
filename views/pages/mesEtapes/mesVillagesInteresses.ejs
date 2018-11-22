@@ -1,0 +1,26 @@
+ <%
+	if (!(villagesInteresses!== undefined && villagesInteresses.length==0){ %>
+<div id="villagesInteresses" class="bordureGrise">
+Liste des marches auxquelles tu es intéréssés
+<p>
+      <table id="listeVillageInteresse" class="tableau">
+	      <thead>
+	      <tr>
+	          <td>Nom</td>
+	          <td>Accéder à l'marche</td>
+	      </tr>
+	      </thead>
+	      <tbody>
+	          <%
+	          if (villagesInteresses!== undefined){
+	          villagesInteresses.forEach(function(village) { %>
+	        <tr id="<%= village._id %>">
+	          <td><%= village.nom %></td>
+	          <td><a href="/village?villageId=<%= village._id %>"> <button>Entrer dans la marche</button></a></td>
+	        </tr>
+	          <% });
+	          }%>
+	      </tbody>
+	  </table>
+  </div>
+<% }%>

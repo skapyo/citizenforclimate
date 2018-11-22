@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <% include ../partials/header.ejs %>
+	
+</head>
+<body>
+
+  <% include ../partials/nav.ejs %>
+  <link href="/stylesheets/profil.css" rel="stylesheet" type="text/css" media="all" />
+  <link href="/stylesheets/mesEtapes.css" rel="stylesheet" type="text/css" media="all" />
+
+
+<div class="container">
+
+
+ <% include ./mesEtapes/mesVillagesParticipants.ejs %>
+<br/>
+ <% include ./mesEtapes/mesVillagesBenevoles.ejs %>
+<br/>
+ <% include ./mesEtapes/mesVillagesOrganisateurs.ejs %>
+<br/>
+
+ <% include ./mesEtapes/mesActivites.ejs %>
+
+</p>
+</div>
+
+
+</body>
+	<% include ../partials/footer.ejs %>
+</html>
+<script>
+	$(".navbar-nav li").removeClass("active");
+	$("#Profil_Icone").addClass("active"); 
+</script>

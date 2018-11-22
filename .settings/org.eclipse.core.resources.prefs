@@ -1,0 +1,5 @@
+eclipse.preferences.version=1
+encoding//views/pages/accueil.ejs=UTF-8
+encoding//views/pages/editionVillage.ejs=UTF-8
+encoding//views/pages/porteur.ejs=UTF-8
+encoding//views/partials/navCommon.ejs=UTF-8

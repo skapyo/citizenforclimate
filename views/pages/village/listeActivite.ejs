@@ -1,0 +1,96 @@
+    <table id="listeActivites" class=" activites tableau">
+      <thead>
+      <tr>
+          <td >Activité</td>
+          <td class="cacherMobile ">Type</td>
+          <td >Horaire</td>
+          <td class="couleurAvecFond  hide">Début</td>
+          <td >Lieu</td>
+          <td class="cacherMobile">Porteurs</td>
+         <!-- <td class="cacherMobile">Quartier</td> -->
+      </tr>
+      </thead>
+      <tbody>
+          <% if (typeof activites !== "undefined" && activites !== null) {
+          activites.forEach(function(activite) { %>
+        <tr  id="<%= activite._id %>">
+          <td><img  id="imageVelo" src="/images/marker.png">
+          <%= activite.nom %>
+          <td class="cacherMobile"><%= activite.typeActivite %>
+          <td><% if (activite.disponibilites!=null){
+            activite.disponibilites.forEach(function(disponibilite) {
+            %>
+            Le <%= moment.utc(disponibilite.dateDebut).locale("fr").format('Do MMMM')  %> de <%= moment.utc(disponibilite.dateDebut).locale("fr").format('HH:mm') %> à <%= moment.utc(disponibilite.dateFin).locale("fr").format('HH:mm') %>
+            <%
+              });
+             }
+            %>
+          </td>
+          <td class='date hide'> <% if (activite.disponibilites!=null){
+            activite.disponibilites.forEach(function(disponibilite) {
+              %>
+             <%= moment.utc(disponibilite.dateDebut).format('DD/MM/YYYY, HH:mm')%>
+              <%
+              });
+              }
+              %>
+        </td>
+          <td><% if (activite._lieux!=null){
+              %><%
+            activite._lieux.forEach(function(lieu) {
+              %>
+              <%= lieu.nom %>
+              <%
+              });
+              }
+              %>
+          </td>   
+          <td class="cacherMobile"> <% if (activite._porteurs!=null){
+            activite._porteurs.forEach(function(porteur,index) {
+             if(porteur!=null){
+                if(index>0){
+              %> , <% } %><%= porteur.nom %><%
+              }
+              });
+              }
+              %>
+          </td>
+          <!-- <td class="cacherMobile"> <% if (activite._porteurs!=null){
+            activite._porteurs.forEach(function(porteur) {
+            if(porteur!=null){
+              %>
+                 <%= porteur.quartier %>
+              <%
+             }
+              });
+              }
+              %>
+          </td> -->
+
+
+
+        </tr>
+          <% }); }%>
+      </tbody>
+  </table>
+<script>  
+   $.fn.dataTable.moment('DD/MM/YYYY, HH:mm');
+$('#listeActivites').DataTable( {
+    responsive: true,
+	<% if (typeof activites !== "undefined" && activites !== null &&activites.length<15) { %>
+                 "searching": false,
+                 "paging":false,
+                 "lengthChange":false,
+                  "info": false,
+
+	<%} %>
+    "language": {
+                "url": "//cdn.datatables.net/plug-ins/1.10.16/i18n/French.json"
+
+            },
+      "order": [[ 3, "asc" ]]
+} );
+
+    
+</script>         
+          

@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <% include ../partials/header.ejs %>
+	
+</head>
+<body>
+
+  <% include ../partials/nav.ejs %>
+  <link href="/stylesheets/profil.css" rel="stylesheet" type="text/css" media="all" />
+
+<div class="container">
+
+
+<!-- Section formateur  -->
+<%
+    if (typeof accesscontrol !== "undefined" && accesscontrol!=null && typeof utilisateur !== "undefined" && utilisateur!=null ) { 
+    	if ( utilisateur.role!=null &&  accesscontrol.can(utilisateur.role).readAny('formation').granted){ 
+
+		if (villages!== undefined && villages.length!=0){ %>
+  
+
+
+</br>
+
+</br>
+	  <% 	}
+	  	}
+	 }%>
+
+<% include ./referent/villagesReferent.ejs %>
+
+</p>
+</p>
+</br>
+</br>
+<!-- Section référent  -->
+<% include ./referent/villagesAttenteValidation.ejs %>
+
+<% include ./referent/listeParticipantReferent.ejs %>
+
+<% include ./referent/demandeReferent.ejs %>
+
+
+</p>
+</br>
+</br>
+
+<!-- Section admin  -->
+ <%
+    if (typeof accesscontrol !== "undefined" && accesscontrol!=null && typeof utilisateur !== "undefined" && utilisateur!=null ) { 
+    	if ( utilisateur.role!=null &&  accesscontrol.can(utilisateur.role).updateAny('referent').granted){ 
+			if (villages!== undefined && villages.length!=0){ %>
+
+<% include ./referent/listeReferent.ejs %>
+
+
+</br>
+
+
+
+
+</br>
+
+	  <% 	}
+	  	}
+	 }%>
+  </div>
+</p>
+</div>
+
+
+</body>
+	<% include ../partials/footer.ejs %>
+</html>
+<script>
+	$.fn.dataTable.moment('DD/MM, HH:mm');
+	$(".navbar-nav li").removeClass("active");
+	$("#Profil_Icone").addClass("active"); 
+	$("#selectVillage").change(function() {
+	  if($("#selectVillage").val()!=""){
+			$("#demandeReferent").removeClass("hide");
+	  }
+	  else{
+	  	$("#demandeReferent").addClass("hide");
+	  }
+
+	});
+</script>

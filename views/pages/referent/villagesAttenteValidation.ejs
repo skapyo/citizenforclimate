@@ -1,0 +1,46 @@
+ <%
+ var villageAttenteValidation = villagesReferent;
+ // les admins peuvent voir tout les villages
+ if (typeof accesscontrol !== "undefined" && accesscontrol!=null && typeof utilisateur !== "undefined" && utilisateur!=null ) { 
+    	if ( utilisateur.role!=null &&  accesscontrol.can(utilisateur.role).updateAny('referent').granted){ 
+ 		villageAttenteValidation=villages;
+ 		}
+ 	}
+	if (villagesReferent!== undefined && villagesReferent.length!=0){ %>
+<div id="validationReferent" class="bordureGrise">
+ Liste des référents en attente de validation 
+ 	<p>
+      <table id="listeVillageParticipant" class="tableau">
+	      <thead>
+	      <tr>
+	          <td >Nom de la marche</td>
+	          <td >Nom </td> 
+	          <td >Prénom</td>
+	          <td >Email</td>
+	          <td >Téléphone</td>
+	          <td >Valider le référent</td>
+	      </tr>
+	      </thead>
+	      <tbody>
+	          <%
+	          if (villageAttenteValidation!== undefined){
+	          villageAttenteValidation.forEach(function(village) { 
+	          	village._referentsNonValides.forEach(function(referentNonValide) { %>
+
+	        <tr id="<%= referentNonValide._id %>">
+	         <td><%= village.nom %></td>
+	          <td><%= referentNonValide.prenom %></td>
+	          <td><%= referentNonValide.nom %></td>
+	          <td><%= referentNonValide.adresseMail %></td>
+	           <td><%= referentNonValide.telephone %></td>
+	          <td><a href="validerReferent?referentId=<%= referentNonValide._id %>&villageId=<%= village._id %>"> <button>Valider le référent</button></a></td>
+	        </tr>
+	          <% });
+	           });
+	          }%>
+	      </tbody>
+	  </table>
+	 </div>
+</br>
+</br>
+	  <% }%>

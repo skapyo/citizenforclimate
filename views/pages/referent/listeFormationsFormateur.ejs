@@ -1,0 +1,50 @@
+
+<div class="bordureGrise">		  		  
+	Liste des formations
+
+	  <table id="listeFormations" class="tableau nowrap">
+	      <thead>
+	      <tr>
+	          <td>Nom de la marche</td>
+	          <td>Nom activite</td>
+	          <td>lien</td>
+	          <td>lien edition</td>
+	          <td>Nombre participant</td>
+	         
+	      </tr>
+	      </thead>
+	      <tbody>
+	          <%
+
+	          villages.forEach(function(village) { 
+	          	village._activites.forEach(function(activite) { 
+	          	if( activite.typeActivite=="Formation"){
+	          	%>
+ 
+	        <tr>
+				<td><%= village.nom %></td>
+				<td><%= activite.nom %></td>
+				<td><a href="/village?villageId=<%= village._id %>&activiteId=<%=activite.id%>" target="_blank">https://ensemblepourleclimat.fr/village?villageId=<%= village._id %>&activiteId=<%=activite.id%></a></td>
+				<td><a href="/activite?villageId=<%= village._id %>&activiteId=<%=activite.id%>" target="_blank"><button>Edition</button></a></td> 
+				
+				<td><%= activite._participants.length %></td>
+   			 </tr> 
+          <% 		
+
+          		}
+        	  });
+           });
+          %>
+	      </tbody>
+	  </table>
+</div>
+<script>
+$('#listeFormations').DataTable( {
+        responsive: true,
+        bSortable: false,  
+        "scrollX": true,
+         buttons: [
+           'csv'
+        ]
+    } );
+</script>

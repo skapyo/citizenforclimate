@@ -1,0 +1,58 @@
+form {
+   	border: 1px solid #ccc;
+   	padding: 10px;
+}
+
+button, input, select, textarea {
+	width: 100%;
+}
+label{
+	width: 100%;
+}
+table{
+   		width: 100%;
+    }
+   .modifier-porteur {
+    margin-top: 20px;
+    margin-bottom: 10px;
+    text-decoration: underline;
+    font-weight: bold;
+ }
+#listePorteur tr{
+ cursor: pointer;
+}
+#cartePorteurExistant {
+   height: 400px;
+   width: 100%;
+ }
+ .afficher-cacher-filtre {
+  width: 100%;
+    padding: 10px 0;
+    text-align: center;
+    background: #148755;
+    color: white;
+    font-weight: bold;
+    font-size: 15px;
+ }
+.afficher-cacher-filtre span{
+  width: 100%;
+  display: block;
+  
+}
+div[onclick], .afficher-cacher-filtre {
+    cursor: pointer;
+}
+#listePorteur td, #listePorteur th{
+  border: none !important;
+}
+#listePorteur_length select,#listePorteur_length button, #listePorteur_length label, #listePorteur_filter label,#listePorteur_filter input{
+  width:inherit;
+  font-weight:inherit;
+}
+#listePorteur_wrapper {
+  padding-top: 1%;
+}
+#listePorteur>tbody>tr:focus, #listePorteur>tbody>tr:hover {
+    color: white;
+    background-color: #148755;
+}

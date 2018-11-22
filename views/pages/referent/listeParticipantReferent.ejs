@@ -1,0 +1,53 @@
+<%
+	if (villagesReferent!== undefined && villagesReferent.length!=0){ %>
+<div class="bordureGrise">		  		  
+	Liste des participants aux activités des marches dont tu es référent :
+
+	  <table id="listeParticipant" class="tableau">
+	      <thead>
+	      <tr>
+	          <td>Nom de la marche</td>
+	          <td>Nom activite</td>
+	          <td>Nom participant</td>
+	          <td>Prénom participant</td>
+	          <td>Email</td>
+	          <td>Téléphone</td>
+	      </tr>
+	      </thead>
+	      <tbody>
+	          <%
+	          if (villagesReferent!== undefined){
+
+	          villagesReferent.forEach(function(village) { 
+	          	village._activites.forEach(function(activite) { 
+	          	if(activite._participants.length>0){
+	          		activite._participants.forEach(function(participant) { 
+	          	%>
+
+	        <tr>
+				<td><%= village.nom %></td>
+				<td><a href="/village?villageId=<%= village._id %>&activiteId=<%=activite.id%>"> <button><%= activite.nom %></button></a></td> 
+				<td><%= participant.prenom %></td>
+				<td><%= participant.nom %></td>
+				<td><%= participant.adresseMail %></td>
+				<td><%= participant.telephone %></td> 
+				
+   			 </tr>
+          <% 		
+          		});
+          		}
+        	  });
+           });
+          }%>
+	      </tbody>
+	  </table>
+</div>
+<script>
+$('#listeParticipant').DataTable( {
+        responsive: true,
+        bSortable: false
+    } );
+</script>
+</br>
+</br>
+<% }%>

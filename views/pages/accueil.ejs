@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <% include ../partials/header.ejs %>
+  <link href="/stylesheets/accueil.css" rel="stylesheet" type="text/css" media="all" />
+</head>
+
+<body onload="InitialiserCarte();">
+  <% include ../partials/nav.ejs %>
+
+<div class="container">
+
+<h1 class="text-center couleurVert">Ensemble pour le climat</h1>
+</br>
+<div class="text-justify description">
+    Après le succès des marches du 8 septembre et du 13 octobre, nous appelons à une mobilisation internationale pendant les prochaines négociations climatiques mondiales : la COP24. Soyons nombreuses et nombreux dans les rues partout le 8 décembre, pour rappeler l’urgence d’agir !
+ </br></br>
+    <%
+    var nbEngagementDejaFait =0
+    var nbEngagementPris =0
+    var nbEngagementRealise =0
+    villages.forEach(function(village) {
+        village._engagements.forEach(function (engagement) {
+            if (engagement._informationParticipantEngagement != undefined) {
+                engagement._informationParticipantEngagement.forEach(function (informationParticipantEngagement) {
+                    if (informationParticipantEngagement.statutEngagement == "Déja fait") {
+                        nbEngagementDejaFait += 1;
+                    }
+                    if (informationParticipantEngagement.statutEngagement == "Je m'engage") {
+                        nbEngagementPris += 1;
+                    }
+                    if (informationParticipantEngagement.statutEngagement == "Fait") {
+                        nbEngagementRealise += 1;
+                    }
+
+                });
+            }
+        });
+    });
+    %>
+
+    <div class ="center">
+        Il faut aussi agir, si nous sommes des milliers à changer, ça change tout.</br>
+        Déjà <b><%- nbEngagementDejaFait %></b> défis réalisés et <b><%- nbEngagementPris %></b> engagement pris.  </br>
+        <a href ="https://onestpret.fr/" target="blank" >On est prêt</a>. A vous d'agir, rejoignez la marche près de chez vous et cliquez sur J'agis
+    </div>
+</div>
+
+</br>
+<!-- <p class="text-center">Cliquez sur la carte ou dans la liste en bas de page pour sélectionner la marche qui vous intéresse et accéder à tous ses détails.</p> -->
+</p>
+
+<% include ./accueil/carte.ejs %>
+
+</p>	
+   
+<% include ./accueil/listeVillage.ejs %>
+
+</p>
+</div>
+</body>
+
+  <% include ../partials/footer.ejs %>
+
+
+</html>
+
+
+<script>
+
+        
+	$(".navbar-nav li").removeClass("active");
+	$("#accueil_Icone").addClass("active");
+</script>

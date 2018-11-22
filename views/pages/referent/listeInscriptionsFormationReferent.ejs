@@ -1,0 +1,85 @@
+ <%
+	if (villagesReferent!== undefined && villagesReferent.length!=0){ %>
+
+<div class="bordureGrise">		  		  
+	Liste des participants à la formation Action non violente des marches dont tu es référents :
+
+	  <table id="listeParticipantFormationParEtape" class="tableau nowrap">
+	      <thead> 
+	      <tr>
+	          <td>Nom de la marche</td>
+	          <td>Date inscription</td>
+	          <td>Nom activite</td>
+	          <td>Nom participant</td>
+	          <td>Prénom participant</td>
+	          <td>Email</td>
+	          <td>Ville</td>
+	          <td>Code Postal</td>
+	          <td>Téléphone</td>
+	          <td>Age</td>
+	          <td>Connaissance Non violence</td>
+	          <td>Actif groupe ANV</td>
+	          <td>Actif groupe alternatiba</td>
+	          <td>Actif groupe Amis de la terre</td>
+	          <td>Actif autres groupes</td>
+	          <td>Participation action</td>
+	          <td>Participation action avec un groupe</td>
+	          <td>Non disponible</td>
+	          <td>Commentaire</td>
+	      </tr>
+	      </thead>
+	      <tbody>
+	          <%
+
+	          villagesReferent.forEach(function(village) { 
+	          	village._activites.forEach(function(activite) { 
+	          	if( activite._participants!=null && activite._participants.length>0 && activite.typeActivite=="Formation" && activite._informationParticipantFormation!=null){
+	          		activite._informationParticipantFormation.forEach(function(informationParticipantFormation) { 	          	%>
+
+	        <tr>
+				<td><%= village.nom %></td>
+				<td> <% if (informationParticipantFormation.createdAt!== undefined){%><%= moment.utc(informationParticipantFormation.createdAt).add(2, 'hours').format('DD/MM, HH:mm')%><%}%></td> 
+				<td><a href="/village?villageId=<%= village._id %>&activiteId=<%=activite.id%>"> <button><%= activite.nom %></button></a></td> 
+				<td><%= informationParticipantFormation.participant.prenom %></td>
+				<td><%= informationParticipantFormation.participant.nom %></td>
+				<td><%= informationParticipantFormation.participant.adresseMail %></td>
+				<td><%= informationParticipantFormation.participant.telephone %></td> 
+				<td><%= informationParticipantFormation.participant.ville %></td> 
+				<td><%= informationParticipantFormation.participant.codePostal %></td> 
+				<!-- <td><% if(informationParticipantFormation.participant.dateNaissance!=undefined){ %> <%= moment.utc(informationParticipantFormation.participant.dateNaissance).format('YYYY') %><%}%></td> --> 
+				<td><%= informationParticipantFormation.participant.age %></td> 
+				<td><%= informationParticipantFormation.connaissanceCritereNonViolence %></td> 
+				<td><%= informationParticipantFormation.estGroupeANV %></td> 
+				<td><%= informationParticipantFormation.estGroupeAlternatiba %></td> 
+				<td><%= informationParticipantFormation.estGroupeAmisDeLaTerre %></td> 
+				<td><%= informationParticipantFormation.autresGroupe %></td> 
+				<td><%= informationParticipantFormation.participationAction %></td> 
+				<td><%= informationParticipantFormation.participationActionAvecGroupe %></td> 
+				<td><%= informationParticipantFormation.nonDisponible %></td> 
+				<td><%= informationParticipantFormation.commentaire %></td> 
+
+   			 </tr> 
+          <% 		
+          		});
+          		}
+        	  });
+           });
+          %>
+	      </tbody>
+	  </table>
+</div>
+<script>
+$.fn.dataTable.moment('DD/MM, HH:mm');
+$('#listeParticipantFormationParEtape').DataTable( {
+        responsive: true,
+        bSortable: false,  
+        "scrollX": true,
+         "order": [[ 1, "desc" ]],
+         buttons: [
+           'csv'
+        ]
+    } );
+</script>
+</br>
+</br>
+  <% }%>

@@ -1,0 +1,165 @@
+
+.nav>.active>a, .nav>.active a:focus, .nav>.active a:hover {
+    background-color: #098048!important;
+    color: white!important;
+   }
+.nav>li>a:hover, a , a:hover  {
+ 	color: #098048!important;
+ 	text-decoration: none;
+}
+.nav {
+	background-color: white;
+	border-color: #098048;
+}
+.logo {
+        padding: 10px 0 0 0;
+    }
+.logo li {
+         list-style-type: none;
+  }
+.header-widget.widget_nav_menu ul.menu li a {
+display: inline-block;
+padding: 0 0 0 15px;
+color: #777;
+}
+.header_top .right .inner>div {
+    border-left: 0;
+    float: left;
+}
+.header-widget.widget_nav_menu {
+    font-size: 16px;
+    text-transform: uppercase;
+    font-weight: 800;
+    padding: 20px;
+}
+.center{
+    text-align: center;
+}
+ @media(min-width:1000px){
+	.left{
+		    position: relative;
+		    float: left;
+		}
+}
+@media(max-width:1000px){
+	.left{
+	    position: relative;
+	    text-align: center;
+	}
+}
+
+
+    
+
+
+.right{
+    position: relative;
+	float: right;
+	
+}
+.infoSite{
+	padding-top: 0%;
+
+}
+
+.infoSite li {
+	text-align: center;
+	width: 50%;
+}
+@media(max-width:1000px){
+.infoSite{
+    display:none;
+}
+}
+.menu{
+	font-size: 15px;
+	text-transform: uppercase;
+	font-weight: 800;
+	font-family: 'Open Sans', sans-serif;
+	float: left;
+	    margin-top: 1%;
+	
+}
+.menu  li{
+    position: relative;
+	display: inline-block;
+	float: left;
+	list-style: none;
+	color: #818181;
+}
+
+
+@media(max-width:1200px){
+	.menu  li a{
+		display: inline-block;
+		padding: 0 0.5em 0.5em 0.01em;
+		color:  rgb(119, 119, 119)!important;
+	}
+}
+ @media(min-width:1200px){
+	.menu  li a{
+	   display: inline-block;
+		padding: 0 9px 1px 15px;
+		color:  rgb(119, 119, 119)!important;
+	}
+}
+
+.menu  li a:hover {
+
+    color: #00BC9D !important;
+
+}
+
+.media-icone{
+	float: right;
+	padding-top: 20%;
+}
+
+#don a {
+	background-color: #F7901E;
+    padding-left: 10px;
+    padding-right: 10px;
+    color: white!important;;
+    text-decoration: none;
+
+}
+#don a:hover ,a:hover {
+
+    color: #00BC9D !important;
+
+}
+.favicon {
+
+    width: 80%;
+
+}
+/*#carte * {
+       box-sizing: content-box;
+   }
+   */
+body{
+   font-size: 1.5rem;
+   font-family: 'Open Sans', sans-serif;
+}
+.navbar {
+	 margin-bottom: 20px;
+}
+.btn , .form-control {
+  font-size: 1.5rem;
+}
+table.dataTable{
+	border-collapse:collapse;
+}
+.nav-content {
+   display: inline-block;
+   width: 100%;
+}
+.dataTables_wrapper .dataTables_filter input {
+    margin-left: 0;
+}
+.dropdown-menu {
+  font-size: inherit;
+  }
+  
+
+  

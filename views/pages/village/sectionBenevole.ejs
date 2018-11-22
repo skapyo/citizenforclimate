@@ -1,0 +1,61 @@
+<!--                   Section benvole           -->  
+
+  <% if (typeof accesscontrol !== "undefined" && accesscontrol!=null && typeof utilisateur !== "undefined" && utilisateur!=null ) { 
+       if ( utilisateur.role!=null &&  accesscontrol.can(utilisateur.role).readAny('benevole').granted || contientUtilisateur(village._referents)){ %>
+  %>
+  Nombre de bénévoles : <%= village._benevoles.length %> 
+  <div class="afficher-cacher-filtre"> <span class="ouvrirBenevole">Afficher la liste des bénévoles souhaitant aider le jour de la marche</span> <span class="fermerBenevole hide">Cacher la liste des bénévoles souhaitant aider le jour de la marche</span></div>
+ <p>
+ <div id="benevole" style="display:none">
+ Liste des bénévoles : 
+      <table id ="listeBenevoles">
+        <thead>
+        <tr>
+            <td>Nom</td>
+            <td>Prénom</td>
+            <td>Email</td>
+            <td>Téléphone</td>
+            <td>Date cr&eacute;ation</td>
+        </tr>
+        </thead>
+        <tbody>
+            <%
+            village._benevoles.forEach(function(benevole) { %>
+          <tr id="<%= benevole._id %>">
+            <td><%= benevole.nom %></td>
+            <td><%= benevole.prenom %></td>
+            <td><%= benevole.adresseMail %></td>
+            <td><%= benevole.telephone %></td>
+            <td><% if(typeof benevole.createdAt !== "undefined" && benevole.createdAt!=null){%>  <%= moment.utc(benevole.createdAt).locale("fr").format('DD/MM/YY HH:mm') %><% } %></td>
+          </tr>
+            <% });%>
+        </tbody>
+    </table>
+  </div>
+     <% } 
+     }
+     %>
+<script>
+ 
+$('.ouvrirBenevole').on('click',function(){
+    $('#benevole').slideDown();
+    $('.ouvrirBenevole').addClass("hide");
+    $('.fermerBenevole').removeClass("hide");
+});
+$('.fermerBenevole').on('click',function(){
+    $('#benevole').slideUp();
+    $('.ouvrirBenevole').removeClass("hide");
+    $('.fermerBenevole').addClass("hide");
+});
+
+$.fn.dataTable.moment('DD/MM/YY HH:mm');   
+$('#listeBenevoles').DataTable( {
+    responsive: true,
+    "language": {
+                "url": "//cdn.datatables.net/plug-ins/1.10.16/i18n/French.json"
+            },
+       "order": [[ 4, "asc" ]]
+            
+} );
+
+</script>

@@ -1,0 +1,205 @@
+<div class="text-center">
+	<img  src="/images/marker.png"> Marche pour le climat 	<!-- <img  src="/images/marker_etendu.png"> Climate Friday -->
+</div>
+<div id="carte"></div>
+
+<% include ./popinContact.ejs %>
+<script>
+        
+	$(".navbar-nav li").removeClass("active");
+	$("#accueil_Icone").addClass("active");
+	
+	
+	function InitialiserCarte() {
+	 var width = document.documentElement.clientWidth;
+	 var zoom;
+		    // tablets are between 768 and 922 pixels wide
+		    // phones are less than 768 pixels wide
+		    if (width < 768) {
+		        // set the zoom level to 10
+		        zoom=5;
+		    }  else {
+		        // set the zoom level to 8
+		        zoom=6;
+		    }
+        var map = L.map('carte').setView([47.427638,2.913749], zoom);
+        map.scrollWheelZoom.disable();
+		map.on('focus', () => { map.scrollWheelZoom.enable(); });
+		map.on('blur', () => { map.scrollWheelZoom.disable(); });
+		L.tileLayer('https://{s}.tile.openstreetmap.fr/osmfr/{z}/{x}/{y}.png', {
+		    attribution: '&copy; <a href="https://osm.org/copyright">OpenStreetMap</a>  <a href="https://ilestencoretemps.fr/">ilestencoretemps</a> contributors'
+		}).addTo(map);
+
+		/**var logo= L.control({
+		    position : 'topleft'
+		});
+		logo.onAdd = function(map) {
+		    this._div = L.DomUtil.create('div', 'myControl');
+		    var img_log = "	<div class='legende'><img  src='/images/marker.png'>  Etape <img  src='/images/marker_preTour.png'>  Etape tour de préchauffe  <img   src='/images/marker_etendu.png'>  Etape tour étendu </div>";
+
+		    this._div.innerHTML = img_log;
+		    return this._div;
+
+		}
+		logo.addTo(map);
+**/
+
+    <%
+
+			function libelleHoraire(horairesOuverture){
+				var libelle="";
+				var isMidi=false;
+			   var isSoir=false;
+				if(moment.utc(horairesOuverture.dateDebut).diff(moment.utc(horairesOuverture.dateFin, 'days'))){
+					
+					var midi = moment.utc(horairesOuverture.dateDebut).set({hour:13,minute:30,second:0,millisecond:0});
+					if(moment.utc(horairesOuverture.dateFin).isAfter(midi) && moment.utc(horairesOuverture.dateDebut).isBefore(midi)){
+						isMidi=true
+					}
+					var soir = moment.utc(horairesOuverture.dateDebut).set({hour:19,minute:30,second:0,millisecond:0});
+					if(moment.utc(horairesOuverture.dateFin).isAfter(soir) && moment.utc(horairesOuverture.dateDebut).isBefore(soir)){
+						isSoir=true
+					}
+					
+					if(isMidi || isSoir){
+						libelle="Le "+moment.utc(horairesOuverture.dateDebut).locale("fr").format('Do MMMM YYYY');
+					}
+					if(isMidi ){
+						libelle+=" le midi"
+					}
+					if(isSoir ){
+						if(isMidi){
+			              libelle+=" et "
+			            }
+						libelle+=" le soir"
+					}
+				}
+				if(!isMidi && ! isSoir){
+					libelle="Début : " +moment.utc(horairesOuverture.dateDebut).locale("fr").format('Do MMMM YYYY, HH:mm')+" Fin : " +moment.utc(horairesOuverture.dateFin).locale("fr").format('Do MMMM YYYY, HH:mm');
+				}
+				return libelle
+			}
+
+
+
+		villages.forEach(function(village) {
+
+         if (village.coordonnees.latitude!=null &&  ((village.estMarche!= undefined && village.estMarche) ||  (village.estClimateFriday!= undefined && village.estClimateFriday))){
+	         var libelleIcone="marker";
+	         var formation;
+				village._activites.forEach(function(activite) {
+
+					if(activite.typeActivite=="Formation") {
+						formation=activite;
+					}
+
+				});
+			// if((formation!=null && formation!=undefined)){
+			// 	libelleIcone+="_formation"
+			// }else
+				if(village.estPreTour!= undefined && village.estPreTour){
+	        	 libelleIcone+="_preTour"
+	         }else if(village.estClimateFriday!= undefined && village.estClimateFriday){
+	        	 libelleIcone+="_etendu"
+	         }
+
+
+	             %>
+                var icon = L.icon({
+                    iconUrl: '/images/<%= libelleIcone %>.png',
+                    iconAnchor: [13, 34], // point of the icon which will correspond to marker's location
+                    popupAnchor: [1, -25]
+                });
+       			 var marker<%=village._id%>=L.marker([<%=village.coordonnees.latitude %>, <%=village.coordonnees.longitude %>],{icon: icon}).addTo(map);
+
+
+
+	            var contenu<%=village._id%> ="<div class=\"couleurVert\"><%= village.nom %></div><% if (village.facebookUrl != null && village.facebookUrl !=""){ %></br><a href='<%- village.facebookUrl %>' target='blank' > Lien facebook </a> <% }  if(village.description!=null && village.description!=""){%></br><%- village.description %><%} if(false && village.emailContact!=null && village.emailContact!=""){%></br></br>Contact : <%- village.emailContact %><%}
+	                if (village._horairesOuvertures!=null){
+	             		 village._horairesOuvertures.forEach(function(horairesOuverture) {
+	             			 %></br></br><%= libelleHoraire(horairesOuverture) %><%
+	                	});
+	              	 }
+	                if(village.publication!=null && village.publication){ 
+	               		%></br></br><a href=\"village?villageId=<%= village._id %>\"> <button class=\"btn btn-default couleurbg\">En savoir plus</button></a><% } else{
+		       		 	%></br></br><button type=\"button\"  data-villageid=\"<%= village._id %>\" class=\"btn btn-default couleurbg contact\" data-toggle=\"modal\" data-target=\"#popinContact\">Contacter la marche</button><%  }%>"
+			            marker<%=village._id%>.bindPopup(contenu<%=village._id%>);
+	         <%
+       		 }
+         });
+		var sortedVillage = villages.sort(function(villageA,villageB){
+		  return  villageA._horairesOuvertures[0].dateDebut - villageB._horairesOuvertures[0].dateDebut ;
+
+		});
+
+		%>
+		// Affichage du tracé du tour
+		var pathCoords= [];
+		<%
+		villages.forEach(function(village) {
+			if(((village.estMarche!= undefined && village.estMarche) || !(village.horsTour!= undefined && village.horsTour)) && !(village.estTourEtendu!= undefined && village.estTourEtendu  ) && !(village.estPreTour!= undefined && village.estPreTour  )&& villages[0]!=village && village.coordonnees.latitude!=undefined && village.coordonnees.latitude!=""){
+		%>	
+        		pathCoords.push(new L.LatLng(<%=village.coordonnees.latitude %>, <%=village.coordonnees.longitude %>));
+		<%
+			}
+		});
+		%>
+	//	var pathLine = L.polyline(pathCoords, { color: "#148755" /* etc. */ }).addTo(map)
+
+
+		// Tour étendu
+       var coordoTourEtendu;
+       <%
+       var booleanIsTourEtendu;
+
+       //on trie par date de fin pour le tour étendu
+       var sortedVillage = villages.sort(function(villageA,villageB){
+		  return villageA._horairesOuvertures[0].dateFin - villageB._horairesOuvertures[0].dateFin ;
+
+		});
+
+		villages.forEach(function(village) {
+			if((village.estTourEtendu!= undefined && village.estTourEtendu  )&& !(village.horsTour!= undefined && village.horsTour)){
+				booleanIsTourEtendu=true;
+			// 	debugger;
+		%>	
+        		coordoTourEtendu= new L.LatLng(<%=village.coordonnees.latitude %>, <%=village.coordonnees.longitude %>);
+		<%
+			}
+			else if(booleanIsTourEtendu){
+				booleanIsTourEtendu=false;
+				%>
+				//debugger;
+				var pathTourEtendu =[coordoTourEtendu];
+				pathTourEtendu.push(new L.LatLng(<%=village.coordonnees.latitude %>, <%=village.coordonnees.longitude %>));
+				//L.polyline(pathTourEtendu, { color: "#fbd15f" /* etc. */ }).addTo(map)
+				//pathTourEtendu= [];
+				<%
+			}
+
+		});
+       
+       %>
+       // Tour chauffe
+       var pathCoords= [];
+		<%
+		villages.forEach(function(village) {
+			if((village.estPreTour!= undefined && village.estPreTour  ) && villages[0]!=village && village.coordonnees.latitude!=undefined && village.coordonnees.latitude!=""){
+		%>	
+        		pathCoords.push(new L.LatLng(<%=village.coordonnees.latitude %>, <%=village.coordonnees.longitude %>));
+		<%
+			}
+		});
+		%>
+	//	var pathLine = L.polyline(pathCoords, { color: "#85bf7c" /* etc. */ }).addTo(map)
+
+
+    map.on('popupopen', function() {
+     $(".contact").click(function(event) {
+     	$("#contactVillageId").val($(event.target).data('villageid'));
+		});
+    });
+    }
+
+    
+</script>

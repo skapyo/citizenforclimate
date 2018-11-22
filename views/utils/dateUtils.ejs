@@ -1,0 +1,35 @@
+<%
+libelleHoraire = function(horairesOuverture,afficherhoraire){
+        var libelle="";
+        var isMidi=false;
+         var isSoir=false;
+        if(moment.utc(horairesOuverture.dateDebut).diff(moment(horairesOuverture.dateFin, 'days')) && !(afficherhoraire!=undefined && afficherhoraire)){
+          
+          var midi = moment.utc(horairesOuverture.dateDebut).set({hour:13,minute:30,second:0,millisecond:0});
+          if(moment.utc(horairesOuverture.dateFin).isAfter(midi) && moment.utc(horairesOuverture.dateDebut).isBefore(midi)){
+            isMidi=true
+          }
+          var soir = moment(horairesOuverture.dateDebut).set({hour:19,minute:30,second:0,millisecond:0});
+          if(moment.utc(horairesOuverture.dateFin).isAfter(soir) && moment.utc(horairesOuverture.dateDebut).isBefore(soir)){
+            isSoir=true
+          }
+          
+          if(isMidi || isSoir){
+            libelle="Le "+moment.utc(horairesOuverture.dateDebut).locale("fr").format('Do MMMM YYYY');
+          }
+          if(isMidi ){
+            libelle+=" le midi"
+          }
+          if(isSoir ){
+            if(isMidi){
+              libelle+=" et "
+            }
+            libelle+=" le soir"
+          }
+        }
+        if(!isMidi && ! isSoir){
+          libelle="Début : " +moment.utc(horairesOuverture.dateDebut).locale("fr").format('Do MMMM YYYY, HH:mm')+" <span class='espace'></span> Fin : " +moment.utc(horairesOuverture.dateFin).locale("fr").format('Do MMMM YYYY, HH:mm');
+        }
+        return libelle
+      }
+ %>

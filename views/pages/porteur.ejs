@@ -1,0 +1,192 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <% include ../partials/header.ejs %>
+  <link href="/stylesheets/porteur.css" rel="stylesheet" type="text/css" media="all" />
+</head>
+
+<body>
+
+  <% include ../partials/navVillage.ejs %>
+
+
+
+
+
+<div class="container">
+	<p>Cette page permet la gestion des porteurs d'alternatives de l'&eacute;tape.</br> 
+	Un porteur d'alternative peut être une structure, une association ...
+	</p>
+
+		<input type="button" class="btn btn-default couleurbg largeurAuto" id="nouveauPorteur" value="Nouveau Porteur"/>
+	<form method="post" 	<%if(!(typeof porteurAModifier  !== undefined && porteurAModifier!=null)){ %> class="hide" <% } %> action="/ajoutPorteur" id="ajoutPorteur">
+		<input type="text" style="display:none" name ="villageId" id="villageId" value="<% if(typeof village  !== undefined && village!=null){ %><%= village._id %><% } %>" />
+	   <input type="text" style="display:none" name ="id" id="id" value="<% if(typeof porteurAModifier  !== undefined && porteurAModifier!=null){ %><%= porteurAModifier._id %><% } %>" />
+	   </p>
+		<label for="nom">Nom du porteur :</label>
+		<input type="text" name="nom" required id="nom" value="<% if(typeof porteurAModifier  !== undefined && porteurAModifier!=null){ %><%= porteurAModifier.nom %><% } %>"/>
+		</p>
+		<label for="siteWeb">Site Web :</label>
+		<input type="text" name="siteWeb" id="siteWeb" value="<% if(typeof porteurAModifier  !== undefined && porteurAModifier!=null){ %><%= porteurAModifier.siteWeb %><% } %>"/>
+		</p>
+		<!-- <label for="questionJeu">Pour le jeu de piste, trouver une question à laquelle le public viendra trouver votre alternative pour y repondre :</label>
+		<input type="text" name="questionJeu" id="questionJeu" value="<% if(typeof porteurAModifier  !== undefined && porteurAModifier!=null){ %><%= porteurAModifier.questionJeu %><% } %>"/>
+		</p> -->
+		<label for="adresseMail">Adresse mail de contact :</label>
+		<input type="text" name="adresseMail" id="adresseMail" value="<% if(typeof porteurAModifier  !== undefined && porteurAModifier!=null){ %><%= porteurAModifier.adresseMail %><% } %>"/>
+		</p>
+		<label for="description">Description du porteur :</label>
+		<textarea form ="ajoutPorteur" rows="4" cols="50" name="description" id="description"><% if(typeof porteurAModifier  !== undefined && porteurAModifier!=null){ %><%= porteurAModifier.description %><% } %></textarea>
+		 <p>
+		 <!-- <div>Quartier du porteur</div>
+		 <select id="quartier" name="quartier">
+			<option value="Consommer responsable"<% if(typeof porteurAModifier  !== undefined && porteurAModifier!=null && porteurAModifier.quartier=="Consommer responsable"){  %> selected="selected" <% }%>>Consommer responsable</option>
+			<option value="Se Loger" <% if(typeof porteurAModifier  !== undefined && porteurAModifier!=null && porteurAModifier.quartier=="Se Loger"){  %> selected="selected" <% }%>>Se Loger</option>
+			<option value="S informer" <% if(typeof porteurAModifier  !== undefined && porteurAModifier!=null && porteurAModifier.quartier=="S informer"){  %> selected="selected" <% }%>>S’informer / se divertir</option>
+			<option value="Se deplacer" <% if(typeof porteurAModifier  !== undefined && porteurAModifier!=null && porteurAModifier.quartier=="Se deplacer"){  %> selected="selected" <% }%>>Se déplacer</option>
+			<option value="Vivre ensemble" <% if(typeof porteurAModifier  !== undefined && porteurAModifier!=null && porteurAModifier.quartier=="Vivre ensemble"){  %> selected="selected" <% }%>> Vivre ensemble</option>
+		</select> -->
+		<input type="submit" id="bouton" value="<% if(typeof porteurAModifier  !== undefined && porteurAModifier!=null){ %> Modifier le porteur <% }else{ %>Ajouter le nouveau porteur <%} %>"/>
+	   </p>
+	</form>
+	</p>
+
+	<div class="modifier-porteur" >Cliquez sur un porteur existant pour le modifier</div>
+	<table id="listePorteur">
+	  <thead>
+	       <td class="couleurAvecFond">Nom</td>
+	       <td class="couleurAvecFond">Description</td>
+	      <!--  <td>Quartier</td> -->
+	  </thead>
+   	   <tbody>
+	    <% if (porteurs!=null) { 
+	    porteurs.forEach(function(porteur) { 
+	    	if(porteur.id!='5afac47189583100040de59') {%>
+	    <tr class="porteurElement" id="<%= porteur.id %>" data-village="<%= village.id %>">
+	       <td><%= porteur.nom %></td>
+	       <td><%= porteur.description %></td>
+	       <!-- <td><%= porteur.quartier %></td> -->
+	    </tr>
+	    <% }}); }%>
+   	   </tbody>
+	</table> 
+</p>	
+
+	</p>	
+
+  <div class="afficher-cacher-filtre"> <span class="ouvrirPorteurExistant">Afficher la liste des porteurs déjà référencés</span> <span class="fermerPorteurExistant hide">Cacher la liste des porteurs référencés</span></div>
+	<div id="porteurExistant" style="display:none">
+		<p>Voici la liste des porteurs d'alternatives référencés se trouvant autour de la marche. N'hésitez pas à les contacter</p>
+		<div id="cartePorteurExistant"></div>
+	</div>
+</div>
+
+</body>
+  <% include ../partials/footer.ejs %>
+</html>
+<script>
+	$(".navbar-nav li").removeClass("active");
+	$("#porteur_Icone").addClass("active");
+
+    $("#listePorteur tbody").click(function(event) {
+      var target = event.target;
+      var parent = target.parentElement
+	  var porteurId=parent.id;
+	  var villageId=$(parent).attr('data-village');
+	  var url="/porteur?porteurId="+porteurId;
+	  if(villageId !=null){
+	  	url=url+"&villageId="+villageId
+	  }
+        window.location.href = url;
+    });
+  <%if((typeof porteurAModifier  !== undefined && porteurAModifier!=null)){ %> 
+      $('html, body').animate({
+                        scrollTop: $("#ajoutPorteur").offset().top
+                    }, 1000);
+<% } %>  
+
+ $("#nouveauPorteur").click(function(event) {
+      $("#id").val("");
+      $("#nom").val("");
+      $("#siteWeb").val("");
+	  $("#adresseMail").val("");
+	  $("#description").val("");
+	  $("#bouton").val("Ajouter le nouveau Porteur");
+	  $("#ajoutPorteur").removeClass("hide");
+	  
+    });
+ $('.ouvrirPorteurExistant').on('click',function(){
+    $('#porteurExistant').slideDown();
+    $('.ouvrirPorteurExistant').addClass("hide");
+    $('.fermerPorteurExistant').removeClass("hide");
+});
+$('.fermerPorteurExistant').on('click',function(){
+    $('#porteurExistant').slideUp();
+    $('.ouvrirPorteurExistant').removeClass("hide");
+    $('.fermerPorteurExistant').addClass("hide");
+});
+
+$("#porteurExistantBouton").click(function(event) {
+	  $("#porteurExistant")
+      $("#porteurExistant").removeClass("hide");
+      
+
+
+    });
+
+
+      $('#listePorteur').DataTable( {
+        responsive: true,
+        "language": {
+                "url": "//cdn.datatables.net/plug-ins/1.10.16/i18n/French.json"
+            },
+        'iDisplayLength': 10
+    } );
+
+      function initMap() {
+	     var zoom=10;
+	      <% if( village.niveauZoom!=null){ %>
+	      zoom=<%= village.niveauZoom%>-5;
+	      <% }%>
+	        var centreVillage = {lat:<%= village.coordonnees.latitude %>, lng: <%= village.coordonnees.longitude %>};
+	        var map = new google.maps.Map(document.getElementById('cartePorteurExistant'), {
+	            zoom: zoom,
+	            center: centreVillage
+	        });
+	        
+
+	       <% var index=0;
+	       if( porteursExistant != undefined && porteursExistant['data']  != undefined ){
+	       	porteursExistant['data'].forEach(function(data){
+	       		if(data.lat!= "" && data.long!=""){
+	       	%>
+				var marker<%=index%>=new google.maps.Marker({ 
+                        position: { lat:<%=data.lat%>, lng:<%=data.long%> },
+                        map:map
+                    });
+	            var infoWindowOptions<%=index%>= {
+	                content:  " Nom : <%= data.name.replace(/\n|\r/g,'');%></br>  Contact : <%=data.contact.replace(/\n|\r/g,'')%> </br> Site : <a target='_blank' href='http://<%= data.site.replace(/\n|\r/g,'')%>'><%= data.site.replace(/\n|\r/g,'');%></a></br> "
+	            };
+	            var infoWindow<%=index%>= new google.maps.InfoWindow(infoWindowOptions<%=index%>);
+
+	            google.maps.event.addListener(marker<%=index%>, 'click', function () {
+	                infoWindow<%=index%>.open(map, marker<%=index%>);
+	            });
+						       
+	       	<%
+	      	 }
+	       	index++;
+	       });
+	       } %>
+	       
+	     
+		   
+	        
+		
+
+	}
+
+</script>
+<script async defer
+        src="https://maps.googleapis.com/maps/api/js?key=googleMapsApiToReplacelanguage=fr&region=FR&callback=initMap">
+</script>

@@ -1,0 +1,31 @@
+.footer{
+	background-color: #1c8654;
+	text-align: center;
+	box-sizing: content-box;
+}
+.footer_top{
+	margin-top: 3%;
+	padding-left: 1.5%;
+}
+
+.three_columns{
+	margin-top: 3%;
+}
+.column_inner{
+	width: 10%;
+	float: left;
+}
+.footer_espacement{
+	margin-top: 1%;
+}
+@media(max-width:472px){
+	.imageTour{
+	    display:none;
+	}
+	
+.droite{
+	text-aling:right;
+}
+.gauche{
+	text-aling:left;
+}

@@ -1,0 +1,56 @@
+  <!--                   Section referent           -->  
+  <% if (typeof accesscontrol !== "undefined" && accesscontrol!=null && typeof utilisateur !== "undefined" && utilisateur!=null ) { 
+       if ( utilisateur.role!=null &&  accesscontrol.can(utilisateur.role).readAny('referent').granted || contientUtilisateur(village._referents)){ %>
+  %>
+    Nombre de référents : <%= village._referents.length %> 
+
+  <div class="afficher-cacher-filtre"> <span class="ouvrirReferent">Afficher la liste des référents</span> <span class="fermerReferent hide">Cacher la liste des référents</span></div>
+ <p>
+ <div id="referent" style="display:none">
+ Liste des référents : 
+      <table id="listeReferents">
+        <thead>
+        <tr>
+            <td>Nom</td>
+            <td>Prénom</td>
+            <td>Email</td>
+            <td>Téléphone</td>
+        </tr>
+        </thead>
+        <tbody>
+            <%
+            village._referents.forEach(function(referent) { %>
+          <tr id="<%= referent._id %>">
+            <td><%= referent.nom %></td>
+            <td><%= referent.prenom %></td>
+            <td><%= referent.adresseMail %></td>
+            <td><%= referent.telephone %></td>
+          </tr>
+            <% });%>
+        </tbody>
+    </table>
+  </div>
+     <% } 
+     }
+     %>
+
+<script>
+ 
+$('.ouvrirReferent').on('click',function(){
+    $('#referent').slideDown();
+    $('.ouvrirReferent').addClass("hide");
+    $('.fermerReferent').removeClass("hide");
+});
+$('.fermerReferent').on('click',function(){
+    $('#referent').slideUp();
+    $('.ouvrirReferent').removeClass("hide");
+    $('.fermerReferent').addClass("hide");
+});
+$('#listeReferents').DataTable( {
+    responsive: true,
+    "language": {
+                "url": "//cdn.datatables.net/plug-ins/1.10.16/i18n/French.json"
+            }
+} );
+
+</script>

@@ -1,0 +1,28 @@
+<div id="validationReferent" class="bordureGrise">
+ <%
+	if (villagesReferent!== undefined && villagesReferent.length!=0){ %>
+Liste des marches dont tu es référent et dont tu peux éditer le contenu
+     <p> 
+      <table id="listeVillageParticipant" class="tableau">
+	      <thead>
+	      <tr>
+	          <td >Ville de la marche</td>
+	          <td >Accéder à la marche</td>
+	      </tr>
+	      </thead>
+	      <tbody>
+	          <%
+	          if (villagesReferent!== undefined){
+	          villagesReferent.forEach(function(village) {  %>
+
+	        <tr>
+	        <td><%= village.nom %></td>
+	          <td><a href="/village?villageId=<%= village._id %>"> <button>Aller à la marche <%= village.nom %></button></a></td>
+	        </tr>
+	          <% });
+	          }%>
+	      </tbody>
+	  </table>
+	 </p>
+	  <% }%>
+  </div>

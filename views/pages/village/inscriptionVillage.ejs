@@ -1,0 +1,126 @@
+ <% if(village.inscriptionVisiteur!=null && village.inscriptionVisiteur || village.inscriptionBenevole!=null && village.inscriptionBenevole || village.inscriptionOrganisateur!=null && village.inscriptionOrganisateur){ %>
+ 
+ <div class="center-block bordureGrise" id="inscription">
+	<div class="row ">
+	    <% 
+	    if(village.inscriptionVisiteur!=null && village.inscriptionVisiteur){%> 
+	     <div class=" center-block ">
+		    <%   if (contientUtilisateur(village._interesses)){ %>
+				<button type="submit" id="suppressionInteresse" class="btn btn-default couleurbginverse ">Je ne suis plus intéressé par la marche </button>
+		    
+		  <%  }else{ %>
+		  <button type="submit" id="ajoutInteresse" class="btn btn-default couleurbg">Je suis intéressé par la marche</button>
+		  <% } %>
+		  </br>
+	  </div>
+	  <%} %>
+
+	  <% 
+	    if(village.inscriptionVisiteur!=null && village.inscriptionVisiteur){ %> 
+		     <div class="center-block ">
+			  <%if (contientUtilisateur(village._participants)){ %>
+	        	<button type="submit" id="suppressionParticipant" class="btn btn-default couleurbginverse">Je ne participerai plus participer à la marche </button>
+	  <%  }else{ %>
+	  <button type="submit" id="ajoutParticipant" class="btn btn-default couleurbg">Je participerai à la marche</button>
+	  <% } %>
+	  </br>
+	  </div>
+	  <%} %>
+
+	   <% if(village.inscriptionOrganisateur!=null && village.inscriptionOrganisateur){  %> 
+		 <div class="center-block ">
+			<%if (contientUtilisateur(village._organisateurs)){ %>
+		   		<button type="submit" id="suppressionOrganisateur" class="btn btn-default couleurbginverse">Je ne souhaite plus aider à l'organisation </button>
+		  <%  }else{ %>
+		  	<button type="button"  id="ajoutOrganisateur" class="btn btn-default couleurbg" data-toggle="modal" data-target="#popinContactOrganisateur">Je souhaite aider à l'organisation de la marche</button>
+		  <% } %>
+		  
+		  </br>
+	  </div>
+	  <%} %>
+
+	  <% if(village.inscriptionBenevole!=null && village.inscriptionBenevole){%> 
+		<div class="center-block ">
+			<%if (contientUtilisateur(village._benevoles)){ %>
+		        <button type="submit" id="suppressionBenevole" class="btn btn-default couleurbginverse">Je ne souhaite plus aider le jour J</button>
+		  <%  }
+		
+		  else{ %>
+		   <button type="button"  id="ajoutBenevole" class="btn btn-default couleurbg" data-toggle="modal" data-target="#popinContactBenevole">Je souhaite aider le jour J</button>
+		   <% } %>
+		  </br>
+	   </div>
+	  <%}  %>
+  </div>
+
+ <% if(village.inscriptionVisiteur!=null && village.inscriptionVisiteur || village.inscriptionBenevole!=null && village.inscriptionBenevole || village.inscriptionOrganisateur!=null && village.inscriptionOrganisateur){ 
+  %>
+  <div class="alert alert-info text-center">
+En cliquant sur un bouton, vos coordonnées seront transmises aux référents de cette marche
+</div>
+ <%} 
+  %>
+</div>
+</br>
+<% include ./popinContactBenevole.ejs %>
+<% include ./popinContactOrganisateur.ejs %>
+<script>
+   <% if (typeof village !== "undefined" && village!=null) {%>
+      $("#ajoutInteresse").click(function(event) {
+            window.location.href = "/ajoutInteresse?villageId=<%= village._id %>";
+        });
+      $("#suppressionInteresse").click(function(event) {
+        window.location.href = "/suppressionInteresse?villageId=<%= village._id %>";
+    });
+
+    $("#ajoutParticipant").click(function(event) {
+    	window.location.href = "/ajoutParticipant?villageId=<%= village._id %>";
+        });
+    $("#suppressionParticipant").click(function(event) {
+        window.location.href = "/suppressionParticipant?villageId=<%= village._id %>";
+    });
+    
+    /* $("#ajoutOrganisateur").click(function(event) {
+    	$("#contactForm").action("/ajoutOrganisateur?villageId=<%= village._id %>");
+        });
+        */
+    $("#suppressionOrganisateur").click(function(event) {
+        window.location.href = "/suppressionOrganisateur?villageId=<%= village._id %>";
+    });
+    $("#ajoutPorteur").click(function(event) {
+            window.location.href = "/ajoutPorteur?villageId=<%= village._id %>";
+        });
+      $("#suppressionPorteur").click(function(event) {
+        window.location.href = "/suppressionPorteur?villageId=<%= village._id %>";
+    });
+  <% if( village.lienFormulaireBenevole!== undefined && village.lienFormulaireBenevole!="undefined" && village.lienFormulaireBenevole!="" ){ %>
+   $("#ajoutOrganisateur").removeAttr("data-toggle");
+   $("#ajoutOrganisateur").removeAttr("data-target");
+   $("#ajoutBenevole").removeAttr("data-target");
+   $("#ajoutBenevole").removeAttr("data-toggle");
+   $("#ajoutBenevole").click(function(event) {
+       window.location.href = "<%=village.lienFormulaireBenevole %>";
+   });
+   $("#ajoutOrganisateur").click(function(event) {
+
+       window.location.href = "<%=village.lienFormulaireBenevole %>";
+   });
+
+   <% } %>
+
+    /*
+    $("#ajoutBenevole").click(function(event) {
+            window.location.href = "/ajoutBenevole?villageId=<%= village._id %>";
+        });
+        */
+  $("#suppressionBenevole").click(function(event) {
+            window.location.href = "/suppressionBenevole?villageId=<%= village._id %>";
+        });
+
+
+
+
+  <% }%>
+
+</script>
+<% }%>
