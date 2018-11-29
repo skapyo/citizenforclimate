@@ -39,7 +39,8 @@
     "nodemailer":"*",
     "nodemailer-express-handlebars":"*",
     "jwt-simple":"*",
-    "mongoose-cache":"*"
+    "mongoose-cache":"*",
+    "i18n-express":"*"
     
   },
   "repository": {

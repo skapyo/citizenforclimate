@@ -1,6 +1,7 @@
 var cool = require('cool-ascii-faces');
 var express = require('express');
 var bodyParser = require("body-parser");
+var i18n=require("i18n-express");
 var app = express();
 
 const fs = require('fs');
@@ -9,7 +10,7 @@ app.use(bodyParser.urlencoded({ extended: true }));
 
 
 
-var url = 'mongodb://mongoDBUrlToReplace';
+var url = 'mongodb://TOREPLACE'
 var mongoose = require('mongoose');
 var Schema = mongoose.Schema,
     ObjectId = Schema.ObjectId;
@@ -44,6 +45,12 @@ app.use(session({
   store: new MongoStore({
     mongooseConnection: mongoose.connection
   })
+}));
+
+app.use(i18n({
+    translationsPath: join(__dirname, 'i18n'), // <--- use here. Specify translations files path.
+    siteLangs: ["en","fr"],
+    textsVarName: 'translation'
 }));
 
   /** Seting up server to accept cross-origin browser requests */

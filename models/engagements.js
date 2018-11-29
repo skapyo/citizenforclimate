@@ -2,7 +2,7 @@ var mongoose = require('mongoose');
 var Schema = mongoose.Schema,
     ObjectId = Schema.ObjectId;
 
-const TYPE_ENGAGEMENT = ['Energie renouvelable','Epargne solidaire','Relocalisation','Solidarité et partage','Agriculture','Recyclage','Sobriété'];
+const TYPE_ENGAGEMENT = ['Energie renouvelable','Epargne solidaire','Relocalisation','Solidarité et partage','Agriculture','Recyclage','Sobriété','Transport','Mobilité'];
 var EngagementSchema = new mongoose.Schema({
     nom:  String,
     description:String,

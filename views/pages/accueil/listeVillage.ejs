@@ -1,9 +1,5 @@
 
 
-<ul class="nav nav-tabs nav-justified">
-    <li class="active tab"><a data-toggle="tab" href="#toutesEtapes">Les marches pour le climat</a></li>
-    <li class="tab formation"><a data-toggle="tab" href="#menu1">Climate Friday</a></li>
-</ul>
 <div class="tab-content">
     <div id="toutesEtapes" class="tab-pane fade in active">
         <table id="listeVillage"  class="tableau">
@@ -98,7 +94,7 @@
             <td class="hide" ><%= village.nom %></td>
             <td><%
                     var libelleIcone="marker";
-                        libelleIcone+="_etendu";
+                    libelleIcone+="_etendu";
 
                 %>
                 <img  id="imageVelo" src="/images/<%=libelleIcone%>.png">
@@ -146,85 +142,85 @@
 </div>
 
 
-  <script>
+<script>
 
-  $("#listeVillage tbody tr:not(.nonCliquable)").click(function(event) {
-            var target = event.target;
-            if(target.parentElement.localName=="td"){
-               var parent = target.parentElement.parentElement;
-            }
-            else{
-              var parent = target.parentElement
-          }
-          var villageId=parent.id;
-            window.location.href = "/village?villageId="+villageId;
-        });
-  $("#listeClimateFriday tbody tr").click(function(event) {
-      var target = event.target;
-      if(target.parentElement.localName=="td"){
-          var parent = target.parentElement.parentElement;
-      }
-      else{
-          var parent = target.parentElement
-      }
-      var villageId=parent.id;
-      window.location.href = "/village?villageId="+villageId;
-  });
-   $(".contact").click(function(event) {
-      $("#contactVillageId").val($(event.target).data('villageid'));
+    $("#listeVillage tbody tr:not(.nonCliquable)").click(function(event) {
+        var target = event.target;
+        if(target.parentElement.localName=="td"){
+            var parent = target.parentElement.parentElement;
+        }
+        else{
+            var parent = target.parentElement
+        }
+        var villageId=parent.id;
+        window.location.href = "/village?villageId="+villageId;
     });
-   $.fn.dataTable.moment('DD/MM/YYYY, HH:mm');
+    $("#listeClimateFriday tbody tr").click(function(event) {
+        var target = event.target;
+        if(target.parentElement.localName=="td"){
+            var parent = target.parentElement.parentElement;
+        }
+        else{
+            var parent = target.parentElement
+        }
+        var villageId=parent.id;
+        window.location.href = "/village?villageId="+villageId;
+    });
+    $(".contact").click(function(event) {
+        $("#contactVillageId").val($(event.target).data('villageid'));
+    });
+    $.fn.dataTable.moment('DD/MM/YYYY, HH:mm');
 
-  jQuery.fn.dataTable.Api.register( 'page.jumpToData()', function ( data, column ) {
-      var pos = this.column(column, {order:'current'}).data().indexOf( data );
+    jQuery.fn.dataTable.Api.register( 'page.jumpToData()', function ( data, column ) {
+        var pos = this.column(column, {order:'current'}).data().indexOf( data );
 
-      if ( pos >= 0 ) {
-          var page = Math.floor( pos / this.page.info().length );
-          this.page( page ).draw( false );
-      }
+        if ( pos >= 0 ) {
+            var page = Math.floor( pos / this.page.info().length );
+            this.page( page ).draw( false );
+        }
 
-      return this;
-  } );
+        return this;
+    } );
 
-  var tableauVillage=$('#listeVillage').DataTable( {
+    var tableauVillage=$('#listeVillage').DataTable( {
         responsive: true,
         bSortable: true,
         "columnDefs": [
-          { "orderable": true, "targets": "_all" } // Applies the option to all columns
+            { "orderable": true, "targets": "_all" } // Applies the option to all columns
         ],
-    "language": {
-                "url": "//cdn.datatables.net/plug-ins/1.10.16/i18n/French.json"
-            },
+        "language": {
+            "url": "//cdn.datatables.net/plug-ins/1.10.16/i18n/French.json"
+        },
         'iDisplayLength': 25
 
-         ,
-          "order": [[ 3, "asc" ]]
+        ,
+        "order": [[ 3, "asc" ]]
 
-  } );
+    } );
 
 
-var initalise=false;
-  var tableauVillageFormation
-  $(".formation").click(function(event) {
-      if(!initalise) {
-           tableauVillageFormation = $('#listeClimateFriday').DataTable({
-              responsive: true,
-              bSortable: true,
-              "columnDefs": [
-                  {"orderable": true, "targets": "_all"} // Applies the option to all columns
-              ],
-              "language": {
-                  "url": "//cdn.datatables.net/plug-ins/1.10.16/i18n/French.json"
-              },
-              'iDisplayLength': 25
+    var initalise=false;
+    var tableauVillageFormation
+    $(".formation").click(function(event) {
+        if(!initalise) {
+            tableauVillageFormation = $('#listeClimateFriday').DataTable({
+                responsive: true,
+                bSortable: true,
+                "columnDefs": [
+                    {"orderable": true, "targets": "_all"} // Applies the option to all columns
+                ],
+                "language": {
+                    "url": "//cdn.datatables.net/plug-ins/1.10.16/i18n/French.json"
+                },
+                'iDisplayLength': 25
 
-              ,
-              "order": [[3, "asc"]]
+                ,
+                "order": [[3, "asc"]]
 
-          });
-          initalise=true;
-      }
-  });
-// Trie par date https://www.datatables.net/plug-ins/sorting/datetime-moment
+            });
+            initalise=true;
+        }
+    });
+    // Trie par date https://www.datatables.net/plug-ins/sorting/datetime-moment
 
 </script>

@@ -106,35 +106,6 @@ exports.ajoutVillage=function(request, response) {
             }
             village.horsFetesDesPossible=horsFetesDesPossible;
 
-            var dirname = require('path').dirname(__dirname);
-            if(request.file != undefined && typeof request.file!= undefined){
-                var filename = id;
-                var path = request.file.path;
-                var type = request.file.mimetype;
-
-                if(village.image!=null && village.image){
-                    gfs.remove({filename}, function(err) {
-                        if(err) {
-                            console.log('Erreur lors de la suppression de l image : ' + err);
-                            return;
-                        }
-                        console.log('Ancienne image correctement supprime');
-                    });
-                }
-                var read_stream =  fs.createReadStream(dirname + '/' + path);
-
-                var writestream = gfs.createWriteStream({
-                    filename: filename
-                });
-                read_stream.pipe(writestream);
-                //  var size =  fs.stat().size;
-                //  debugger;
-
-                fs.unlink(dirname + '/' + path, (err) => {
-                    if (err) throw err;
-            });
-                village.image=true;
-            }
 
             village.save(function (err){
                 console.log("Village "+ nom +" updaté dans la base.");
