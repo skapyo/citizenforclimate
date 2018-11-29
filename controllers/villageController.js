@@ -701,8 +701,8 @@ exports.afficherVillage=function(request, response) {
 function afficherVillage(request, response) {
     var villageId = request.query.villageId;
     var activiteId = request.query.activiteId;
-    var afficherEngagement=request.query.afficherEngagement
-
+    var afficherEngagement=request.query.afficherEngagement;
+    var language=request.query.clang;
 
     if(villageId !== undefined && typeof villageId !== undefined && villageId!="undefined" && villageId!="" ) {
         Village.findById(villageId).populate('_activites').populate('_participants').populate('_interesses').populate('_benevoles').populate('_organisateurs').populate('_referentsNonValides').populate('_referents').populate('_porteurs').populate('_engagements').populate('_engagements._informationParticipantEngagement').exec(function (err, village) {

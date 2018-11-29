@@ -8,12 +8,13 @@ var mailerhbs = require('nodemailer-express-handlebars');
 
 exports.home=function(request,response){
     //Village.find().populate('_activites').cache().exec(function (err, villages) {
+    var language=request.query.clang;
 
 Village.find().populate('_engagements _engagements._informationParticipantEngagement').cache().exec(function (err, villages) {
 
     InformationParticipantEngagement.populate(villages, '_engagements._informationParticipantEngagement', function (err, villageavecEngagement) {
         request.visitor.pageview("accueil").send();
-        response.render('pages/accueil', {villages: villageavecEngagement, moment: moment});
+        response.render('pages/accueil', {villages: villageavecEngagement, moment: moment,language:language});
     });
 });
 };

@@ -19,7 +19,7 @@
     <h1 class="text-center couleurVert"><%=translation.HOME_TITLE%></h1>
     </br>
     <div class="text-justify description">
-        Après le succès des marches du 8 septembre et du 13 octobre, nous appelons à une mobilisation internationale pendant les prochaines négociations climatiques mondiales : la COP24. Soyons nombreuses et nombreux dans les rues partout le 8 décembre, pour rappeler l’urgence d’agir !
+        <%=translation.HOME_DESCRIPTION%>
         </br></br>
         <%
         var nbEngagementDejaFait =0
@@ -46,15 +46,16 @@
         %>
 
         <div class ="center">
-            Il faut aussi agir, si nous sommes des milliers à changer, ça change tout.</br>
-            Déjà <b><%- nbEngagementDejaFait %></b> défis réalisés et <b><%- nbEngagementPris %></b> engagement pris.  </br>
-            <a href ="https://onestpret.fr/" target="blank" >On est prêt</a>. A vous d'agir, rejoignez la marche près de chez vous et cliquez sur J'agis
+            <%=translation.HOME_ACTION_0%>
+            </br>
+            <%=translation.HOME_ACTION_1%><b><%- nbEngagementDejaFait %></b>  <%=translation.HOME_ACTION_2%><b><%- nbEngagementPris %></b> <%=translation.HOME_ACTION_3%> </br>
+            <a href ="https://onestpret.fr/" target="blank" >On est prêt</a>. <%=translation.HOME_ACTION_4%>
         </div>
         </br>
         </br>
-        Vous êtes référent de marche et vous voulez créer votre propre page comme celle-ci <a href ="https://ensemblepourleclimat.fr/village?villageId=5bd8d8c3ebc6f56f25d0a844" target="blank" >Exemple de la marche de La Rochelle</a>
+        <%=translation.HOME_REFERENT_0%><a href ="https://ensemblepourleclimat.fr/village?villageId=5bd8d8c3ebc6f56f25d0a844" target="blank" ><%=translation.HOME_REFERENT_EXAMPLE%></a>
         </br>
-        Créez votre compte, puis dans Mon profil -> Espace référent -> Faites la demande de référent pour votre marche.
+        <%=translation.HOME_REFERENT_1%>
 
     </div>
 

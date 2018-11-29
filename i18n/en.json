@@ -1,3 +1,20 @@
 {
-  "HOME_TITLE": "Citizen for climate"
+  "SITE_TITLE": "Citizen for climate",
+
+  "NAV_HOME": "Page d'accueil",
+
+  "HOME_TITLE": "Citizen for climate",
+  "HOME_DESCRIPTION" : " After the success of the 8 September and 13 October marches, we call for international mobilization during the next global climate negotiations: COP24. Let us be numerous and numerous in the streets everywhere on December 8, to remind the urgency to act!",
+  "HOME_ACTION_0": "Acting is not a choice, if we are bilion to act, we can change the system.",
+  "HOME_ACTION_1": " Already ",
+  "HOME_ACTION_2": "challenges achieved and ",
+  "HOME_ACTION_3" : "challenges taken.  ",
+  "HOME_ACTION_4" : "It's your time to act, join the nearest walk and click on I act",
+  "HOME_REFERENT_0": "You are a walking leader and you want to create your own page like this ",
+  "HOME_REFERENT_EXAMPLE": "Example Walk of La Rochelle",
+  "HOME_REFERENT_1": "Create your account and follow the Profile Menu -> Administrator Page -> Do the referral request for your walk.",
+  "MAP_CLIMATE_WALK" : "Climate Walk",
+  "TABLE_WALK_HEADER_CITY" : "City",
+  "TABLE_WALK_HEADER_DESCRIPTION" :"Description"
+
 }

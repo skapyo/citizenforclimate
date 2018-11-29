@@ -6,8 +6,8 @@
 
             <thead>
             <td class="couleurAvecFond hide">Ville</td>
-            <td class="couleurAvecFond">Ville du collectif</td>
-            <td class="cacherMobile couleurAvecFond" >Description</td>
+            <td class="couleurAvecFond"><%=translation.TABLE_WALK_HEADER_CITY%></td>
+            <td class="cacherMobile couleurAvecFond" ><%=translation.TABLE_WALK_HEADER_DESCRIPTION%></td>
             <td class="couleurAvecFond hide ">Début</td>
             <td class="couleurAvecFond hide ">Fin</td>
             <td class="couleurAvecFond"></td>
@@ -77,7 +77,7 @@
 
             <thead>
             <td class="couleurAvecFond hide">Ville de la marche</td>
-            <td class="couleurAvecFond">Ville du collectif</td>
+            <td class="couleurAvecFond"><%=translation.TABLE_WALK_HEADER_CITY%></td>
             <td class="couleurAvecFond hide ">Début</td>
             <td class="couleurAvecFond hide ">Fin</td>
             <td class="couleurAvecFond"></td>
@@ -188,9 +188,11 @@
         "columnDefs": [
             { "orderable": true, "targets": "_all" } // Applies the option to all columns
         ],
+        <% if(typeof language !== "undefined" && language!=null && language==='fr'){ %>
         "language": {
             "url": "//cdn.datatables.net/plug-ins/1.10.16/i18n/French.json"
         },
+        <% } %>
         'iDisplayLength': 25
 
         ,
@@ -209,9 +211,11 @@
                 "columnDefs": [
                     {"orderable": true, "targets": "_all"} // Applies the option to all columns
                 ],
+                <% if(typeof language !== "undefined" && language!=null && language==='fr'){ %>
                 "language": {
                     "url": "//cdn.datatables.net/plug-ins/1.10.16/i18n/French.json"
                 },
+                <% } %>
                 'iDisplayLength': 25
 
                 ,

@@ -1,3 +1,22 @@
 {
-  "HOME_TITLE": "Citoyen pour le climat"
+  "SITE_TITLE": "Citoyen pour le climat",
+
+  "NAV_HOME": "HOME",
+
+  "HOME_TITLE": "Citoyen pour le climat",
+  "HOME_DESCRIPTION" : " Après le succès des marches du 8 septembre et du 13 octobre, nous appelons à une mobilisation internationale pendant les prochaines négociations climatiques mondiales : la COP24. Soyons nombreuses et nombreux dans les rues partout le 8 décembre, pour rappeler l’urgence d’agir !",
+  "HOME_ACTION_0": "Il faut aussi agir, si nous sommes des milliers à changer, ça change tout.",
+  "HOME_ACTION_1": " Déjà ",
+  "HOME_ACTION_2": "défis réalisés et ",
+  "HOME_ACTION_3" : "engagement pris.  ",
+  "HOME_ACTION_4" : "A vous d'agir, rejoignez la marche près de chez vous et cliquez sur J'agis",
+  "HOME_REFERENT_0": "Vous êtes référent de marche et vous voulez créer votre propre page comme celle-ci ",
+  "HOME_REFERENT_EXAMPLE": "Exemple de la marche de La Rochelle",
+  "HOME_REFERENT_1": "Créez votre compte, puis dans Mon profil -> Espace référent -> Faites la demande de référent pour votre marche.",
+
+  "MAP_CLIMATE_WALK" : "Marche pour le climat",
+
+  "TABLE_WALK_HEADER_CITY" : "Ville",
+  "TABLE_WALK_HEADER_DESCRIPTION" :"Description"
+
 }
