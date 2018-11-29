@@ -1,13 +1,13 @@
  <%
 	if (!(villagesInteresses!== undefined && villagesInteresses.length==0){ %>
 <div id="villagesInteresses" class="bordureGrise">
-Liste des marches auxquelles tu es intéréssés
+	<%=translation.PROFIL_LIST_WALK_INTERREST%>
 <p>
       <table id="listeVillageInteresse" class="tableau">
 	      <thead>
 	      <tr>
-	          <td>Nom</td>
-	          <td>Accéder à l'marche</td>
+	          <td><%=translation.PROFIL_LIST_WALK_NAME%></td>
+	          <td><%=translation.PROFIL_LIST_WALK_ACCESS%></td>
 	      </tr>
 	      </thead>
 	      <tbody>
@@ -16,7 +16,7 @@ Liste des marches auxquelles tu es intéréssés
 	          villagesInteresses.forEach(function(village) { %>
 	        <tr id="<%= village._id %>">
 	          <td><%= village.nom %></td>
-	          <td><a href="/village?villageId=<%= village._id %>"> <button>Entrer dans la marche</button></a></td>
+	          <td><a href="/village?villageId=<%= village._id %>"> <button><%=translation.PROFIL_LIST_WALK_ACCESS%></button></a></td>
 	        </tr>
 	          <% });
 	          }%>

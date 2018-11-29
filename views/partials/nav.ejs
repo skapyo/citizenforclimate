@@ -10,14 +10,14 @@
    		
       <ul class="nav navbar-nav mr-auto">
         <li class="nav-item" id="accueil_Icone">
-          <a href="/"><span class="glyphicon glyphicon-globe"></span> <%=translation.NAV_HOME%>Page d'accueil</a>
+          <a href="/"><span class="glyphicon glyphicon-globe"></span> <%=translation.NAV_HOME%></a>
         </li>
 
      <% if (typeof accesscontrol !== "undefined" && accesscontrol!=null && typeof utilisateur !== "undefined" && utilisateur!=null ) { 
       if ( utilisateur.role!=null &&  accesscontrol.can(utilisateur.role).updateAny('village').granted){ %>
          
       <li lass="nav-item" id="village_Icone">
-            <a href="/editionVillage"><span class="glyphicon glyphicon-home"></span> Création / Edition de marche</a>
+            <a href="/editionVillage"><span class="glyphicon glyphicon-home"></span> <%=translation.NAV_EDIT_WALK%></a>
           </li> 
 
      <% } %>
@@ -25,12 +25,12 @@
      <ul class="nav navbar-nav navbar-right" >
         <li class="nav-item dropdown" id="Profil_Icone">
         <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-          <span class="glyphicon glyphicon-user"></span>Mon profil
+          <span class="glyphicon glyphicon-user"></span><%=translation.NAV_PROFIL%>
         </a>
         <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
-          <a class="dropdown-item" href="/profil/mesEtapes">Mes préférences</a>
-          <a class="dropdown-item" href="/profil/referent">Espace Référent</a>
-          <a class="dropdown-item" href="/authentification/logout">Se déconnecter</a>
+          <a class="dropdown-item" href="/profil/mesEtapes"><%=translation.NAV_PROFIL_PREFERENCE%></a>
+          <a class="dropdown-item" href="/profil/referent"><%=translation.NAV_PROFIL_REFERENT%></a>
+          <a class="dropdown-item" href="/authentification/logout"><%=translation.NAV_PROFIL_DISCONNECT%></a>
         </div>
       </li>
 	  </ul>
@@ -39,7 +39,7 @@
 
      <ul class="nav navbar-nav navbar-right" >
         <li class="nav-item " id="Profil_Icone">
-          <a href="/profil/mesEtapes"><span class="glyphicon glyphicon-user"></span>Connexion</a>
+          <a href="/profil/mesEtapes"><span class="glyphicon glyphicon-user"></span><%=translation.NAV_PROFIL_CONNECTION%></a>
         </li>
 	</ul>
          <% } %>

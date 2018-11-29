@@ -2,6 +2,7 @@
     if (typeof accesscontrol !== "undefined" && accesscontrol!=null && typeof utilisateur !== "undefined" && utilisateur!=null ) { 
 			if (villages!== undefined && villages.length!=0){ %>
 	<form action="/ajoutReferent" method="get">
+		<%=translation.PROFIL_REFERENT_DEMAND_TITLE%>
 		Vous pouvez faire une demande pour être référent d'une marche en choissant la marche dans la liste déroulante.
 		La demande doit être ensuite validée.
 		<select id="selectVillage" name="villageId" class="selectpicker" data-live-search="true" >

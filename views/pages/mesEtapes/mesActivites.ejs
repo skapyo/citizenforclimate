@@ -1,17 +1,18 @@
 <div id="activites" class="bordureGrise">
  <%
 	if (activites!== undefined && activites.length==0){ %>
-Tu ne participe encore 	&agrave; aucune activit&eacute;
+	<%=translation.PROFIL_NO_ACTIVITY%>
+
 	<% } else { %>
-Liste des activit&eacute;s auxquelles tu souhaites participer
+	<%=translation.PROFIL_ACTIVITY_LIST_TITLE%>
 <p>
       <table id="listeActiviteeParticipant" class="tableau">
 	      <thead>
 	      <tr>
-	          <td>Nom</td>
+	          <td><%=translation.PROFIL_ACTIVITY_LIST_NAME%></td>
 	         <!-- <td>Materiel Necessaire</td> -->
-	          <td>Lieu</td>
-	          <td>Etape</td>
+	          <td><%=translation.PROFIL_ACTIVITY_LIST_PLACE%></td>
+	          <td><%=translation.PROFIL_ACTIVITY_LIST_WALK%></td>
 	      </tr>
 	      </thead>
 	      <tbody>

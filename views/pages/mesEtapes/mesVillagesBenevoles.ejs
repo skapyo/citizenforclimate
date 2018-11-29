@@ -1,13 +1,13 @@
  <% if (!(villagesBenevoles!== undefined && villagesBenevoles.length==0)){ %>
 <div id="villagesBenevoles" class="bordureGrise">
-Liste des marches pour lesquelles dont tu es bénévole pour le jour J
+	<%=translation.PROFIL_LIST_WALK_BENEVOLE%>
 <p>
       <table id="listeVillageBenevoles" class="tableau">
 	      <thead>
 	      <tr>
-	          <td>Nom</td>
-	          <td>Nombre bénévoles</td>
-	          <td>Accéder à la marche</td>
+	          <td><%=translation.PROFIL_LIST_WALK_NAME%></td>
+	          <td><%=translation.PROFIL_LIST_WALK_NUMBER_BENEVOLE%></td>
+	          <td><%=translation.PROFIL_LIST_WALK_ACCESS%></td>
 	      </tr>
 	      </thead>
 	      <tbody>
@@ -17,7 +17,7 @@ Liste des marches pour lesquelles dont tu es bénévole pour le jour J
 	        <tr id="<%= village._id %>">
 	          <td><%= village.nom %></td>
 	          <td><%= village._benevoles.length %></td>
-	          <td><a href="/village?villageId=<%= village._id %>"> <button>Entrer dans la marche</button></a></td>
+	          <td><a href="/village?villageId=<%= village._id %>"> <button><%=translation.PROFIL_LIST_WALK_ENTER%></button></a></td>
 	        </tr>
 	          <% });
 	          }%>

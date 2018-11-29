@@ -1,7 +1,13 @@
 {
   "SITE_TITLE": "Citizen for climate",
 
-  "NAV_HOME": "Page d'accueil",
+  "NAV_HOME": "Home",
+  "NAV_EDIT_WALK" :"Création / Edition de marche",
+  "NAV_PROFIL" :"Mon profil",
+  "NAV_PROFIL_PREFERENCE" :"Mes préférences",
+  "NAV_PROFIL_REFERENT" :"Espace Référent",
+  "NAV_PROFIL_DISCONNECT" :"Se déconnecter",
+  "NAV_PROFIL_CONNECTION" :"Connexion",
 
   "HOME_TITLE": "Citizen for climate",
   "HOME_DESCRIPTION" : " After the success of the 8 September and 13 October marches, we call for international mobilization during the next global climate negotiations: COP24. Let us be numerous and numerous in the streets everywhere on December 8, to remind the urgency to act!",
@@ -15,6 +21,24 @@
   "HOME_REFERENT_1": "Create your account and follow the Profile Menu -> Administrator Page -> Do the referral request for your walk.",
   "MAP_CLIMATE_WALK" : "Climate Walk",
   "TABLE_WALK_HEADER_CITY" : "City",
-  "TABLE_WALK_HEADER_DESCRIPTION" :"Description"
+  "TABLE_WALK_HEADER_DESCRIPTION" :"Description",
+
+  "PROFIL_NO_PARTICIPATION" : "Tu ne participes encore à aucune marche",
+  "PROFIL_LIST_WALK" : "Liste des marches auxquelles tu souhaites participer",
+  "PROFIL_LIST_WALK_NAME" : "Nom",
+  "PROFIL_LIST_WALK_ACCESS" : "Accéder à la marche",
+  "PROFIL_LIST_WALK_ENTER" : "Entrer dans la marche",
+  "PROFIL_LIST_WALK_BENEVOLE" : "Liste des marches pour lesquelles dont tu es bénévole pour le jour J",
+  "PROFIL_LIST_WALK_NUMBER_BENEVOLE" : "Nombre bénévoles",
+  "PROFIL_LIST_WALK_INTERREST" : "Liste des marches auxquelles tu es intéréssés",
+  "PROFIL_NO_ACTIVITY" : "Tu ne participe encore à aucune activité",
+  "PROFIL_ACTIVITY_LIST_TITLE" : "Liste des activités auxquelles tu souhaites participer",
+  "PROFIL_ACTIVITY_LIST_NAME" : "Nom",
+  "PROFIL_ACTIVITY_LIST_PLACE" : "Lieu",
+  "PROFIL_ACTIVITY_LIST_WALK" : "Etape"
+
+
+
+
 
 }

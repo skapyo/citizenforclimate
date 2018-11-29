@@ -1,15 +1,15 @@
 <div id="villagesParticipants" class="bordureGrise">
  <%
 	if (villagesParticipants!== undefined && villagesParticipants.length==0){ %>
-Tu ne participes encore &agrave; aucune marche
+	<%=translation.PROFIL_NO_PARTICIPATION%>
 	<% } else { %>
-Liste des marches auxquelles tu souhaites participer
+	<%=translation.PROFIL_LIST_WALK%>
 <p>
       <table id="listeVillageParticipant" class="tableau">
 	      <thead>
 	      <tr>
-	          <td>Nom</td>
-	          <td>Accéder à la marche</td>
+	          <td><%=translation.PROFIL_LIST_WALK_NAME%></td>
+	          <td><%=translation.PROFIL_LIST_WALK_ACCESS%></td>
 	      </tr>
 	      </thead>
 	      <tbody>
@@ -18,7 +18,7 @@ Liste des marches auxquelles tu souhaites participer
 	          villagesParticipants.forEach(function(village) { %>
 	        <tr id="<%= village._id %>">
 	          <td><%= village.nom %></td>
-	          <td><a href="/village?villageId=<%= village._id %>"> <button>Entrer dans la marche</button></a></td>
+	          <td><a href="/village?villageId=<%= village._id %>"> <button><%=translation.PROFIL_LIST_WALK_ENTER%></button></a></td>
 	        </tr>
 	          <% });
 	          }%>

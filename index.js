@@ -10,7 +10,9 @@ app.use(bodyParser.urlencoded({ extended: true }));
 
 
 
-var url = 'mongodb://cfc:hhlJPGlyIrc9yq25EVxo@localhost:27017/mapCFC'
+var url = 'mongodb://cfc:123456@35.180.167.130:27017/mapCFC';
+//'mongodb://cfc:hhlJPGlyIrc9yq25EVxo@localhost:27017/mapCFC';
+url = 'mongodb://ilestencoretemps:ilestencoretemps2018@ds147213.mlab.com:47213/heroku_vd0nv6cm';
 var mongoose = require('mongoose');
 var Schema = mongoose.Schema,
     ObjectId = Schema.ObjectId;
