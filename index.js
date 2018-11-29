@@ -50,7 +50,10 @@ app.use(session({
 app.use(i18n({
     translationsPath: join(__dirname, 'i18n'), // <--- use here. Specify translations files path.
     siteLangs: ["en","fr"],
-    textsVarName: 'translation'
+    textsVarName: 'translation',
+    browserEnable: 'true',
+    defaultLang: 'en',
+    paramLangName: 'clang'
 }));
 
   /** Seting up server to accept cross-origin browser requests */
