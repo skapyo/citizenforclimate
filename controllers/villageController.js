@@ -19,11 +19,6 @@ var moment = require('moment');
 
 var conn = mongoose.connection;
 var multer = require('multer');
-var GridFsStorage = require('multer-gridfs-storage');
-var Grid = require('gridfs-stream');
-Grid.mongo = mongoose.mongo;
-var db = new mongo.Db('',new mongo.Server("",47213));
-var gfs = Grid(db,mongoose.mongo);
 const nodemailer = require('nodemailer');
 
 var mailerhbs = require('nodemailer-express-handlebars');
@@ -32,44 +27,6 @@ const url = require('url');
 
 
 /** API path that will upload the files */
-exports.upload=function(req, res) {
-    var dirname = require('path').dirname(__dirname);
-    var filename = req.file.originalname;
-    var path = req.file.path;
-    var type = req.file.mimetype;
-
-    var read_stream =  fs.createReadStream(dirname + '/' + path);
-
-    var writestream = gfs.createWriteStream({
-        filename: filename
-    });
-    read_stream.pipe(writestream);
-
-
-    fs.unlink(dirname + '/' + path, (err) => {
-        if (err) throw err;
-});
-};
-
-exports.recupererImage=function(req, res){
-    res.json('Image non trouvée');
-    if(false) {
-        var pic_id = req.param('nomImage');
-        gfs.files.find({filename: pic_id}).toArray(function (err, files) {
-
-            if (err) {
-                res.json(err);
-            }
-            if (files.length > 0) {
-                res.set('Content-Type', files[0].contentType);
-                var read_stream = gfs.createReadStream({filename: pic_id});
-                read_stream.pipe(res);
-            } else {
-                res.json('Image non trouvée');
-            }
-        });
-    }
-};
 
 
 

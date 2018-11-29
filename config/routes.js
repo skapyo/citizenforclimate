@@ -18,8 +18,6 @@ const engagementController = require('../controllers/engagementController');
 var mongoose = require('mongoose');
 var passport = require('passport');
 var  Utilisateur = mongoose.model('Utilisateur');
-var multer = require('multer');
-var upload =multer({dest: './uploads/'});
 const AccessControl = require('accesscontrol');
 var ua = require('universal-analytics');
 var visitor = ua('codeGAToReplace');
@@ -215,8 +213,8 @@ module.exports = function (app) {
     
     app.get('/login',ajoutFlashMessage, authentificationController.login);
     //page edition village
-   	app.get('/editionVillage',ajoutUtilisateurEtAccesControl,upload.single('image'), villageController.editionVillage);
-    app.post('/ajoutVillage',ajoutUtilisateurEtAccesControl,upload.single('image'), villageController.ajoutVillage);
+   	app.get('/editionVillage',ajoutUtilisateurEtAccesControl, villageController.editionVillage);
+    app.post('/ajoutVillage',ajoutUtilisateurEtAccesControl, villageController.ajoutVillage);
     //Page village
     app.get('/village',ajoutUtilisateurEtAccesControl, villageController.afficherVillage);
     app.get('/data',requiresLogin,ajoutUtilisateurEtAccesControl, villageController.afficherData);
@@ -244,7 +242,6 @@ module.exports = function (app) {
     app.get('/contactVillage',ajoutUtilisateurEtAccesControl, villageController.afficherVillage);
     
 
-    app.get('/recupererImage/:nomImage',villageController.recupererImage);
     app.get('/creerFormation',villageController.creerFormation);
     app.get('/exportVillageKML',villageController.exportVillageKML);
 
