@@ -2,19 +2,19 @@
   <% if (typeof accesscontrol !== "undefined" && accesscontrol!=null && typeof utilisateur !== "undefined" && utilisateur!=null ) { 
        if ( utilisateur.role!=null &&  accesscontrol.can(utilisateur.role).readAny('referent').granted || contientUtilisateur(village._referents)){ %>
   %>
-    Nombre de référents : <%= village._referents.length %> 
+  <%=translation.WALK_SECTION_REFERENT_NUMBER%><%= village._referents.length %>
 
-  <div class="afficher-cacher-filtre"> <span class="ouvrirReferent">Afficher la liste des référents</span> <span class="fermerReferent hide">Cacher la liste des référents</span></div>
+  <div class="afficher-cacher-filtre"> <span class="ouvrirReferent"><%=translation.WALK_SECTION_REFERENT_LIST_SHOW%></span> <span class="fermerReferent hide"><%=translation.WALK_SECTION_REFERENT_LIST_HIDE%></span></div>
  <p>
  <div id="referent" style="display:none">
- Liste des référents : 
+      <%=translation.WALK_SECTION_REFERENT_LIST_TITLE%>
       <table id="listeReferents">
         <thead>
         <tr>
-            <td>Nom</td>
-            <td>Prénom</td>
-            <td>Email</td>
-            <td>Téléphone</td>
+            <td><%=translation.WALK_SECTION_REFERENT_LIST_NAME%></td>
+            <td><%=translation.WALK_SECTION_REFERENT_LIST_FIRSTNAME%></td>
+            <td><%=translation.WALK_SECTION_REFERENT_LIST_EMAIL%></td>
+            <td><%=translation.WALK_SECTION_REFERENT_LIST_CUTIME%></td>
         </tr>
         </thead>
         <tbody>

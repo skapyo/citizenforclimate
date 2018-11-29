@@ -3,19 +3,19 @@
   <% if (typeof accesscontrol !== "undefined" && accesscontrol!=null && typeof utilisateur !== "undefined" && utilisateur!=null ) { 
        if ( utilisateur.role!=null &&  accesscontrol.can(utilisateur.role).readAny('organisateur').granted || contientUtilisateur(village._organisateurs)|| contientUtilisateur(village._referents)){ %>
   %>
-  Nombre d'organisateurs : <%= village._organisateurs.length %> 
-  <div class="afficher-cacher-filtre"> <span class="ouvrirOrganisateur">Afficher la liste des bénévoles souhaitant aider à l'organisation</span> <span class="fermerOrganisateur hide">Cacher la liste des bénévoles souhaitant aider à l'organisation</span></div>
+<%=translation.WALK_SECTION_INTEREST_NUMBER%> <%= village._organisateurs.length %>
+  <div class="afficher-cacher-filtre"> <span class="ouvrirOrganisateur"><%=translation.WALK_SECTION_ORGANISATOR_LIST_SHOW%></span> <span class="fermerOrganisateur hide"><%=translation.WALK_SECTION_ORGANISATOR_LIST_HIDE%></span></div>
  <p>
  <div id="organisateur" style="display:none">
- Liste des organisateurs : 
+    <%=translation.WALK_SECTION_ORGANISATOR_LIST_TITLE%>
       <table id ="listeOrganisateurs">
         <thead>
         <tr>
-            <td>Nom</td>
-            <td>Prénom</td>
-            <td>Email</td>
-            <td>Téléphone</td>
-            <td>Date cr&eacute;ation</td>
+            <td><%=translation.WALK_SECTION_ORGANISATOR_LIST_NAME%> </td>
+            <td><%=translation.WALK_SECTION_ORGANISATOR_LIST_FIRSTNAME%></td>
+            <td><%=translation.WALK_SECTION_ORGANISATOR_LIST_FIRSTNAME%></td>
+            <td><%=translation.WALK_SECTION_ORGANISATOR_LIST_PHONE%></td>
+            <td><%=translation.WALK_SECTION_ORGANISATOR_LIST_CUTIME%></td>
         </tr>
         </thead>
         <tbody>

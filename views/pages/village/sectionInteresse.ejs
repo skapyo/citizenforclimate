@@ -2,19 +2,19 @@
   <% if (typeof accesscontrol !== "undefined" && accesscontrol!=null && typeof utilisateur !== "undefined" && utilisateur!=null ) { 
   		 if ( utilisateur.role!=null &&  accesscontrol.can(utilisateur.role).readAny('interesse').granted || contientUtilisateur(village._referents)){ %>
   %>
-    Nombre d'intéressés : <%= village._interesses.length %> 
+<%=translation.WALK_SECTION_INTEREST_NUMBER%><%= village._interesses.length %>
 
-  <div class="afficher-cacher-filtre"> <span class="ouvrirInteresse">Afficher la liste des personnes intéressées</span> <span class="fermerInteresse hide">Cacher la liste des personnes intéressées</span></div>
+  <div class="afficher-cacher-filtre"> <span class="ouvrirInteresse"><%=translation.WALK_SECTION_INTEREST_LIST_SHOW%></span> <span class="fermerInteresse hide"><%=translation.WALK_SECTION_INTEREST_LIST_HIDE%></span></div>
  <p>
  <div id="interesse" style="display:none">
- Liste des intéressés : 
+    <%=translation.WALK_SECTION_INTEREST_LIST_TITLE_HIDE%>
       <table id="listeInteresses">
 	      <thead>
 	      <tr>
-	          <td>Nom</td>
-	          <td>Prénom</td>
-	          <td>Email</td>
-	          <td>Date cr&eacute;ation</td>
+	          <td><%=translation.WALK_SECTION_INTEREST_LIST_NAME%></td>
+	          <td><%=translation.WALK_SECTION_INTEREST_LIST_FIRSTNAME%></td>
+	          <td><%=translation.WALK_SECTION_INTEREST_LIST_EMAIL%></td>
+	          <td><%=translation.WALK_SECTION_INTEREST_LIST_CUTIME%></td>
 	      </tr>
 	      </thead>
 	      <tbody>

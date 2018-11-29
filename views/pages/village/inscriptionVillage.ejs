@@ -6,10 +6,10 @@
 	    if(village.inscriptionVisiteur!=null && village.inscriptionVisiteur){%> 
 	     <div class=" center-block ">
 		    <%   if (contientUtilisateur(village._interesses)){ %>
-				<button type="submit" id="suppressionInteresse" class="btn btn-default couleurbginverse ">Je ne suis plus intéressé par la marche </button>
+				<button type="submit" id="suppressionInteresse" class="btn btn-default couleurbginverse "><%=translation.WALK_INTERESTED_NO%></button>
 		    
 		  <%  }else{ %>
-		  <button type="submit" id="ajoutInteresse" class="btn btn-default couleurbg">Je suis intéressé par la marche</button>
+		  <button type="submit" id="ajoutInteresse" class="btn btn-default couleurbg"><%=translation.WALK_INTERESTED%></button>
 		  <% } %>
 		  </br>
 	  </div>
@@ -19,9 +19,9 @@
 	    if(village.inscriptionVisiteur!=null && village.inscriptionVisiteur){ %> 
 		     <div class="center-block ">
 			  <%if (contientUtilisateur(village._participants)){ %>
-	        	<button type="submit" id="suppressionParticipant" class="btn btn-default couleurbginverse">Je ne participerai plus participer à la marche </button>
+	        	<button type="submit" id="suppressionParticipant" class="btn btn-default couleurbginverse"><%=translation.WALK_PARTICIPATION_NO%></button>
 	  <%  }else{ %>
-	  <button type="submit" id="ajoutParticipant" class="btn btn-default couleurbg">Je participerai à la marche</button>
+	  <button type="submit" id="ajoutParticipant" class="btn btn-default couleurbg"><%=translation.WALK_PARTICIPATION%></button>
 	  <% } %>
 	  </br>
 	  </div>
@@ -30,9 +30,9 @@
 	   <% if(village.inscriptionOrganisateur!=null && village.inscriptionOrganisateur){  %> 
 		 <div class="center-block ">
 			<%if (contientUtilisateur(village._organisateurs)){ %>
-		   		<button type="submit" id="suppressionOrganisateur" class="btn btn-default couleurbginverse">Je ne souhaite plus aider à l'organisation </button>
+		   		<button type="submit" id="suppressionOrganisateur" class="btn btn-default couleurbginverse"><%=translation.WALK_ORGANISATOR_NO%></button>
 		  <%  }else{ %>
-		  	<button type="button"  id="ajoutOrganisateur" class="btn btn-default couleurbg" data-toggle="modal" data-target="#popinContactOrganisateur">Je souhaite aider à l'organisation de la marche</button>
+		  	<button type="button"  id="ajoutOrganisateur" class="btn btn-default couleurbg" data-toggle="modal" data-target="#popinContactOrganisateur"><%=translation.WALK_ORGANISATOR%></button>
 		  <% } %>
 		  
 		  </br>
@@ -42,11 +42,11 @@
 	  <% if(village.inscriptionBenevole!=null && village.inscriptionBenevole){%> 
 		<div class="center-block ">
 			<%if (contientUtilisateur(village._benevoles)){ %>
-		        <button type="submit" id="suppressionBenevole" class="btn btn-default couleurbginverse">Je ne souhaite plus aider le jour J</button>
+		        <button type="submit" id="suppressionBenevole" class="btn btn-default couleurbginverse"><%=translation.WALK_BENEVOLE_NO%></button>
 		  <%  }
 		
 		  else{ %>
-		   <button type="button"  id="ajoutBenevole" class="btn btn-default couleurbg" data-toggle="modal" data-target="#popinContactBenevole">Je souhaite aider le jour J</button>
+		   <button type="button"  id="ajoutBenevole" class="btn btn-default couleurbg" data-toggle="modal" data-target="#popinContactBenevole"><%=translation.WALK_BENEVOLE%></button>
 		   <% } %>
 		  </br>
 	   </div>
@@ -56,7 +56,7 @@
  <% if(village.inscriptionVisiteur!=null && village.inscriptionVisiteur || village.inscriptionBenevole!=null && village.inscriptionBenevole || village.inscriptionOrganisateur!=null && village.inscriptionOrganisateur){ 
   %>
   <div class="alert alert-info text-center">
-En cliquant sur un bouton, vos coordonnées seront transmises aux référents de cette marche
+<%=translation.WALK_INSCRIPTION_CONFIDENTIAL%>
 </div>
  <%} 
   %>

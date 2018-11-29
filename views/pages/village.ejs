@@ -16,7 +16,7 @@
 <div class="center-block">
   <div class="row ">
     <div class="col-xs-6 center-block " style="float:none"><span class="align-middle"><h1 class="text-center couleurVert">
-		Bienvenue à la marche de
+        <%=translation.WELCOME_TITLE%>
 		  <% if (typeof village !== "undefined" && village!=null) {%>
 		    <%= village.nom %>
 		  <% }%><span class="align-middle"></h1>
@@ -35,10 +35,10 @@
             </div>
  <% }else {
 	  %><div class="col-sm center-block"/>
-	        Début : <%= moment.utc(horairesOuverture.dateDebut).locale("fr").format('Do MMMM YYYY, HH:mm') %>
+    <%=translation.WELCOME_START%><%= moment.utc(horairesOuverture.dateDebut).locale("fr").format('Do MMMM YYYY, HH:mm') %>
 	    </div>
 	    <div class="col-sm center-block"/>
-	      Fin : <%= moment.utc(horairesOuverture.dateFin).locale("fr").format('Do MMMM YYYY, HH:mm')%>
+    <%=translation.WELCOME_START%><%= moment.utc(horairesOuverture.dateFin).locale("fr").format('Do MMMM YYYY, HH:mm')%>
 	    </div><%
 	}
     });
@@ -84,9 +84,9 @@
   });
   %>
   <div class ="center">
-      Il faut aussi agir, si nous sommes des milliers à changer, ça change tout.</br>
-      Déjà <b><%- nbEngagementDejaFait %></b> défis réalisés et <b><%- nbEngagementPris %></b> engagement pris pour <% if (typeof village !== "undefined" && village!=null) {%><%= village.nom %><% }%>.  </br>
-      <a href ="https://onestpret.fr/" target="blank" >On est prêt</a>. A vous d'agir :
+      <%=translation.HOME_ACTION_0%></br>
+      <%=translation.HOME_ACTION_1%><b><%- nbEngagementDejaFait %></b> <%=translation.HOME_ACTION_2%><b><%- nbEngagementPris %></b>  <%=translation.HOME_ACTION_3BIS%><% if (typeof village !== "undefined" && village!=null) {%><%= village.nom %><% }%>.  </br>
+      <a href ="https://onestpret.fr/" target="blank" >On est prêt</a>. <%=translation.HOME_ACTION_4%>
       </br>
       </br>
       <button type="button"  id="agirbutton" data-villageid="<%= village._id %>" class="btn btn-default couleurbg agir center agirwidth" data-toggle="modal" data-target="#popinEngagement">J'agis</button>

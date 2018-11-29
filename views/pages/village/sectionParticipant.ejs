@@ -2,19 +2,19 @@
   <% if (typeof accesscontrol !== "undefined" && accesscontrol!=null && typeof utilisateur !== "undefined" && utilisateur!=null ) { 
   		 if ( utilisateur.role!=null &&  accesscontrol.can(utilisateur.role).readAny('participant').granted || contientUtilisateur(village._referents)){ %>
   %>
-    Nombre de participants : <%= village._participants.length %> 
+<%=translation.WALK_SECTION_PARTICIPANT_NUMBER%><%= village._participants.length %>
 
-  <div class="afficher-cacher-filtre"> <span class="ouvrirParticipant">Afficher la liste des participants à la marche</span> <span class="fermerParticipant hide">Cacher la liste la liste des participants à la marche</span></div>
+  <div class="afficher-cacher-filtre"> <span class="ouvrirParticipant"><%=translation.WALK_SECTION_PARTICIPANT_LIST_SHOW%></span> <span class="fermerParticipant hide"><%=translation.WALK_SECTION_PARTICIPANT_LIST_HIDE%></span></div>
  <p>
  <div id="participant" style="display:none">
- Liste des participants : 
+    <%=translation.WALK_SECTION_PARTICIPANT_NUMBER%>
       <table id="listeParticipants">
 	      <thead>
 	      <tr>
-	          <td>Nom</td>
-	          <td>Prénom</td>
-	          <td>Email</td>
-	          <td>Date cr&eacute;ation</td>
+	          <td><%=translation.WALK_SECTION_PARTICIPANT_LIST_NAME%></td>
+	          <td><%=translation.WALK_SECTION_PARTICIPANT_LIST_FIRSTNAME%></td>
+	          <td><%=translation.WALK_SECTION_PARTICIPANT_LIST_EMAIL%></td>
+	          <td><%=translation.WALK_SECTION_PARTICIPANT_LIST_CUTIME%></td>
 	      </tr>
 	      </thead>
 	      <tbody>
