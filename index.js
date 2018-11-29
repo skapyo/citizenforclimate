@@ -10,7 +10,7 @@ app.use(bodyParser.urlencoded({ extended: true }));
 
 
 
-var url = 'mongodb://TOREPLACE'
+var url = 'mongodb://cfc:hhlJPGlyIrc9yq25EVxo@localhost:27017/mapCFC'
 var mongoose = require('mongoose');
 var Schema = mongoose.Schema,
     ObjectId = Schema.ObjectId;

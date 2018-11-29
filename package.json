@@ -34,14 +34,13 @@
     "multer": "*",
     "multer-gridfs-storage": "*",
     "gridfs-stream": "*",
-    "universal-analytics":"*",
-    "bootstrap-select":"*",
-    "nodemailer":"*",
-    "nodemailer-express-handlebars":"*",
-    "jwt-simple":"*",
-    "mongoose-cache":"*",
-    "i18n-express":"*"
-    
+    "universal-analytics": "*",
+    "bootstrap-select": "*",
+    "nodemailer": "*",
+    "nodemailer-express-handlebars": "*",
+    "jwt-simple": "*",
+    "mongoose-cache": "*",
+    "i18n-express": "*"
   },
   "repository": {
     "type": "git",
