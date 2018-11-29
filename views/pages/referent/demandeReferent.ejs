@@ -2,11 +2,10 @@
     if (typeof accesscontrol !== "undefined" && accesscontrol!=null && typeof utilisateur !== "undefined" && utilisateur!=null ) { 
 			if (villages!== undefined && villages.length!=0){ %>
 	<form action="/ajoutReferent" method="get">
-		<%=translation.PROFIL_REFERENT_DEMAND_TITLE%>
-		Vous pouvez faire une demande pour être référent d'une marche en choissant la marche dans la liste déroulante.
-		La demande doit être ensuite validée.
+		<%=translation.PROFIL_REFERENT_DEMAND_TITLE%></br>
+		<%=translation.PROFIL_REFERENT_DEMAND_TITLE2%></br>
 		<select id="selectVillage" name="villageId" class="selectpicker" data-live-search="true" >
-					<option><Choissiez une marche</option>
+					<option><%=translation.PROFIL_REFERENT_DEMAND_CHOOSE_WALK%></option>
 			          <%
 			          if (villages!== undefined){
 			          	
@@ -20,7 +19,7 @@
 			           });
 			          }%>
 		</select>
-		<input id="demandeReferent" type="submit" class="hide"  value="Demander à être référent">
+		<input id="demandeReferent" type="submit" class="hide"  value="<%=translation.PROFIL_REFERENT_DEMAND_CHOOSE_WALK_CONFIRM%>">
 	</form>
 	</p>
 	</br>
@@ -33,7 +32,7 @@
 							if(referent.id==utilisateur.id){
 								%>
 								<div class="alert alert-primary" role="alert">
-								Tu es en attente de validation pour être référent sur la marche <%= village.nom %> </br>
+									<%=translation.PROFIL_REFERENT_DEMAND_CHOOSE_WALK_WAIT%> <%= village.nom %> </br>
 								</div>
 								<%
 							}

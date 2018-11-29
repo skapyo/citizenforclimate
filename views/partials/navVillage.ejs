@@ -24,7 +24,7 @@
     <div class="collapse navbar-collapse" id="navbarSupportedContent">
       <ul class="nav navbar-nav mr-auto">
         <li class="nav-item" id="accueil_Icone">
-          <a href="/"><span class="glyphicon glyphicon-globe"></span> Page d'accueil</a>
+          <a href="/"><span class="glyphicon glyphicon-globe"></span><%=translation.NAV_HOME%></a>
         <li id="village_Icone" class="nav-item">
           <a href="/village?villageId=<% if (typeof village !== "undefined" && village!=null) {%><%= village.id %><% }%>"><span class="glyphicon glyphicon-home"></span> <% if (typeof village !== "undefined" && village!=null) {%><%= village.nom %><% }%></a>
     
@@ -33,39 +33,39 @@
       
           if ( utilisateur.role!=null &&  accesscontrol.can(utilisateur.role).updateAny('porteur').granted || contientUtilisateur(village._referents)){ %>
              <li id="edition_Icone">
-                <a href="/editionVillage?villageId=<%= village.id %>"><span class="glyphicon glyphicon-pencil"></span> Edition marche</a>
+                <a href="/editionVillage?villageId=<%= village.id %>"><span class="glyphicon glyphicon-pencil"></span> <%=translation.NAV_EDIT_ONLY_WALK%></a>
             </li>
             <li id="porteur_Icone">
-              <a href="/porteur?villageId=<%= village.id %>"><span class="glyphicon glyphicon-pencil"></span> Edition porteurs</a>
+              <a href="/porteur?villageId=<%= village.id %>"><span class="glyphicon glyphicon-pencil"></span> <%=translation.NAV_EDIT_PORTEUR%></a>
             </li>
        <% } 
           if ( utilisateur.role!=null &&  accesscontrol.can(utilisateur.role).updateAny('lieu').granted || contientUtilisateur(village._referents)){ %>
           %>
             <li class="nav-item" id="lieu_Icone">
-            <a href="/lieu?villageId=<%= village.id %>"><span class="glyphicon glyphicon-pencil"></span> Edition lieux</a>
+            <a href="/lieu?villageId=<%= village.id %>"><span class="glyphicon glyphicon-pencil"></span> <%=translation.NAV_EDIT_PORTEUR%></a>
             </li>
       <% } 
           if ( utilisateur.role!=null &&  accesscontrol.can(utilisateur.role).updateAny('activite').granted || contientUtilisateur(village._referents)|| contientUtilisateur(village._porteurs)){ %>
             <li  id="Activite_Icone">
-            <a href="/activite?villageId=<%= village.id %>"><span class="glyphicon glyphicon-pencil"></span> Edition activit&eacute; </a>
+            <a href="/activite?villageId=<%= village.id %>"><span class="glyphicon glyphicon-pencil"></span> <%=translation.NAV_EDIT_ACTIVITY%> </a>
             </li>
         <% }
           if ( utilisateur.role!=null &&  accesscontrol.can(utilisateur.role).updateAny('engagements').granted || contientUtilisateur(village._referents)){ %>
           %>
           <li class="nav-item" id="lieu_Icone">
-              <a href="/engagement?villageId=<%= village.id %>"><span class="glyphicon glyphicon-pencil"></span> Edition Engagements</a>
+              <a href="/engagement?villageId=<%= village.id %>"><span class="glyphicon glyphicon-pencil"></span> <%=translation.NAV_EDIT_CHALENGE%></a>
           </li>
           <% } %>
           </ul>
 		   <ul class="nav navbar-nav navbar-right" >
         <li class="nav-item dropdown" id="Profil_Icone">
         <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-          <span class="glyphicon glyphicon-user"></span>Mon profil
+          <span class="glyphicon glyphicon-user"></span><%=translation.NAV_PROFIL%>
         </a>
         <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
-          <a class="dropdown-item" href="/profil/mesEtapes">Mes marches/activités</a>
-          <a class="dropdown-item" href="/profil/referent">Espace référent</a>
-          <a class="dropdown-item" href="/authentification/logout">Se déconnecter</a>
+          <a class="dropdown-item" href="/profil/mesEtapes"><%=translation.NAV_PROFIL_PREFERENCE%></a>
+          <a class="dropdown-item" href="/profil/referent"><%=translation.NAV_PROFIL_REFERENT%></a>
+          <a class="dropdown-item" href="/authentification/logout"><%=translation.NAV_PROFIL_DISCONNECT%></a>
         </div>
       </li>
     </ul>

@@ -3,8 +3,15 @@
 
   "NAV_HOME": "Home",
   "NAV_EDIT_WALK" :"Création / Edition de marche",
+  "NAV_EDIT_ONLY_WALK" :"Edition de marche",
+  "NAV_EDIT_PORTEUR" :"Edition porteurs",
+  "NAV_EDIT_PLACE" :"Edition lieux",
+  "NAV_EDIT_ACTIVITY" :"Edition activité",
+  "NAV_EDIT_CHALENGE": "Edition Engagements",
+
+
   "NAV_PROFIL" :"Mon profil",
-  "NAV_PROFIL_PREFERENCE" :"Mes préférences",
+  "NAV_PROFIL_PREFERENCE" :">Mes marches/activités",
   "NAV_PROFIL_REFERENT" :"Espace Référent",
   "NAV_PROFIL_DISCONNECT" :"Se déconnecter",
   "NAV_PROFIL_CONNECTION" :"Connexion",
@@ -35,7 +42,20 @@
   "PROFIL_ACTIVITY_LIST_TITLE" : "Liste des activités auxquelles tu souhaites participer",
   "PROFIL_ACTIVITY_LIST_NAME" : "Nom",
   "PROFIL_ACTIVITY_LIST_PLACE" : "Lieu",
-  "PROFIL_ACTIVITY_LIST_WALK" : "Etape"
+  "PROFIL_ACTIVITY_LIST_WALK" : "Etape",
+  "PROFIL_REFERENT_DEMAND_TITLE" : "Vous pouvez faire une demande pour être référent d'une marche en choissant la marche dans la liste déroulante.",
+  "PROFIL_REFERENT_DEMAND_TITLE2" : "La demande doit être ensuite validée.",
+  "PROFIL_REFERENT_DEMAND_CHOOSE_WALK" : "Choissiez une marche",
+  "PROFIL_REFERENT_DEMAND_CHOOSE_WALK_CONFIRM" : "Demander à être référent",
+  "PROFIL_REFERENT_DEMAND_CHOOSE_WALK_WAIT" : "Tu es en attente de validation pour être référent sur la marche",
+
+  "PROFIL_REFERENT_ACTIVITY_PARTICIPATION_LIST_TITLE" : "Liste des participants aux activités des marches dont tu es référent :",
+  "PROFIL_REFERENT_ACTIVITY_PARTICIPATION_LIST_WALK_NAME" : "Nom de la marche",
+  "PROFIL_REFERENT_ACTIVITY_PARTICIPATION_LIST_ACTIVITY_NAME" : "Nom activite",
+  "PROFIL_REFERENT_ACTIVITY_PARTICIPATION_LIST_USER_NAME" : "Nom participant",
+  "PROFIL_REFERENT_ACTIVITY_PARTICIPATION_LIST_USER_FIRSTNAME" : "Prénom participant",
+  "PROFIL_REFERENT_ACTIVITY_PARTICIPATION_LIST_USER_EMAIL" : "Email",
+  "PROFIL_REFERENT_ACTIVITY_PARTICIPATION_LIST_USER_PHONE" : "Téléphone"
 
 
 

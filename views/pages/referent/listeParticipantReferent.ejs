@@ -1,17 +1,18 @@
 <%
 	if (villagesReferent!== undefined && villagesReferent.length!=0){ %>
-<div class="bordureGrise">		  		  
-	Liste des participants aux activités des marches dont tu es référent :
+<div class="bordureGrise">
+	<%=translation.PROFIL_REFERENT_ACTIVITY_PARTICIPATION_LIST_TITLE%>
+
 
 	  <table id="listeParticipant" class="tableau">
 	      <thead>
 	      <tr>
-	          <td>Nom de la marche</td>
-	          <td>Nom activite</td>
-	          <td>Nom participant</td>
-	          <td>Prénom participant</td>
-	          <td>Email</td>
-	          <td>Téléphone</td>
+	          <td><%=translation.PROFIL_REFERENT_ACTIVITY_PARTICIPATION_LIST_WALK_NAME%></td>
+	          <td><%=translation.PROFIL_REFERENT_ACTIVITY_PARTICIPATION_LIST_ACTIVITY_NAME%></td>
+	          <td><%=translation.PROFIL_REFERENT_ACTIVITY_PARTICIPATION_LIST_USER_NAME%></td>
+	          <td><%=translation.PROFIL_REFERENT_ACTIVITY_PARTICIPATION_LIST_USER_FIRSTNAME%></td>
+	          <td><%=translation.PROFIL_REFERENT_ACTIVITY_PARTICIPATION_LIST_USER_EMAIL%></td>
+	          <td><%=translation.PROFIL_REFERENT_ACTIVITY_PARTICIPATION_LIST_USER_PHONE%></td>
 	      </tr>
 	      </thead>
 	      <tbody>
