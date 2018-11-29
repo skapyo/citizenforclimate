@@ -10,7 +10,9 @@ app.use(bodyParser.urlencoded({ extended: true }));
 
 
 
+
 var url = 'mongodb://cfc:123456@35.180.167.130:27017/mapCFC';
+
 var mongoose = require('mongoose');
 var Schema = mongoose.Schema,
     ObjectId = Schema.ObjectId;
