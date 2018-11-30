@@ -3,19 +3,19 @@
   <% if (typeof accesscontrol !== "undefined" && accesscontrol!=null && typeof utilisateur !== "undefined" && utilisateur!=null ) { 
        if ( utilisateur.role!=null &&  accesscontrol.can(utilisateur.role).readAny('benevole').granted || contientUtilisateur(village._referents)){ %>
   %>
-  Nombre de bénévoles : <%= village._benevoles.length %> 
-  <div class="afficher-cacher-filtre"> <span class="ouvrirBenevole">Afficher la liste des bénévoles souhaitant aider le jour de la marche</span> <span class="fermerBenevole hide">Cacher la liste des bénévoles souhaitant aider le jour de la marche</span></div>
+<%=translation.WALK_SECTION_BENEVOLE_NUMBER%><%= village._benevoles.length %>
+  <div class="afficher-cacher-filtre"> <span class="ouvrirBenevole"><%=translation.WALK_SECTION_BENEVOLE_LIST_SHOW%></span> <span class="fermerBenevole hide"><%=translation.WALK_SECTION_BENEVOLE_LIST_HIDE%></span></div>
  <p>
  <div id="benevole" style="display:none">
- Liste des bénévoles : 
+    <%=translation.WALK_SECTION_BENEVOLE_LIST_TITLE%>
       <table id ="listeBenevoles">
         <thead>
         <tr>
-            <td>Nom</td>
-            <td>Prénom</td>
-            <td>Email</td>
-            <td>Téléphone</td>
-            <td>Date cr&eacute;ation</td>
+            <td><%=translation.WALK_SECTION_BENEVOLE_LIST_NAME%></td>
+            <td><%=translation.WALK_SECTION_BENEVOLE_LIST_FIRSTNAME%></td>
+            <td><%=translation.WALK_SECTION_BENEVOLE_LIST_EMAIL%></td>
+            <td><%=translation.WALK_SECTION_BENEVOLE_LIST_PHONE%></td>
+            <td><%=translation.WALK_SECTION_BENEVOLE_LIST_CUTIME%></td>
         </tr>
         </thead>
         <tbody>

@@ -9,9 +9,9 @@
 <body>
 	<% include ../partials/navVillage.ejs %>
 	<div class="container">
-		<p>Cette page permet la gestion des lieux où vont se dérouler les activités de la marche : stands, conférences, concerts et formations.</br>
+		<p><%=translation.PLACE_TITLE%></br>
 	</p>
-		<input type="button" class="btn btn-default couleurbg largeurAuto" id="nouveauLieu" value="Nouveau Lieu" />
+		<input type="button" class="btn btn-default couleurbg largeurAuto" id="nouveauLieu" value="<%=translation.PLACE_NEW%>" />
 
 		<form method="post" <%if(!(typeof lieuAModifier  !== undefined && lieuAModifier!=null)){ %> class="hide" <% } %> action="/ajoutLieu" id="ajoutLieu">
 		   <p>
@@ -22,9 +22,9 @@
 			 <input type="text" style="display:none" name ="longitude" id="longitude" value="<% if(typeof lieuAModifier  !== undefined && lieuAModifier!=null){ %><%= lieuAModifier.coordonnees.longitude %><% } %>" />
 
 			<!-- Donnees du formulaire -->
-			<label for="nom">Nom du lieu (Exemple place du village, salle Voltaire, Parc butte Chaumont, ...):</label>
+			<label for="nom"><%=translation.PLACE_FORM_NAME%></label>
 			<input type="text" name="nom" required id="nom" value="<% if(typeof lieuAModifier  !== undefined && lieuAModifier!=null){ %><%= lieuAModifier.nom %><% } %>"/>
-			<label for="adresse">Adresse du lieu :</label>
+			<label for="adresse"><%=translation.PLACE_FORM_ADRESS%></label>
 			<input type="text" name="adresse" required id="adresse" value="<% if(typeof lieuAModifier  !== undefined && lieuAModifier!=null){ %><%= lieuAModifier.adresse %><% } %>"/>
 			
 			<p>
@@ -49,20 +49,20 @@
   %><%= moment.utc(horairesOuverture.dateFin).format('HH:mm') %><% }); }%>"/>
 			</p>
 			-->
-			<label> Cliquez sur la carte pour indiquer l'emplacement du lieu ou utilisez la zone de recherche</label>
-			<input id="pac-input" class="controls" type="text" placeholder="Rechercher l'emplacement du lieu">
+			<label><%=translation.PLACE_MAP_BUTTON%></label>
+			<input id="pac-input" class="controls" type="text" placeholder="<%=translation.PLACE_MAP_SEARCH%>">
 			<div id="carte"></div>
 			</p>
 			<p>
-				<input type="submit" id="bouton" value="<% if(typeof lieuAModifier  !== undefined && lieuAModifier!=null){ %> Modifier le lieu <% }else{ %>Ajouter un nouveau lieu <%} %>"/>
+				<input type="submit" id="bouton" value="<% if(typeof lieuAModifier  !== undefined && lieuAModifier!=null){ %><%=translation.PLACE_FORM_MODIFY%><% }else{ %><%=translation.PLACE_FORM_MODIFY%><%} %>"/>
 			</p>
 		</form>
 	</p>
-		<div class="modifier-lieu">Cliquez sur un lieu existant pour le modifier</div>
+		<div class="modifier-lieu"><%=translation.PLACE_FORM_EDIT_TITLE%></div>
 		<table id="listeLieu">
 			<thead>
-			   <td class="couleurAvecFond">Nom du lieu</td>
-			   <td class="couleurAvecFond">Adresse</td>
+			   <td class="couleurAvecFond"><%=translation.PLACE_FORM_EDIT_NAME%></td>
+			   <td class="couleurAvecFond"><%=translation.PLACE_FORM_EDIT_ADRESS%></td>
 			</thead>
 			<tbody>
 			<% if (lieux!=null) {

@@ -49,23 +49,23 @@ function contientUtilisateur(listeUtilisateur){
 
         </p>
         <!-- Donnees du formulaire -->
-        <label  for="nom">Ville de la marche :</label>
+        <label  for="nom"><%=translation.WALK_EDIT_NAME%></label>
         <input type="text" name="nom" id="nom"  required value="<% if(typeof villageAModifier  !== undefined && villageAModifier!=null){ %><%= villageAModifier.nom %><% } %>"/>
         <p>
-            <label  for="facebookUrl">Url Facebook :</label>
+            <label  for="facebookUrl"><%=translation.WALK_EDIT_FACEBOOK_URL%></label>
             <input type="text" name="facebookUrl" id="facebookUrl"  value="<% if(typeof villageAModifier  !== undefined && villageAModifier!=null){ %><%= villageAModifier.facebookUrl %><% } %>"/>
         <p>
         <div class="form-check">
             <input type="checkbox" class="form-check-input" name="estPreTour" <% if(typeof villageAModifier  !== undefined && villageAModifier!=null && (villageAModifier.estPreTour=!null  && villageAModifier.estPreTour)){ %>checked<% } %>/>
-            <label class="form-check-label" for="estPreTour">Cette étape fait partie du tour de chauffe (du 3 au 8 juin)</label>
+            <label class="form-check-label" for="estPreTour"><%=translation.WALK_EDIT_ALTERNATIBA_TOUR%></label>
         </div>
         <div class="form-check">
             <input type="checkbox" class="form-check-input" name="estTourEtendu" <% if(typeof villageAModifier  !== undefined && villageAModifier!=null && (villageAModifier.estTourEtendu=!null  && villageAModifier.estTourEtendu)){ %>checked<% } %>/>
-            <label class="form-check-label" for="estTourEtendu">Cette étape fait partie d'un tour étendu</label>
+            <label class="form-check-label" for="estTourEtendu"><%=translation.WALK_EDIT_ALTERNATIBA_TOUR_EXTEND%></label>
         </div>
         <div class="form-check">
             <input type="checkbox" class="form-check-input" name="estMarche" <% if(typeof villageAModifier  !== undefined && villageAModifier!=null && (villageAModifier.estMarche=!null  && villageAModifier.estMarche)){ %>checked<% } %>/>
-            <label class="form-check-label" for="estMarche">Marche</label>
+            <label class="form-check-label" for="estMarche"><%=translation.WALK_EDIT_IS_WALK%></label>
         </div>
 
         <div class="bordure">
@@ -78,8 +78,7 @@ function contientUtilisateur(listeUtilisateur){
                     %>
                     <%- libelleHoraire(horairesOuverture,false)%><% }})} %>")</label>
             </div>
-            Sélectionner les dates et horaires de la marche si vous affichez les horaires (attention, il faut que la date de la marche corresponde toujours au jour pendant lequel les cyclistes seront présents)
-
+            <%=translation.WALK_EDIT_SELECT_HOUR%>
             <div id="mapLabel"> <strong>Sélectionner les dates et horaires de la marche si vous affichez les horaires  </strong></div>
             <input id="dateDebut" name="dateDebut" type="date" class="date start datepicker horaire"  value="<%  if(typeof villageAModifier  !== undefined && villageAModifier!=null && villageAModifier._horairesOuvertures != undefined && typeof villageAModifier._horairesOuvertures[0]  !== undefined && villageAModifier._horairesOuvertures[0]!=null ){ %><%= moment.utc(villageAModifier._horairesOuvertures[0].dateDebut).format('YYYY-MM-DD') %><% }else{ %>2018-12-08<%}%>"/>
             <input id="horaireDebut"  name="horaireDebut" type="time" class="time start horaire"  value="<%  if(typeof villageAModifier  !== undefined && villageAModifier!=null && villageAModifier._horairesOuvertures != undefined && typeof villageAModifier._horairesOuvertures[0]  !== undefined && villageAModifier._horairesOuvertures[0]!=null){ %><%= moment.utc(villageAModifier._horairesOuvertures[0].dateDebut).format('HH:mm') %><% }else{ %>14:00<%}%>"/> à
@@ -87,17 +86,17 @@ function contientUtilisateur(listeUtilisateur){
             <input id="horaireFin" name="horaireFin" type="time" class="date end datepicker horaire"value="<%  if(typeof villageAModifier  !== undefined && villageAModifier!=null && typeof villageAModifier._horairesOuvertures[0]  !== undefined && villageAModifier._horairesOuvertures[0]!=null){ %><%= moment.utc(villageAModifier._horairesOuvertures[0].dateFin).format('HH:mm') %><% }else{ %>18:00<%}%>"/>
             </p>
         </div>
-        <label for="emailContact">Adresses email de contact : </label>
-        Séparer chaque adresse email par une virgule (exemple : alternatiba@alternatiba.eu, anv-cop21@anv-cop21.org)
+        <label for="emailContact"><%=translation.WALK_EDIT_EMAIL_CONTACT%></label>
+        <%=translation.WALK_EDIT_EMAIL_CONTACT_INFO%>
         <input type="text" form ="ajoutVillage" name="emailContact" id="emailContact" value="<% if(typeof villageAModifier  !== undefined && villageAModifier!=null){ %><%= villageAModifier.emailContact %><% } %>"/>
         </br>
         </p>
-        <label for="description">Description succinte pour la page d'accueil (Max 120 caractères ne contenant pas de  guillemet "") :</label>
+        <label for="description"><%=translation.WALK_EDIT_DESCRIPTION%></label>
         <input type="text" form ="ajoutVillage" name="description" id="description" value="<% if(typeof villageAModifier  !== undefined && villageAModifier!=null){ %><%= villageAModifier.description %><% } else {%> <%}%>%> "/>
         </br>
         </p>
 
-        <label for="description">Article de présentation de la marche:</label>
+        <label for="description"><%=translation.WALK_EDIT_ARTICLE%></label>
         <textarea form ="ajoutVillage" rows="4" cols="50" name="article" id="article"><% if(typeof villageAModifier  !== undefined && villageAModifier!=null){ %><%= villageAModifier.article %><% } %></textarea>
 
 
@@ -106,56 +105,56 @@ function contientUtilisateur(listeUtilisateur){
         </p>
         <div class="form-check">
             <input type="checkbox" class="form-check-input" name="inscriptionOrganisateur" <% if(typeof villageAModifier  !== undefined && villageAModifier!=null && (villageAModifier.inscriptionOrganisateur=!null  && villageAModifier.inscriptionOrganisateur)){ %>checked<% } %>/>
-            <label class="form-check-label" for="inscriptionOrganisateur">Activer le bouton d'inscription "Je souhaite aider à l'organisation de la marche" (Les personnes inscrites sur cette liste souhaitent être bénévole pour organisées la marche)</label>
+            <label class="form-check-label" for="inscriptionOrganisateur"><%=translation.WALK_EDIT_ACTIVATE_ORGANISATOR%></label>
         </div>
         <div class="form-check">
             <input type="checkbox" class="form-check-input" name="inscriptionBenevole" <% if(typeof villageAModifier  !== undefined && villageAModifier!=null && (villageAModifier.inscriptionBenevole=!null  && villageAModifier.inscriptionBenevole)){ %>checked<% } %>/>
-            <label class="form-check-label" for="inscriptionBenevole">Activer le bouton d'inscription "Je souhaite aider le jour J" (Les personnes inscrites sur cette liste souhaitent être bénévole le jour de la marche)</label>
+            <label class="form-check-label" for="inscriptionBenevole"><%=translation.WALK_EDIT_ACTIVATE_BENEVOLE%></label>
         </div>
-        <label for="lienFormulaireBenevole">Url du formulaire spécifique pour les bénévoles : (Optionnel)</label>
+        <label for="lienFormulaireBenevole"><%=translation.WALK_EDIT_BENEVOLE_INSCRIPTION_FORM%></label>
         <input type="text" form="ajoutVillage" name="lienFormulaireBenevole" id="lienFormulaireBenevole"
                value="<% if(typeof villageAModifier !== undefined && villageAModifier != null){ %><%= villageAModifier.lienFormulaireBenevole %><% } %>"/>
         </br>
         <div class="form-check">
             <input type="checkbox" class="form-check-input" name="inscriptionVisiteur" <% if(typeof villageAModifier  !== undefined && villageAModifier!=null && (villageAModifier.inscriptionVisiteur=!null  && villageAModifier.inscriptionVisiteur)){ %>checked<% } %>/>
-            <label class="form-check-label" for="inscriptionVisiteur">Activer le bouton "Je suis intéréssé par la marche "(Personne souhaitant recevoir l'actualité de l'étape) et le bouton "Je participerai à la marche" (personne souhaitant être présent le jour de la marche) </label>
+            <label class="form-check-label" for="inscriptionVisiteur"><%=translation.WALK_EDIT_ACTIVATE_INTERESTED%></label>
         </div>
 
 
-        <label> Cliquez sur la carte pour indiquer le centre de la marche et définissez le niveau de zoom pour l'affichage de la carte de la marche</label>
-        <input id="pac-input" class="controls" type="text" placeholder="Rechercher le lieu de la marche">
+        <label><%=translation.WALK_EDIT_MAP_POSITION%></label>
+        <input id="pac-input" class="controls" type="text" placeholder="<%=translation.WALK_EDIT_MAP_FIND_PLACE%>">
         <div id="carte"></div>
         </p>
 
         <div class="form-check">
             <input type="checkbox" class="form-check-input" name="publication" <% if(typeof villageAModifier  !== undefined && villageAModifier!=null && (villageAModifier.publication=!null  && villageAModifier.publication)){ %>checked<% } %>/>
-            <label class="form-check-label" for="publication">Publier la marche (Attention : si cette case n'est pas cochée, les visiteurs ne pourront pas accéder à votre marche depuis la page d'accueil)</label>
+            <label class="form-check-label" for="publication"><%=translation.WALK_EDIT_MAP_FIND_PLACE%></label>
         </div>
 
         <div class="form-check">
             <input type="checkbox" class="form-check-input" name="horsFetesDesPossible" <% if(typeof villageAModifier  !== undefined && villageAModifier!=null && (villageAModifier.horsFetesDesPossible=!null  && villageAModifier.horsFetesDesPossible)){ %>checked<% } %>/>
-            <label class="form-check-label" for="horsFetesDesPossible">Hors Fêtes des Possibles</label>
+            <label class="form-check-label" for="horsFetesDesPossible"><%=translation.WALK_EDIT_IS_FETE_POSSIBLE%></label>
         </div>
         <% if (typeof accesscontrol !== "undefined" && accesscontrol!=null && typeof utilisateur !== "undefined" && utilisateur!=null ) {
         if ( utilisateur.role!=null &&  accesscontrol.can(utilisateur.role).updateAny('village').granted){ %>
         <div class="form-check">
             <input type="checkbox" class="form-check-input" name="horsTour" <% if(typeof villageAModifier  !== undefined && villageAModifier!=null && (villageAModifier.horsTour=!null  && villageAModifier.horsTour)){ %>checked<% } %>/>
-            <label class="form-check-label" for="horsTour">Village non affiché sur la carte</label>
+            <label class="form-check-label" for="horsTour"><%=translation.WALK_EDIT_NO_SHOW_MAP%></label>
         </div>
 
         <% }
         }%>
-        <input type="submit" id="bouton" class="btn btn-default couleurbg largeurAuto" value="<% if(typeof villageAModifier  !== undefined && villageAModifier!=null){ %> Enregistrer les modifications <% }else{ %>Ajouter la marche <%} %>"/>
+        <input type="submit" id="bouton" class="btn btn-default couleurbg largeurAuto" value="<% if(typeof villageAModifier  !== undefined && villageAModifier!=null){ %> <%=translation.WALK_EDIT_SAVE%> <% }else{ %><%=translation.WALK_EDIT_ADD%> <%} %>"/>
         </p>
     </form>
 
     <% if (typeof accesscontrol !== "undefined" && accesscontrol!=null && typeof utilisateur !== "undefined" && utilisateur!=null ) {
     if ( utilisateur.role!=null &&  accesscontrol.can(utilisateur.role).updateAny('village').granted){ %>
 
-    <div class="modifier-village" >Cliquez sur une marche existante pour la modifier</div>
+    <div class="modifier-village" ><%=translation.WALK_EDIT_LIST_TITLE%></div>
     <table id="listeVillage">
         <thead>
-        <td>Nom</td><td class="cacherMobile">Description</td><td>Horaires</td>
+        <td>Nom</td><td class="cacherMobile"><%=translation.WALK_EDIT_LIST_DESCRIPTION%></td><td><%=translation.WALK_EDIT_LIST_HOUR%></td>
         </thead>
         <tbody>
         <% if (villages!=null) {

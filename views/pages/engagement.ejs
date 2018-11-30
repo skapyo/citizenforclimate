@@ -14,22 +14,22 @@
 <div class="container">
 
 	
-		<p>Cette page permet la gestion des engagements. C'est grâce à ces engagements que l'on va changer d'echelle</br>
+		<p><%=translation.CHALLENGE_TITLE%></br>
 	</p>
 	
 	<p>
-		<input type="button" class="btn btn-default couleurbg largeurAuto" id="nouveauEngagement" value="Nouveau engagement"/>
+		<input type="button" class="btn btn-default couleurbg largeurAuto" id="nouveauEngagement" value="<%=translation.CHALLENGE_NEW%>"/>
 	<form method="post" action="/ajoutEngagement" id="ajoutEngagement" <%if(!(typeof engagementAModifier  !== undefined && engagementAModifier!=null)){ %> class="hide" <% } %>>
 		   	<input type="text" style="display:none" name ="villageId" id="villageId" value="<% if(typeof village  !== undefined && village!=null){ %><%= village._id %><% } %>" />
 		   <input type="text" style="display:none" name ="id" id="id" value="<% if(typeof engagementAModifier  !== undefined && engagementAModifier!=null){ %><%= engagementAModifier._id %><% } %>" />
-		<label for="nom">Nom de l'engagement :</label>
+		<label for="nom"><%=translation.CHALLENGE_NEW_NAME%></label>
 		<input type="text" name="nom" required id="nom" value="<% if(typeof engagementAModifier  !== undefined && engagementAModifier!=null){ %><%= engagementAModifier.nom %><% } %>"/>
 	</p>
-		<label for="description">Description de l'engagement :</label>
+		<label for="description"><%=translation.CHALLENGE_NEW_DESCRIPTION%></label>
 			<textarea form ="ajoutEngagement" rows="4" cols="50" name="description" id="description"><% if(typeof engagementAModifier  !== undefined && engagementAModifier!=null){ %><%= engagementAModifier.description %><% } %></textarea>
 			</p>
 		</p>
-		<label>Sélectionner le porteur référent (Pour sélectionner plusieurs porteurs garder la touche controle enfoncée et selectionner les porteurs)</label>
+		<label><%=translation.CHALLENGE_NEW_PORTEUR%></label>
 		<select id="idPorteur"  multiple name="idPorteur">
 		<option value=""></option>
 
@@ -46,7 +46,7 @@
 		</select>
 		</p>
 
-		<label>Sélectionner le type de l'engagement</label>
+		<label><%=translation.CHALLENGE_NEW_TYPE%></label>
 		<select id="typeEngagement" name="typeEngagement">
 		
 			 <% Engagement.schema.path('typeEngagement').enumValues.forEach(function(typeEngagement) {
@@ -56,24 +56,19 @@
                 }); %>
 		</select>
 		</br>
-		<div  id="lienVelorution"  <%  if(!(typeof engagementAModifier  !== undefined && engagementAModifier!=null &&  engagementAModifier.typeEngagement.localeCompare("V&eacute;lorution")==1)){ %> class="hide" <% } %>>
-			<label for="lienVelorution"> Lien Open Runner </label>
-			<input type="text" name="lienVelorution" value="<% if(typeof engagementAModifier  !== undefined && engagementAModifier!=null){ %><%= engagementAModifier.lienVelorution %><% } %>" >
-			</br>
-		</div>
 
 		<p>
-			<input type="submit" id="bouton" value="<% if(typeof engagementAModifier  !== undefined && engagementAModifier!=null){ %> Modifier l'engagement <% }else{ %>Ajouter l'engagement<%} %>"/>
+			<input type="submit" id="bouton" value="<% if(typeof engagementAModifier  !== undefined && engagementAModifier!=null){ %><%=translation.CHALLENGE_MODIFY%><% }else{ %><%=translation.CHALLENGE_ADD%><%} %>"/>
 		</p>
 	</form>
 
-	<div class="modifier-engagement" >Cliquez sur une engagement existante pour la modifier</div>
+	<div class="modifier-engagement" ><%=translation.CHALLENGE_LIST_TITLE%></div>
 	<table id="listeEngagement">
 		<thead>
-			<td class="couleurAvecFond">Nom</td>
-			<td class="couleurAvecFond">Type</td>
-			<td class="couleurAvecFond">Porteur</td>
-			<td class="couleurAvecFond">Supression</td>
+			<td class="couleurAvecFond"><%=translation.CHALLENGE_LIST_NAME%></td>
+			<td class="couleurAvecFond"><%=translation.CHALLENGE_LIST_TYPE%></td>
+			<td class="couleurAvecFond"><%=translation.CHALLENGE_LIST_PORTEUR%></td>
+			<td class="couleurAvecFond"><%=translation.CHALLENGE_LIST_DELETE%></td>
 		</thead>
 		<tbody>
         <% if (engagements!=null) {
@@ -132,7 +127,7 @@ $("#supprimer").click(function(event) {
 	      $("#placeMaximum").val("");
 		  $("#adresse").val("");
 		  $("#idPorteur").val("");
-		  $("#bouton").val("Ajouter une nouveau engagement");
+		  $("#bouton").val("<%=translation.CHALLENGE_NEW_ADD%>");
 		  $("#ajoutEngagement").removeClass("hide");
 	    });
 		

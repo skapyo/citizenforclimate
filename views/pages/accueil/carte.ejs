@@ -65,7 +65,7 @@
 						libelle="Le "+moment.utc(horairesOuverture.dateDebut).locale("fr").format('Do MMMM YYYY');
 					}
 					if(isMidi ){
-						libelle+=" le midi"
+						libelle+=translation.HOME_MAP_LIBELLE_AFTERNOON;
 					}
 					if(isSoir ){
 						if(isMidi){
@@ -75,7 +75,7 @@
 					}
 				}
 				if(!isMidi && ! isSoir){
-					libelle="Début : " +moment.utc(horairesOuverture.dateDebut).locale("fr").format('Do MMMM YYYY, HH:mm')+" Fin : " +moment.utc(horairesOuverture.dateFin).locale("fr").format('Do MMMM YYYY, HH:mm');
+					libelle=translation.HOME_MAP_LIBELLE_FROM +moment.utc(horairesOuverture.dateDebut).locale("fr").format('Do MMMM YYYY, HH:mm')+translation.HOME_MAP_LIBELLE_END +moment.utc(horairesOuverture.dateFin).locale("fr").format('Do MMMM YYYY, HH:mm');
 				}
 				return libelle
 			}
@@ -114,15 +114,15 @@
 
 
 
-	            var contenu<%=village._id%> ="<div class=\"couleurVert\"><%= village.nom %></div><% if (village.facebookUrl != null && village.facebookUrl !=""){ %></br><a href='<%- village.facebookUrl %>' target='blank' > Lien facebook </a> <% }  if(village.description!=null && village.description!=""){%></br><%- village.description %><%} if(false && village.emailContact!=null && village.emailContact!=""){%></br></br>Contact : <%- village.emailContact %><%}
+	            var contenu<%=village._id%> ="<div class=\"couleurVert\"><%= village.nom %></div><% if (village.facebookUrl != null && village.facebookUrl !=""){ %></br><a href='<%- village.facebookUrl %>' target='blank' ><%=translation.HOME_MAP_FACEBOOK_LINK%></a> <% }  if(village.description!=null && village.description!=""){%></br><%- village.description %><%} if(false && village.emailContact!=null && village.emailContact!=""){%></br></br><%=translation.HOME_MAP_FACEBOOK_LINK%><%- village.emailContact %><%}
 	                if (village._horairesOuvertures!=null){
 	             		 village._horairesOuvertures.forEach(function(horairesOuverture) {
 	             			 %></br></br><%= libelleHoraire(horairesOuverture) %><%
 	                	});
 	              	 }
 	                if(village.publication!=null && village.publication){ 
-	               		%></br></br><a href=\"village?villageId=<%= village._id %>\"> <button class=\"btn btn-default couleurbg\">En savoir plus</button></a><% } else{
-		       		 	%></br></br><button type=\"button\"  data-villageid=\"<%= village._id %>\" class=\"btn btn-default couleurbg contact\" data-toggle=\"modal\" data-target=\"#popinContact\">Contacter la marche</button><%  }%>"
+	               		%></br></br><a href=\"village?villageId=<%= village._id %>\"> <button class=\"btn btn-default couleurbg\"><%=translation.HOME_MAP_MORE%></button></a><% } else{
+		       		 	%></br></br><button type=\"button\"  data-villageid=\"<%= village._id %>\" class=\"btn btn-default couleurbg contact\" data-toggle=\"modal\" data-target=\"#popinContact\"><%=translation.HOME_MAP_CONTACT_WALK%></button><%  }%>"
 			            marker<%=village._id%>.bindPopup(contenu<%=village._id%>);
 	         <%
        		 }

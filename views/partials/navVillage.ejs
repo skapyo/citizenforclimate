@@ -42,7 +42,7 @@
           if ( utilisateur.role!=null &&  accesscontrol.can(utilisateur.role).updateAny('lieu').granted || contientUtilisateur(village._referents)){ %>
           %>
             <li class="nav-item" id="lieu_Icone">
-            <a href="/lieu?villageId=<%= village.id %>"><span class="glyphicon glyphicon-pencil"></span> <%=translation.NAV_EDIT_PORTEUR%></a>
+            <a href="/lieu?villageId=<%= village.id %>"><span class="glyphicon glyphicon-pencil"></span> <%=translation.NAV_EDIT_PLACE%></a>
             </li>
       <% } 
           if ( utilisateur.role!=null &&  accesscontrol.can(utilisateur.role).updateAny('activite').granted || contientUtilisateur(village._referents)|| contientUtilisateur(village._porteurs)){ %>
